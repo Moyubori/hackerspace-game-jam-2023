@@ -17,6 +17,7 @@ dependencies:
   flame_tiled: ^1.9.1
   flame_audio: ^1.4.0
   flame_isolate: ^0.2.0
+  bonfire: ^2.12.0
 
 
 dev_dependencies:
@@ -28,5 +29,21 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/images/
     - assets/audio/
+    - assets/images/
+    - assets/images/player/
+    - assets/images/enemy/
+    - assets/images/npc/
+    - assets/images/tile/
+    - assets/images/tile_random/
+    - assets/images/tiled/
+    - assets/images/tiled/top_down/
+    - assets/images/tiled/tileset/
+    - assets/images/itens/
+    - assets/images/lpc/body/
+    - assets/images/lpc/feet/
+    - assets/images/lpc/hair/
+    - assets/images/lpc/leg/
+    - assets/images/lpc/torco/
+    - assets/images/lpc/head/
+    - assets/images/lpc/gloves/
