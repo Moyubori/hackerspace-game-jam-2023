@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hackerspace_game_jam_2023/fight.dart';
-import 'package:hackerspace_game_jam_2023/overworld.dart';
+import 'package:hackerspace_game_jam_2023/fight/fight.dart';
+import 'package:hackerspace_game_jam_2023/overworld/overworld.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,10 +15,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      // routes: {
-      //   '/': (context) => Overworld(),
-      //   '/fight': (context) => FightSceneWidget(),
-      // },
       home: Scaffold(
         appBar: AppBar(
           actions: [

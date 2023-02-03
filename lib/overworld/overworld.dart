@@ -1,91 +1,22 @@
 import 'dart:math';
 
 import 'package:bonfire/bonfire.dart';
-import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
+import 'package:hackerspace_game_jam_2023/overworld/player.dart';
 
 class Overworld extends StatelessWidget {
   const Overworld({super.key});
 
   @override
   Widget build(BuildContext context) => BonfireWidget(
-        player: Knight(
+        player: MainPlayer(
           Vector2((4 * DungeonMap.tileSize), (6 * DungeonMap.tileSize)),
         ),
         joystick: Joystick(
-          keyboardConfig: KeyboardConfig(),
+          keyboardConfig: KeyboardConfig(keyboardDirectionalType: KeyboardDirectionalType.wasdAndArrows),
         ),
         map: DungeonMap.map(),
       );
-}
-
-class PlayerSpriteSheet {
-  static Future<SpriteAnimation> get idleLeft => SpriteAnimation.load(
-        "player/knight_idle_left.png",
-        SpriteAnimationData.sequenced(
-          amount: 6,
-          stepTime: 0.1,
-          textureSize: Vector2(16, 16),
-        ),
-      );
-
-  static Future<SpriteAnimation> get idleRight => SpriteAnimation.load(
-        "player/knight_idle.png",
-        SpriteAnimationData.sequenced(
-          amount: 6,
-          stepTime: 0.1,
-          textureSize: Vector2(16, 16),
-        ),
-      );
-
-  static Future<SpriteAnimation> get runRight => SpriteAnimation.load(
-        "player/knight_run.png",
-        SpriteAnimationData.sequenced(
-          amount: 6,
-          stepTime: 0.1,
-          textureSize: Vector2(16, 16),
-        ),
-      );
-
-  static Future<SpriteAnimation> get runLeft => SpriteAnimation.load(
-        "player/knight_run_left.png",
-        SpriteAnimationData.sequenced(
-          amount: 6,
-          stepTime: 0.1,
-          textureSize: Vector2(16, 16),
-        ),
-      );
-
-  static SimpleDirectionAnimation get simpleDirectionAnimation => SimpleDirectionAnimation(
-        idleRight: idleRight,
-        runRight: runRight,
-      );
-}
-
-class Knight extends SimplePlayer with ObjectCollision {
-  Knight(Vector2 position)
-      : super(
-          position: position,
-          size: Vector2(32, 32),
-          animation: PlayerSpriteSheet.simpleDirectionAnimation,
-        ) {
-    setupCollision(
-      CollisionConfig(
-        collisions: [
-          CollisionArea.rectangle(
-            size: Vector2(
-              DungeonMap.tileSize / 2,
-              DungeonMap.tileSize / 2.2,
-            ),
-            align: Vector2(
-              DungeonMap.tileSize / 3.5,
-              DungeonMap.tileSize / 2,
-            ),
-          )
-        ],
-      ),
-    );
-  }
 }
 
 class DungeonMap {
