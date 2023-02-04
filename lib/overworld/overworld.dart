@@ -1,8 +1,8 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/demo_dungeon_map.dart';
-import 'package:hackerspace_game_jam_2023/enemies/centipede/centipede.dart';
 import 'package:hackerspace_game_jam_2023/enemies/goblin/goblin.dart';
+import 'package:hackerspace_game_jam_2023/enemies/plaguebearer/plaguebearer.dart';
 import 'package:hackerspace_game_jam_2023/interface/equipment_info.dart';
 import 'package:hackerspace_game_jam_2023/interface/life_bar.dart';
 import 'package:hackerspace_game_jam_2023/overworld/player.dart';
@@ -25,7 +25,8 @@ class Overworld extends StatelessWidget {
           player: player,
           enemies: [
             Goblin(Vector2(10 * DemoDungeonMap.tileSize, 5 * DemoDungeonMap.tileSize)),
-            Centipede(Vector2(6 * DemoDungeonMap.tileSize, 5 * DemoDungeonMap.tileSize))
+            Plaguebearer(Vector2(6 * DemoDungeonMap.tileSize, 5 * DemoDungeonMap.tileSize))
+            // Centipede(Vector2(6 * DemoDungeonMap.tileSize, 5 * DemoDungeonMap.tileSize))
           ],
           joystick: Joystick(
             keyboardConfig: KeyboardConfig(keyboardDirectionalType: KeyboardDirectionalType.wasdAndArrows),

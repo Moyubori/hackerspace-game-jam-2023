@@ -3,7 +3,6 @@ import 'package:collection/collection.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/builders/content/dungeon_content_factory.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/builders/dungeon_tile_builder.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/dungeon_map.dart';
-import 'package:hackerspace_game_jam_2023/enemies/goblin.dart';
 
 typedef EnemyBuilder = Enemy Function(Vector2);
 

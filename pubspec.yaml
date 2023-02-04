@@ -38,6 +38,7 @@ flutter:
     - assets/images/enemy/
     - assets/images/enemy/centipede/
     - assets/images/enemy/goblin/
+    - assets/images/enemy/plaguebearer/
     - assets/images/npc/
     - assets/images/tile/
     - assets/images/tile_random/
