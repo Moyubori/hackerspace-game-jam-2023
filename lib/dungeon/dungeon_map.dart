@@ -20,14 +20,7 @@ class DungeonMap {
     List.generate(35, (indexRow) {
       List.generate(70, (indexColumn) {
         if (indexRow == 3 && indexColumn > 2 && indexColumn < 30) {
-          tileList.add(TileModel(
-            sprite: TileModelSprite(path: wallBottom),
-            x: indexColumn.toDouble(),
-            y: indexRow.toDouble(),
-            collisions: [CollisionArea.rectangle(size: Vector2(tileSize, tileSize))],
-            width: tileSize,
-            height: tileSize,
-          ));
+          tileList.add(_buildWallBottom(indexColumn, indexRow));
           return;
         }
         if (indexRow == 4 && indexColumn > 2 && indexColumn < 30) {
@@ -36,14 +29,7 @@ class DungeonMap {
         }
 
         if (indexRow == 9 && indexColumn > 2 && indexColumn < 30) {
-          tileList.add(TileModel(
-            sprite: TileModelSprite(path: wallTop),
-            x: indexColumn.toDouble(),
-            y: indexRow.toDouble(),
-            collisions: [CollisionArea.rectangle(size: Vector2(tileSize, tileSize))],
-            width: tileSize,
-            height: tileSize,
-          ));
+          tileList.add(_buildWallTop(indexColumn, indexRow));
           return;
         }
 
@@ -81,6 +67,28 @@ class DungeonMap {
     });
 
     return WorldMap(tileList);
+  }
+
+  static TileModel _buildWallTop(int indexColumn, int indexRow) {
+    return TileModel(
+          sprite: TileModelSprite(path: wallTop),
+          x: indexColumn.toDouble(),
+          y: indexRow.toDouble(),
+          collisions: [CollisionArea.rectangle(size: Vector2(tileSize, tileSize))],
+          width: tileSize,
+          height: tileSize,
+        );
+  }
+
+  static TileModel _buildWallBottom(int indexColumn, int indexRow) {
+    return TileModel(
+          sprite: TileModelSprite(path: wallBottom),
+          x: indexColumn.toDouble(),
+          y: indexRow.toDouble(),
+          collisions: [CollisionArea.rectangle(size: Vector2(tileSize, tileSize))],
+          width: tileSize,
+          height: tileSize,
+        );
   }
 
   static TileModel _buildWall(int indexColumn, int indexRow) {
