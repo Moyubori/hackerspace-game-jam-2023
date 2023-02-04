@@ -5,7 +5,8 @@ import 'package:bonfire/mixins/keyboard_listener.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
-import 'package:hackerspace_game_jam_2023/overworld/overworld.dart';
+
+import '../dungeon_provider.dart';
 
 import '../item.dart';
 
@@ -81,12 +82,12 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
         collisions: [
           CollisionArea.rectangle(
             size: Vector2(
-              DungeonMap.tileSize / 2,
-              DungeonMap.tileSize / 2.2,
+              DungeonProvider.tileSize / 2,
+              DungeonProvider.tileSize / 2.2,
             ),
             align: Vector2(
-              DungeonMap.tileSize / 3.5,
-              DungeonMap.tileSize / 2,
+              DungeonProvider.tileSize / 3.5,
+              DungeonProvider.tileSize / 2,
             ),
           )
         ],
