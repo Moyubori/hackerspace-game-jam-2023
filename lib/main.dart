@@ -1,12 +1,18 @@
+import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
+import 'package:hackerspace_game_jam_2023/dungeon/dungeon.dart';
+import 'dart:math';
+
 import 'package:hackerspace_game_jam_2023/fight/fight.dart';
 import 'package:hackerspace_game_jam_2023/overworld/overworld.dart';
+import 'package:hackerspace_game_jam_2023/dungeon/dungeon_builder.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
   MyApp({super.key});
@@ -32,6 +38,13 @@ class MyApp extends StatelessWidget {
                 style: TextStyle(color: Colors.white),
               ),
             ),
+            TextButton(
+              onPressed: () => navigatorKey.currentState!.popAndPushNamed('/dungeon'),
+              child: Text(
+                'dungeon',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
             const SizedBox(
               width: 100,
             )
@@ -45,6 +58,8 @@ class MyApp extends StatelessWidget {
                 return MaterialPageRoute(builder: (_) => Overworld(), settings: settings);
               case '/fight':
                 return MaterialPageRoute(builder: (_) => FightSceneWidget(), settings: settings);
+              case '/dungeon':
+                return MaterialPageRoute(builder: (_) => Dungeon(), settings: settings);
             }
           },
         ),
