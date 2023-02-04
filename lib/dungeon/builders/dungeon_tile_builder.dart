@@ -43,7 +43,7 @@ class DungeonTileBuilder {
     sprite: TileModelSprite(path: abyss),
     x: x.toDouble(),
     y: y.toDouble(),
-    collisions: [CollisionArea.rectangle(size: Vector2(tileSize, tileSize))],
+    // collisions: [CollisionArea.rectangle(size: Vector2(tileSize, tileSize))],
     width: tileSize,
     height: tileSize,
   );

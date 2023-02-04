@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:bonfire/bonfire.dart';
-import 'package:hackerspace_game_jam_2023/dungeon/dungeon_tile_builder.dart';
+import 'package:hackerspace_game_jam_2023/dungeon/builders/dungeon_tile_builder.dart';
 
 class DemoDungeonMap {
   static double tileSize = 45;
