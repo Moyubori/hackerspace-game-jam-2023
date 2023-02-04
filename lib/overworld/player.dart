@@ -5,9 +5,9 @@ import 'package:bonfire/mixins/keyboard_listener.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
-import 'package:hackerspace_game_jam_2023/overworld/overworld.dart';
+import 'package:hackerspace_game_jam_2023/dungeon_map.dart';
 
-import '../item.dart';
+import '../inventory_item.dart';
 
 class PlayerSpriteSheet {
   static Future<SpriteAnimation> get idleLeft => SpriteAnimation.load(

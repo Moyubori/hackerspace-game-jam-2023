@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
-import 'dungeonMap.dart';
+import 'dungeon_map.dart';
 import 'overworld/player.dart';
 
 abstract class MapObject extends GameDecoration with Sensor<Player> {

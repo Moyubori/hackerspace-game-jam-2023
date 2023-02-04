@@ -1,9 +1,9 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/widgets.dart';
-import 'package:hackerspace_game_jam_2023/item.dart';
+import 'package:hackerspace_game_jam_2023/inventory_item.dart';
 import 'package:hackerspace_game_jam_2023/overworld/player.dart';
 
-import 'dungeonMap.dart';
+import 'dungeon_map.dart';
 
 class Chest extends GameDecoration with TapGesture {
   bool _observedPlayer = false;

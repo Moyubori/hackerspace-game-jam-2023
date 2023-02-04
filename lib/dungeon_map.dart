@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:bonfire/bonfire.dart';
 
 import 'chest.dart';
-import 'item.dart';
+import 'inventory_item.dart';
 
 class DungeonMap {
   static double tileSize = 45;
