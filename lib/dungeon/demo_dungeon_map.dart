@@ -1,10 +1,8 @@
-import 'dart:math';
-
 import 'package:bonfire/bonfire.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/builders/dungeon_tile_builder.dart';
 
 class DemoDungeonMap {
-  static double tileSize = 45;
+  static double tileSize = 48;
   static const String wallBottom = 'tile/wall_bottom.png';
   static const String wall = 'tile/wall.png';
   static const String wallTop = 'tile/wall_top.png';
@@ -63,14 +61,16 @@ class DemoDungeonMap {
         sprite: Sprite.load('itens/barrel.png'),
         position: getRelativeTilePosition(10, 6),
         size: Vector2(tileSize, tileSize),
-        collisions: [CollisionArea.rectangle(size: Vector2(tileSize / 1.5, tileSize / 1.5))],
+        collisions: [
+          CollisionArea.circle(radius: tileSize / 3, align: Vector2.all(tileSize / 6)),
+        ],
       ),
       GameDecorationWithCollision.withSprite(
         sprite: Sprite.load('itens/table.png'),
         position: getRelativeTilePosition(15, 7),
         size: Vector2(tileSize, tileSize),
         collisions: [
-          CollisionArea.rectangle(size: Vector2(tileSize, tileSize * 0.8)),
+          CollisionArea.circle(radius: tileSize * 0.4, align: Vector2.all(tileSize * 0.1)),
         ],
       ),
       GameDecorationWithCollision.withSprite(
@@ -78,7 +78,7 @@ class DemoDungeonMap {
         position: getRelativeTilePosition(27, 6),
         size: Vector2(tileSize, tileSize),
         collisions: [
-          CollisionArea.rectangle(size: Vector2(tileSize, tileSize * 0.8)),
+          CollisionArea.circle(radius: tileSize * 0.4, align: Vector2.all(tileSize * 0.1)),
         ],
       ),
       GameDecoration.withSprite(

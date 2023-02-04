@@ -76,18 +76,7 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
             life: initialHp) {
     setupCollision(
       CollisionConfig(
-        collisions: [
-          CollisionArea.rectangle(
-            size: Vector2(
-              DemoDungeonMap.tileSize / 2,
-              DemoDungeonMap.tileSize / 2.2,
-            ),
-            align: Vector2(
-              DemoDungeonMap.tileSize / 3.5,
-              DemoDungeonMap.tileSize / 2,
-            ),
-          )
-        ],
+        collisions: [CollisionArea.circle(radius: 12, align: Vector2(4, 4))],
       ),
     );
 

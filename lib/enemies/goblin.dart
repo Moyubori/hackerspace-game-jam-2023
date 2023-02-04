@@ -13,29 +13,19 @@ class Goblin extends SimpleEnemy
         MovementByJoystick,
         AutomaticRandomMovement,
         UseBarLife,
-        UseStateController<GoblinController>
-{
+        UseStateController<GoblinController> {
   Goblin(Vector2 position)
       : super(
-    animation: GoblinSpriteSheet.goblinSimpleDirectionAnimation,
-    position: position,
-    size: Vector2.all(DemoDungeonMap.tileSize * 0.8),
-    speed: DemoDungeonMap.tileSize * 1.6,
-    life: 100,
-  ) {
+          animation: GoblinSpriteSheet.goblinSimpleDirectionAnimation,
+          position: position,
+          size: Vector2.all(48),
+          speed: DemoDungeonMap.tileSize * 1.6,
+          life: 100,
+        ) {
     setupCollision(
       CollisionConfig(
         collisions: [
-          CollisionArea.rectangle(
-            size: Vector2(
-              DemoDungeonMap.tileSize * 0.4,
-              DemoDungeonMap.tileSize * 0.4,
-            ),
-            align: Vector2(
-              DemoDungeonMap.tileSize * 0.2,
-              DemoDungeonMap.tileSize * 0.2,
-            ),
-          ),
+          CollisionArea.circle(radius: 16, align: Vector2(8, 8)),
         ],
       ),
     );
