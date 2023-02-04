@@ -1,9 +1,11 @@
-import 'dart:math' as math;
 import 'dart:ui';
 
 import 'package:bonfire/bonfire.dart';
 import 'package:flame/components.dart';
+import 'dart:math' as math;
 
+import '../enemies/awards.dart';
+import '../overworld/ExpManager.dart';
 import '../overworld/player.dart';
 
 class WeaponComponent extends SpriteComponent with HasGameRef<BonfireGame> {
@@ -22,16 +24,14 @@ class WeaponComponent extends SpriteComponent with HasGameRef<BonfireGame> {
   bool _isSwinging = false;
   double _swingingStartTime = 0;
   bool isEquipped = false;
-  late Sprite axe;
-  late Sprite sword;
+  late Sprite anyWeapon;
 
   WeaponComponent(this.player) : super(priority: 999);
 
   @override
   Future<void> onLoad() async {
-    axe = await Sprite.load('axe.png');
-    sword = await Sprite.load('sword.png');
-    sprite = axe;
+    anyWeapon = await Sprite.load('axe.png');
+    sprite = anyWeapon;
     size = Vector2(32, 32);
     anchor = Anchor.center;
     position = player.position;
@@ -97,6 +97,9 @@ class WeaponComponent extends SpriteComponent with HasGameRef<BonfireGame> {
         }
         if (!gameRef.camera.shaking) {
           gameRef.camera.shake(duration: 0.1 + (dmg / 1000), intensity: 4 + (dmg / 100));
+        }
+        if(hitEnemy.isDead) {
+          ExpManager.giveAwardsToKiller(player, (hitEnemy as awards).exp());
         }
       });
     }

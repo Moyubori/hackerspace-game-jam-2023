@@ -7,6 +7,8 @@ import 'package:hackerspace_game_jam_2023/interface/life_bar.dart';
 import 'package:hackerspace_game_jam_2023/interface/equipment_info.dart';
 import 'package:hackerspace_game_jam_2023/overworld/player.dart';
 
+import '../interface/exp_info.dart';
+
 class Overworld extends StatelessWidget {
   const Overworld({super.key});
 
@@ -30,8 +32,8 @@ class Overworld extends StatelessWidget {
           ),
           map: DemoDungeonMap.map(),
           decorations: DemoDungeonMap.decorations(),
-          cameraConfig: CameraConfig(zoom: 3),
-          interface: GameInterface()..add(LifeBar())..add(EquipmentInfo()),
+          //cameraConfig: CameraConfig(zoom: 3),
+          interface: GameInterface()..add(LifeBar())..add(EquipmentInfo())..add(ExpInfo()),
           constructionMode: true,
           showCollisionArea: true,
         ),

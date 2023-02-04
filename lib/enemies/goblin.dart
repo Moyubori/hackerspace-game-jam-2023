@@ -5,6 +5,7 @@ import 'package:hackerspace_game_jam_2023/sprite_sheets/goblin_sprite_sheet.dart
 
 import '../dungeon/demo_dungeon_map.dart';
 import '../sprite_sheets/common_sprite_sheet.dart';
+import 'awards.dart';
 
 class Goblin extends SimpleEnemy
     with
@@ -13,6 +14,7 @@ class Goblin extends SimpleEnemy
         MovementByJoystick,
         AutomaticRandomMovement,
         UseBarLife,
+        awards,
         UseStateController<GoblinController> {
   Goblin(Vector2 position)
       : super(
@@ -102,4 +104,9 @@ class Goblin extends SimpleEnemy
 
   @override
   void moveTo(Vector2 position) {}
+
+  @override
+  double exp() {
+    return 5;
+  }
 }

@@ -1,0 +1,3 @@
+mixin awards {
+  double exp();
+}
