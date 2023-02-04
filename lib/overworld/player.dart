@@ -7,7 +7,7 @@ import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/demo_dungeon_map.dart';
-import 'package:hackerspace_game_jam_2023/overworld/ExpManager.dart';
+import 'package:hackerspace_game_jam_2023/overworld/reward_manager.dart';
 import 'package:hackerspace_game_jam_2023/sprite_sheets/common_sprite_sheet.dart';
 
 import '../equipment/base_equipment.dart';
@@ -77,7 +77,7 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
   double currentExp = 0;
   static int initialLevel = 1;
   int currentLvl = initialLevel;
-  double expNeeded = ExpManager.expNeededToNextLevelUp[initialLevel];
+  double expNeeded = RewardManager.expNeededToNextLevelUp[initialLevel];
 
   JoystickMoveDirectional currentFacingDirection = JoystickMoveDirectional.MOVE_RIGHT;
   JoystickMoveDirectional _rollingDirection = JoystickMoveDirectional.MOVE_RIGHT;

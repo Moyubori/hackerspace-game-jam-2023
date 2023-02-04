@@ -49,8 +49,8 @@ abstract class BaseWeapon extends InteractableItem {
   void render(Canvas c) {
     var style = const TextStyle(color: Colors.white, fontSize: 5);
     var basePos = Vector2.copy(position);
-    basePos.y += 2;
-    TextPaint(style: style).render(c, "LV: $reqLvl", position);
+    basePos.y -= 5;
+    TextPaint(style: style).render(c, "LV: $reqLvl", basePos);
     super.render(c);
   }
 
