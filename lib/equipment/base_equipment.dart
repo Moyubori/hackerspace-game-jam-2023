@@ -2,7 +2,7 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:bonfire/bonfire.dart';
-import 'package:flame/components.dart';
+import 'package:flutter/material.dart';
 import 'package:hackerspace_game_jam_2023/equipment/base_item.dart';
 import 'package:hackerspace_game_jam_2023/overworld/player.dart';
 
@@ -45,6 +45,15 @@ abstract class BaseWeapon extends InteractableItem {
     wasJustDropped = false;
   }
 
+  @override
+  void render(Canvas c) {
+    var style = const TextStyle(color: Colors.white, fontSize: 5);
+    var basePos = Vector2.copy(position);
+    basePos.y += 2;
+    TextPaint(style: style).render(c, "LV: $reqLvl", position);
+    super.render(c);
+  }
+
   double dmgScaledWithLevel() {
     const dmgMultiplier = 1.1;
     return baseDmg * (pow(dmgMultiplier, reqLvl - 1));
@@ -53,7 +62,4 @@ abstract class BaseWeapon extends InteractableItem {
 
 class DummyWeapon extends BaseWeapon {
   DummyWeapon(): super.noPosition("sword.png", 0, 0, 0);
-
-  @override
-  void render(Canvas c) { }
 }
