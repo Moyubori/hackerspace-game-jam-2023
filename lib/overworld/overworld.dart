@@ -1,10 +1,10 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/demo_dungeon_map.dart';
+import 'package:hackerspace_game_jam_2023/enemies/boss/centipede.dart';
+import 'package:hackerspace_game_jam_2023/enemies/goblin.dart';
+import 'package:hackerspace_game_jam_2023/interface/life_bar.dart';
 import 'package:hackerspace_game_jam_2023/overworld/player.dart';
-
-import '../enemies/goblin.dart';
-import '../interface/life_bar.dart';
 
 class Overworld extends StatelessWidget {
   const Overworld({super.key});
@@ -20,7 +20,10 @@ class Overworld extends StatelessWidget {
       children: [
         BonfireWidget(
           player: player,
-          enemies: [Goblin(Vector2(6 * DemoDungeonMap.tileSize, 8 * DemoDungeonMap.tileSize))],
+          enemies: [
+            Goblin(Vector2(10 * DemoDungeonMap.tileSize, 5 * DemoDungeonMap.tileSize)),
+            Centipede(Vector2(6 * DemoDungeonMap.tileSize, 5 * DemoDungeonMap.tileSize))
+          ],
           joystick: Joystick(
             keyboardConfig: KeyboardConfig(keyboardDirectionalType: KeyboardDirectionalType.wasdAndArrows),
           ),
@@ -28,13 +31,13 @@ class Overworld extends StatelessWidget {
           decorations: DemoDungeonMap.decorations(),
           cameraConfig: CameraConfig(zoom: 3),
           interface: GameInterface()..add(LifeBar()),
+          constructionMode: true,
         ),
       ],
     );
   }
 }
 
-// Positioned(child: Text("HP: ${player.life}", style: TextStyle(color: Colors.yellow)
 class PlayerSpriteSheet {
   static Future<SpriteAnimation> get idleLeft => SpriteAnimation.load(
         "player/knight_idle_left.png",
