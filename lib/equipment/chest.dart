@@ -1,11 +1,15 @@
+import 'dart:math';
+
 import 'package:bonfire/bonfire.dart';
+import 'package:bonfire/mixins/keyboard_listener.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hackerspace_game_jam_2023/overworld/player.dart';
 
 import '../dungeon/demo_dungeon_map.dart';
 import 'base_item.dart';
 
-class Chest extends GameDecoration with TapGesture {
+class Chest extends GameDecoration with KeyboardEventListener {
   bool _observedPlayer = false;
   List<InteractableItem> contents;
   late TextPaint _textConfig;
@@ -31,6 +35,14 @@ class Chest extends GameDecoration with TapGesture {
   }
 
   @override
+  bool onKeyboard(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
+    if(keysPressed.contains(LogicalKeyboardKey.keyE)) {
+      _open();
+    }
+    return super.onKeyboard(event, keysPressed);
+  }
+
+  @override
   void update(double dt) {
     if (gameRef.player != null) {
       seeComponent(
@@ -44,7 +56,7 @@ class Chest extends GameDecoration with TapGesture {
         notObserved: () {
           _observedPlayer = false;
         },
-        radiusVision: DemoDungeonMap.tileSize,
+        radiusVision: 15,
       );
     }
     super.update(dt);
@@ -56,20 +68,26 @@ class Chest extends GameDecoration with TapGesture {
     if (_observedPlayer) {
       _textConfig.render(
         canvas,
-        'Open',
+        'Open (E)',
         Vector2(x - width / 1.5, center.y - (height + 5)),
       );
     }
   }
 
-  @override
-  void onTap() {
+  void _open() {
     if (_observedPlayer) {
       for (var element in contents) {
-        element.interact(gameRef.player as MainPlayer);
+        const min = -30;
+        const max = 30;
+        var rnd = Random();
+        roll() => min + rnd.nextInt(max - min);
+        var newPosition = Vector2(position.x + roll(), position.y + roll());
+        element.position = newPosition;
+        gameRef.add(element);
+        _addSmokeExplosion(newPosition);
       }
+      _addSmokeExplosion(position);
       removeFromParent();
-      _addSmokeExplosion(position.translate(0, 0));
     }
   }
 
