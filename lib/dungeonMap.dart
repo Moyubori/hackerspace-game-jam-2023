@@ -1,71 +1,9 @@
+import 'dart:math';
+
 import 'package:bonfire/bonfire.dart';
-import 'package:flutter/material.dart';
-import 'package:hackerspace_game_jam_2023/overworld/player.dart';
 
-import 'player.dart';
-
-class Overworld extends StatelessWidget {
-  const Overworld({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    Knight player = Knight(
-      Vector2((4 * DungeonMap.tileSize), (6 * DungeonMap.tileSize)),
-      100,
-    );
-
-    return Stack(
-      children: [
-        BonfireWidget(
-          player: player,
-          joystick: Joystick(
-            keyboardConfig: KeyboardConfig(),
-          ),
-          map: DungeonMap.map(),
-          decorations: DungeonMap.decorations(),
-        ),
-        const Positioned(child: Text("HP: ", style: TextStyle(color: Colors.yellow)))
-      ],
-    );
-  }
-}
-
-class PlayerSpriteSheet {
-  static Future<SpriteAnimation> get idleLeft => SpriteAnimation.load(
-        "player/knight_idle_left.png",
-        SpriteAnimationData.sequenced(
-          amount: 6,
-          stepTime: 0.1,
-          textureSize: Vector2(16, 16),
-        ),
-      );
-
-  static Future<SpriteAnimation> get idleRight => SpriteAnimation.load(
-        "player/knight_idle.png",
-        SpriteAnimationData.sequenced(
-          amount: 6,
-          stepTime: 0.1,
-          textureSize: Vector2(16, 16),
-        ),
-      );
-
-  static Future<SpriteAnimation> get runRight => SpriteAnimation.load(
-        "player/knight_run.png",
-        SpriteAnimationData.sequenced(
-          amount: 6,
-          stepTime: 0.1,
-          textureSize: Vector2(16, 16),
-        ),
-      );
-
-  static Future<SpriteAnimation> get runLeft => SpriteAnimation.load(
-        "player/knight_run_left.png",
-        SpriteAnimationData.sequenced(
-          amount: 6,
-          stepTime: 0.1,
-          textureSize: Vector2(16, 16),
-        ),
-}
+import 'chest.dart';
+import 'item.dart';
 
 class DungeonMap {
   static double tileSize = 45;
@@ -171,48 +109,8 @@ class DungeonMap {
 
   static List<GameDecoration> decorations() {
     return [
-      GameDecorationWithCollision.withSprite(
-        sprite: Sprite.load('itens/barrel.png'),
-        position: getRelativeTilePosition(10, 6),
-        size: Vector2(tileSize, tileSize),
-        collisions: [CollisionArea.rectangle(size: Vector2(tileSize / 1.5, tileSize / 1.5))],
-      ),
-      GameDecorationWithCollision.withSprite(
-        sprite: Sprite.load('itens/table.png'),
-        position: getRelativeTilePosition(15, 7),
-        size: Vector2(tileSize, tileSize),
-        collisions: [
-          CollisionArea.rectangle(size: Vector2(tileSize, tileSize * 0.8)),
-        ],
-      ),
-      GameDecorationWithCollision.withSprite(
-        sprite: Sprite.load('itens/table.png'),
-        position: getRelativeTilePosition(27, 6),
-        size: Vector2(tileSize, tileSize),
-        collisions: [
-          CollisionArea.rectangle(size: Vector2(tileSize, tileSize * 0.8)),
-        ],
-      ),
-      GameDecoration.withSprite(
-        sprite: Sprite.load('itens/flag_red.png'),
-        position: getRelativeTilePosition(24, 4),
-        size: Vector2(tileSize, tileSize),
-      ),
-      GameDecoration.withSprite(
-        sprite: Sprite.load('itens/flag_red.png'),
-        position: getRelativeTilePosition(6, 4),
-        size: Vector2(tileSize, tileSize),
-      ),
-      GameDecoration.withSprite(
-        sprite: Sprite.load('itens/prisoner.png'),
-        position: getRelativeTilePosition(10, 4),
-        size: Vector2(tileSize, tileSize),
-      ),
-      GameDecoration.withSprite(
-        sprite: Sprite.load('itens/flag_red.png'),
-        position: getRelativeTilePosition(14, 4),
-        size: Vector2(tileSize, tileSize),
-      )
+      Chest(Vector2(250, 300), [Potion(Vector2(0, 0))]),
+      Potion(Vector2(450, 240)),
     ];
   }
 
@@ -246,11 +144,4 @@ class DungeonMap {
       (y * tileSize).toDouble(),
     );
   }
-}
-
-
-  static SimpleDirectionAnimation get simpleDirectionAnimation => SimpleDirectionAnimation(
-        idleRight: idleRight,
-        runRight: runRight,
-      );
 }
