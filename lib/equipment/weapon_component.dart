@@ -13,6 +13,8 @@ class WeaponComponent extends SpriteComponent with HasGameRef<BonfireGame> {
   static const double swingingDamping = 3;
   static const double firstPositionAngularPosition = 1.5;
   static const double secondPositionAngularPosition = 0.5;
+  Vector2 _originalSwingFacingDirection = Vector2.zero();
+  List<Attackable> _enemiesDamagedThisSwing = [];
 
   final MainPlayer player;
 
@@ -45,21 +47,23 @@ class WeaponComponent extends SpriteComponent with HasGameRef<BonfireGame> {
     }
   }
 
-
   @override
   void update(double dt) {
     super.update(dt);
+    if ((_inSecondPosition && isFlippedVertically) || (!_inSecondPosition && !isFlippedVertically)) {
+      flipVertically();
+    }
     if (!_isSwinging) {
-      final Vector2 targetWeaponDirection = player.currentFacingDirection.toVector2()
+      final Vector2 targetAxeDirection = player.currentFacingDirection.toVector2()
         ..rotate((_inSecondPosition ? secondPositionAngularPosition : firstPositionAngularPosition) * math.pi);
-      final Vector2 targetPosition = player.position + Vector2(16, 16) + targetWeaponDirection * 32;
+      final Vector2 targetPosition = player.position + Vector2(16, 16) + targetAxeDirection * 32;
       position.lerp(
         targetPosition,
         dt * position.distanceTo(targetPosition) * (_isSwinging ? swingingDamping : normalDamping),
       );
     } else {
       final double swingProgress = (gameRef.currentTime() - _swingingStartTime) / swingDuration;
-      final Vector2 targetPosition = player.currentFacingDirection.toVector2()
+      final Vector2 targetPosition = Vector2.copy(_originalSwingFacingDirection)
         ..rotate(((_inSecondPosition
             ? secondPositionAngularPosition - firstPositionAngularPosition
             : firstPositionAngularPosition - secondPositionAngularPosition) *
@@ -68,12 +72,40 @@ class WeaponComponent extends SpriteComponent with HasGameRef<BonfireGame> {
             math.pi);
       position = player.position + Vector2(16, 16) + targetPosition * 32;
     }
+    final Vector2 positionRelativeToPlayer = player.position - (position - Vector2(16, 16));
+    angle = _inSecondPosition
+        ? math.pi * 1.75 - math.atan2(positionRelativeToPlayer.x, positionRelativeToPlayer.y)
+        : math.pi * 1.25 - math.atan2(positionRelativeToPlayer.x, positionRelativeToPlayer.y);
+
+    if (_isSwinging) {
+      gameRef
+          .visibleAttackables()
+          .where((a) => a.rectAttackable().overlaps(toRect()) && a != player && !_enemiesDamagedThisSwing.contains(a))
+          .forEach((Attackable hitEnemy) {
+        _enemiesDamagedThisSwing.add(hitEnemy);
+        hitEnemy.receiveDamage(AttackFromEnum.PLAYER_OR_ALLY, dmg, 'id');
+        final Vector2 pushDirection = (hitEnemy.position - player.position).normalized();
+        final double pushAngle = math.atan2(pushDirection.x, pushDirection.y);
+        final Vector2 diffBase = BonfireUtil.diffMovePointByAngle(
+          hitEnemy.position,
+          32,
+          pushAngle,
+        );
+        final Vector2 rectAfterPush = hitEnemy.position.translate(diffBase.x, diffBase.y);
+        if (hitEnemy is ObjectCollision &&
+            ((hitEnemy as ObjectCollision).isCollision(displacement: rectAfterPush).isEmpty)) {
+          hitEnemy.translate(diffBase.x, diffBase.y);
+        }
+      });
+    }
   }
 
   void trySwing() {
     if (!_isSwinging) {
       _isSwinging = true;
       _swingingStartTime = gameRef.currentTime();
+      _originalSwingFacingDirection = player.currentFacingDirection.toVector2();
+      _enemiesDamagedThisSwing = [];
       add(
         TimerComponent(
           period: swingDuration,
