@@ -10,15 +10,13 @@ class DungeonMap {
   });
 }
 
-class DungeonMapConfig {
-  final String levelFile;
+abstract class DungeonMapConfig {
   final Vector2 startingPos;
   final double safeAreaRadius;
   final double enemySpread;
   final int enemiesCount;
 
   DungeonMapConfig({
-    required this.levelFile,
     required this.startingPos,
     this.safeAreaRadius = 10.0,
     this.enemySpread = 10.0,

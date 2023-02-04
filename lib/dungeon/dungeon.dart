@@ -1,27 +1,37 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
-import 'package:hackerspace_game_jam_2023/dungeon/dungeon_builder.dart';
+import 'package:hackerspace_game_jam_2023/dungeon/builders/dungeon_builder.dart';
+import 'package:hackerspace_game_jam_2023/dungeon/builders/dungeon_tile_builder.dart';
+import 'package:hackerspace_game_jam_2023/dungeon/builders/random_dungeon_builder.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/dungeon_map.dart';
-import 'package:hackerspace_game_jam_2023/dungeon/file_dungeon_builder.dart';
+import 'package:hackerspace_game_jam_2023/dungeon/builders/file_dungeon_builder.dart';
 import 'package:hackerspace_game_jam_2023/overworld/player.dart';
 
 class DungeonWidget extends StatelessWidget {
   late DungeonBuilder _dungeonBuilder;
+  late DungeonMapConfig _mapConfig;
 
   DungeonWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    _dungeonBuilder = FileDungeonBuilder();
+    // _dungeonBuilder = FileDungeonBuilder();
+    // _mapConfig = FileDungeonMapConfig(
+    //   levelFile: 'assets/levels/sampleLevel.png',
+    //   startingPos: Vector2(1, 1),
+    // );
+    _dungeonBuilder = RandomDungeonBuilder();
+    _mapConfig = RandomDungeonMapConfig(
+      mapSize: Vector2(64, 64),
+      startingBlobs: 32,
+      startingPos: Vector2(32, 32),
+    );
 
     return LayoutBuilder(
       builder: (context, constraints) {
         return FutureBuilder<DungeonMap>(
           // future: Future.value(_dungeonBuilder.build(DungeonBuilder.sample)),
-          future: _dungeonBuilder.build(DungeonMapConfig(
-            levelFile: 'assets/levels/sampleLevel.png',
-            startingPos: Vector2(1, 1),
-          )),
+          future: _dungeonBuilder.build(_mapConfig),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return const Material(
@@ -38,8 +48,12 @@ class DungeonWidget extends StatelessWidget {
             }
             DungeonMap result = snapshot.data!;
             return BonfireWidget(
+              // constructionMode: true,
               player: MainPlayer(
-                Vector2(45, 45),
+                Vector2(
+                  _mapConfig.startingPos.x * DungeonTileBuilder.tileSize,
+                  _mapConfig.startingPos.y * DungeonTileBuilder.tileSize,
+                ),
                 150,
               ),
               joystick: Joystick(
