@@ -1,6 +1,7 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/demo_dungeon_map.dart';
+import 'package:hackerspace_game_jam_2023/enemies/boss/centipede.dart';
 import 'package:hackerspace_game_jam_2023/overworld/player.dart';
 
 import '../enemies/goblin.dart';
@@ -20,7 +21,10 @@ class Overworld extends StatelessWidget {
       children: [
         BonfireWidget(
           player: player,
-          enemies: [Goblin(Vector2(6 * DemoDungeonMap.tileSize, 8 * DemoDungeonMap.tileSize))],
+          enemies: [
+            // Goblin(Vector2(6 * DemoDungeonMap.tileSize, 8 * DemoDungeonMap.tileSize)),
+            Centipede(Vector2(6 * DemoDungeonMap.tileSize, 8 * DemoDungeonMap.tileSize))
+          ],
           joystick: Joystick(
             keyboardConfig: KeyboardConfig(keyboardDirectionalType: KeyboardDirectionalType.wasdAndArrows),
           ),

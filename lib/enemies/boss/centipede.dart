@@ -1,27 +1,26 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
-import 'package:hackerspace_game_jam_2023/enemies/goblin_controller.dart';
-import 'package:hackerspace_game_jam_2023/sprite_sheets/goblin_sprite_sheet.dart';
+import 'package:hackerspace_game_jam_2023/dungeon/demo_dungeon_map.dart';
+import 'package:hackerspace_game_jam_2023/enemies/boss/centipede_controller.dart';
+import 'package:hackerspace_game_jam_2023/sprite_sheets/centipede_sprite_sheet.dart';
+import 'package:hackerspace_game_jam_2023/sprite_sheets/common_sprite_sheet.dart';
 
-import '../dungeon/demo_dungeon_map.dart';
-import '../sprite_sheets/common_sprite_sheet.dart';
-
-class Goblin extends SimpleEnemy
+class Centipede extends SimpleEnemy
     with
         ObjectCollision,
         JoystickListener,
         MovementByJoystick,
         AutomaticRandomMovement,
         UseBarLife,
-        UseStateController<GoblinController>
+        UseStateController<CentipedeController>
 {
-  Goblin(Vector2 position)
+  Centipede(Vector2 position)
       : super(
-    animation: GoblinSpriteSheet.goblinSimpleDirectionAnimation,
+    animation: CentipedeSpriteSheet.centipedeSimpleDirectionAnimation,
     position: position,
-    size: Vector2.all(DemoDungeonMap.tileSize * 0.8),
-    speed: DemoDungeonMap.tileSize * 1.6,
-    life: 100,
+    size: Vector2.all(DemoDungeonMap.tileSize * 3),
+    speed: DemoDungeonMap.tileSize * 0.8,
+    life: 1000,
   ) {
     setupCollision(
       CollisionConfig(
@@ -42,7 +41,7 @@ class Goblin extends SimpleEnemy
 
     setupBarLife(
       borderRadius: BorderRadius.circular(2),
-      borderWidth: 2,
+      borderWidth: 4,
     );
   }
 

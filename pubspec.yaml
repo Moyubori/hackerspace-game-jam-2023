@@ -36,6 +36,7 @@ flutter:
     - assets/images/
     - assets/images/player/
     - assets/images/enemy/
+    - assets/images/enemy/centipede/
     - assets/images/npc/
     - assets/images/tile/
     - assets/images/tile_random/
