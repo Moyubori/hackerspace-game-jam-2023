@@ -34,7 +34,7 @@ class DungeonWidget extends StatelessWidget {
       enemyFactory: EnemyFactory()
         ..withEnemy(EnemyDefinition(builder: (pos) => Goblin(pos), spawnProbability: 0.9))
         ..withEnemy(EnemyDefinition(builder: (pos) => Centipede(pos), spawnProbability: 0.1)),
-      decorationFactory: DecorationBuilder(),
+      decorationFactory: DecorationFactory(),
     );
 
     return LayoutBuilder(

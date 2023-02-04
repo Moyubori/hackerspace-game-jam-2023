@@ -6,7 +6,7 @@ import 'package:hackerspace_game_jam_2023/dungeon/builders/content/dungeon_conte
 import 'package:hackerspace_game_jam_2023/dungeon/builders/dungeon_decoration_builder.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/dungeon_map.dart';
 
-class DecorationBuilder extends DungeonContentFactory<GameDecoration> {
+class DecorationFactory extends DungeonContentFactory<GameDecoration> {
   @override
   List<GameDecoration> createContent(List<List<TileModel>> rawMap, DungeonMapConfig config) {
     final DungeonDecorationBuilder decorationBuilder = DungeonDecorationBuilder();
