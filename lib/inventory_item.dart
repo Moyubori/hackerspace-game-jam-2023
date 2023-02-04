@@ -54,6 +54,6 @@ class Potion extends InventoryItem {
 
   @override
   void use(MainPlayer player) {
-    player.hp = min(player.hp + 20, player.initialHp);
+    player.addLife(20);
   }
 }
