@@ -19,22 +19,30 @@ class FileDungeonMapConfig extends DungeonMapConfig {
     super.safeAreaRadius = 10.0,
     super.enemySpread = 10.0,
     super.enemiesCount = -1,
+    super.enemyFactory,
+    super.decorationFactory,
   });
 }
 
 class FileDungeonBuilder extends DungeonBuilder {
   @override
   Future<DungeonMap> build(FileDungeonMapConfig config) async {
-    ByteData byteData = await rootBundle.load(config.levelFile);
-    img.Image? levelData = img.decodeImage(byteData.buffer.asUint8List());
+    List<List<TileModel>> rawMap = await buildPaths(config);
 
-    List<List<TileModel>> rawMap = _buildPaths(levelData);
     decorate(rawMap);
 
     return DungeonMap(
       dungeon: WorldMap(rawMap.expand((line) => line).toList()),
-      enemies: createEnemies(rawMap, config),
+      enemies: config.enemyFactory?.createContent(rawMap, config) ?? [],
     );
+  }
+
+  @override
+  Future<List<List<TileModel>>> buildPaths(FileDungeonMapConfig config) async {
+    ByteData byteData = await rootBundle.load(config.levelFile);
+    img.Image? levelData = img.decodeImage(byteData.buffer.asUint8List());
+
+    return _buildPaths(levelData);
   }
 
   List<List<TileModel>> _buildPaths(img.Image? levelData) {

@@ -5,15 +5,28 @@ import 'package:bonfire/bonfire.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/builders/dungeon_decoration_builder.dart';
+import 'package:hackerspace_game_jam_2023/dungeon/builders/tile_helpers.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/dungeon_map.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/builders/dungeon_tile_builder.dart';
 import 'package:hackerspace_game_jam_2023/enemies/goblin.dart';
 
-abstract class DungeonBuilder {
+abstract class DungeonBuilder with TileHelpers {
   @protected
   DungeonTileBuilder dungeonTileBuilder = DungeonTileBuilder();
 
-  Future<DungeonMap> build(covariant DungeonMapConfig config);
+  Future<DungeonMap> build(covariant DungeonMapConfig config) async {
+    List<List<TileModel>> rawMap = await buildPaths(config);
+
+    decorate(rawMap);
+
+    return DungeonMap(
+      dungeon: WorldMap(rawMap.expand((line) => line).toList()),
+      enemies: config.enemyFactory?.createContent(rawMap, config) ?? [],
+      decorations: config.decorationFactory?.createContent(rawMap, config) ?? [],
+    );
+  }
+
+  Future<List<List<TileModel>>> buildPaths(covariant DungeonMapConfig config);
 
   @protected
   void decorate(List<List<TileModel>> rawMap) {
@@ -76,65 +89,5 @@ abstract class DungeonBuilder {
         }
       }
     }
-  }
-
-  @protected
-  bool isFloor(TileModel? model) {
-    if (model == null) return false;
-    return model.sprite!.path.contains('floor');
-  }
-
-  @protected
-  double getManhattanDistance(Vector2 p1, Vector2 p2) => (p1.x - p2.x).abs() + (p1.y - p2.y).abs();
-
-  @protected
-  List<Enemy> createEnemies(List<List<TileModel>> rawMap, DungeonMapConfig config) {
-    List<Vector2> spawnPoints = [];
-
-    for (int x = 0; x < rawMap.length; x++) {
-      for (int y = 0; y < rawMap[x].length; y++) {
-        final Vector2 currentPos = Vector2(x.toDouble(), y.toDouble());
-
-        if (isFloor(rawMap[x][y]) && _isOutsideSafeSpace(config, currentPos)) {
-          if (spawnPoints.isEmpty || _canSpawn(currentPos, spawnPoints, config)) {
-            spawnPoints.add(currentPos);
-          }
-        }
-      }
-    }
-
-    return spawnPoints
-        .map((e) => Goblin(Vector2(e.x * DungeonTileBuilder.tileSize, e.y * DungeonTileBuilder.tileSize)))
-        .toList();
-  }
-
-  bool _isOutsideSafeSpace(DungeonMapConfig config, Vector2 currentPos) {
-    return getManhattanDistance(config.startingPos, currentPos) > config.safeAreaRadius;
-  }
-
-  /// Determines if nearest enemy is further than configured distance in manhattan metric
-  /// @protected
-  bool _canSpawn(Vector2 currentPos, List<Vector2> spawnPoints, DungeonMapConfig config) =>
-      spawnPoints.none((e) => getManhattanDistance(e, currentPos) < config.enemySpread) &&
-      (spawnPoints.length < config.enemiesCount || config.enemiesCount == -1);
-
-  List<GameDecoration> createDecorations(List<List<TileModel>> rawMap, DungeonMapConfig config) {
-    final DungeonDecorationBuilder decorationBuilder = DungeonDecorationBuilder();
-    final Random r = Random();
-    List<Vector2> decorationPositions = [];
-
-    for (int x = 0; x < rawMap.length; x++) {
-      for (int y = 0; y < rawMap.length; y++) {
-        final Vector2 currentPos = Vector2(x.toDouble(), y.toDouble());
-
-        if (isFloor(rawMap[x][y]) &&
-            r.nextInt(10) < 3 &&
-            decorationPositions.none((p) => getManhattanDistance(p, currentPos) < 10)) {
-          decorationPositions.add(currentPos);
-        }
-      }
-    }
-
-    return decorationPositions.map((e) => decorationBuilder.buildRandom(e.x.toInt(), e.y.toInt())).toList();
   }
 }
