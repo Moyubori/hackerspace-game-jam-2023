@@ -29,7 +29,7 @@ class RewardManager {
   ];
 
   static BaseWeapon _randomItemLevel(BaseWeapon weapon, MainPlayer player) {
-    weapon.reqLvl = max(0, player.currentLvl + Random().nextInt(4) - 2);
+    weapon.reqLvl = max(1, player.currentLvl + Random().nextInt(4) - 2);
     return weapon;
   }
 
