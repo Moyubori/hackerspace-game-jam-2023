@@ -1,5 +1,6 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
+import 'package:hackerspace_game_jam_2023/enemies/boss/centipede_controller.dart';
 
 import 'package:hackerspace_game_jam_2023/fight/fight.dart';
 import 'package:hackerspace_game_jam_2023/overworld/overworld.dart';
@@ -9,6 +10,7 @@ import 'dungeon/dungeon.dart';
 
 void main() async {
   BonfireInjector().putFactory((i) => GoblinController());
+  BonfireInjector().putFactory((i) => CentipedeController());
 
   runApp(MyApp());
 }

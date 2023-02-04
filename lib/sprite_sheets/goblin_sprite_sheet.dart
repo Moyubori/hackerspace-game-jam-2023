@@ -1,7 +1,7 @@
 import 'package:bonfire/bonfire.dart';
 
-class EnemySpriteSheet {
-  static Future<SpriteAnimation> get idleLeft => SpriteAnimation.load(
+class GoblinSpriteSheet {
+  static Future<SpriteAnimation> get goblinIdleLeft => SpriteAnimation.load(
     "enemy/goblin_idle_left.png",
     SpriteAnimationData.sequenced(
       amount: 6,
@@ -10,7 +10,7 @@ class EnemySpriteSheet {
     ),
   );
 
-  static Future<SpriteAnimation> get idleRight => SpriteAnimation.load(
+  static Future<SpriteAnimation> get goblinIdleRight => SpriteAnimation.load(
     "enemy/goblin_idle.png",
     SpriteAnimationData.sequenced(
       amount: 6,
@@ -19,7 +19,7 @@ class EnemySpriteSheet {
     ),
   );
 
-  static Future<SpriteAnimation> get runRight => SpriteAnimation.load(
+  static Future<SpriteAnimation> get goblinRunRight => SpriteAnimation.load(
     "enemy/goblin_run_right.png",
     SpriteAnimationData.sequenced(
       amount: 6,
@@ -28,7 +28,7 @@ class EnemySpriteSheet {
     ),
   );
 
-  static Future<SpriteAnimation> get runLeft => SpriteAnimation.load(
+  static Future<SpriteAnimation> get goblinRunLeft => SpriteAnimation.load(
     "enemy/goblin_run_left.png",
     SpriteAnimationData.sequenced(
       amount: 6,
@@ -37,9 +37,9 @@ class EnemySpriteSheet {
     ),
   );
 
-  static SimpleDirectionAnimation get simpleDirectionAnimation =>
+  static SimpleDirectionAnimation get goblinSimpleDirectionAnimation =>
       SimpleDirectionAnimation(
-        idleRight: idleRight,
-        runRight: runRight,
+        idleRight: goblinIdleRight,
+        runRight: goblinRunRight,
       );
 }
