@@ -54,6 +54,21 @@ class RandomDungeonBuilder extends DungeonBuilder {
     return rawMap;
   }
 
+  @override
+  Vector2? chooseGatePosition(List<List<TileModel>> rawMap, DungeonMapConfig config) {
+    for (int x = 0; x < rawMap.length; x++) {
+      for (int y = 0; y < rawMap[x].length; y++) {
+        final Vector2 currentPos = Vector2(x.toDouble(), y.toDouble());
+
+        if (isFloor(rawMap[x][y]) && getManhattanDistance(config.startingPos, currentPos) > 10) {
+          return currentPos;
+        }
+      }
+    }
+
+    return null;
+  }
+
   void _insertBlobs(
       List<Vector2> blobs, Vector2 centerBlob, List<List<TileModel>> rawMap, int cols, int rows) {
     _insertBlob(centerBlob, rawMap, cols, rows);

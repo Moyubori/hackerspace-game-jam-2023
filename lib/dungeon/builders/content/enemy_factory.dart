@@ -17,7 +17,7 @@ class EnemyFactory extends DungeonContentFactory<Enemy> {
   final List<EnemyDefinition> enemyDefinitions = [];
 
   @override
-  List<Enemy> createContent(List<List<TileModel>> rawMap, DungeonMapConfig config) {
+  List<Enemy> createContent(List<List<TileModel>> rawMap, DungeonMapConfig config, List<Vector2> takenSpots) {
     List<Vector2> spawnPoints = [];
 
     for (int x = 0; x < rawMap.length; x++) {
@@ -25,8 +25,9 @@ class EnemyFactory extends DungeonContentFactory<Enemy> {
         final Vector2 currentPos = Vector2(x.toDouble(), y.toDouble());
 
         if (isFloor(rawMap[x][y]) && isOutsideSafeSpace(config, currentPos)) {
-          if (spawnPoints.isEmpty || _canSpawn(currentPos, spawnPoints, config)) {
+          if ((spawnPoints.isEmpty || _canSpawn(currentPos, spawnPoints, config)) && !isTaken(currentPos, takenSpots)) {
             spawnPoints.add(currentPos);
+            takenSpots.add(currentPos);
           }
         }
       }

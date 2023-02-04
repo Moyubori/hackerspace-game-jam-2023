@@ -5,11 +5,13 @@ class DungeonMap {
   final WorldMap dungeon;
   final List<Enemy> enemies;
   final List<GameDecoration> decorations;
+  final Vector2? gatePos;
 
   DungeonMap({
     required this.dungeon,
     this.enemies = const [],
     this.decorations = const [],
+    this.gatePos,
   });
 }
 

@@ -1,13 +1,10 @@
 import 'dart:async';
 
 import 'package:bonfire/bonfire.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/builders/dungeon_builder.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/dungeon_map.dart';
-import 'package:hackerspace_game_jam_2023/dungeon/builders/dungeon_tile_builder.dart';
-import 'package:hackerspace_game_jam_2023/enemies/goblin/goblin.dart';
 import 'package:image/image.dart' as img;
 
 class FileDungeonMapConfig extends DungeonMapConfig {
@@ -25,17 +22,6 @@ class FileDungeonMapConfig extends DungeonMapConfig {
 }
 
 class FileDungeonBuilder extends DungeonBuilder {
-  @override
-  Future<DungeonMap> build(FileDungeonMapConfig config) async {
-    List<List<TileModel>> rawMap = await buildPaths(config);
-
-    decorate(rawMap);
-
-    return DungeonMap(
-      dungeon: WorldMap(rawMap.expand((line) => line).toList()),
-      enemies: config.enemyFactory?.createContent(rawMap, config) ?? [],
-    );
-  }
 
   @override
   Future<List<List<TileModel>>> buildPaths(FileDungeonMapConfig config) async {
