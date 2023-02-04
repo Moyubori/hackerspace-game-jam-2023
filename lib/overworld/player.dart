@@ -62,6 +62,7 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
   bool _isRolling = false;
   double _rollStartTime = 0;
   double initialHp = 100;
+  bool _canAttack = true;
   List<InteractableItem> inventory = List.empty(growable: true);
 
   JoystickMoveDirectional currentFacingDirection = JoystickMoveDirectional.MOVE_RIGHT;
@@ -173,8 +174,12 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
         add(TimerComponent(period: rollDuration, onTick: () => _canRoll = true));
       }
     }
-    if (keysPressed.contains(LogicalKeyboardKey.keyK) && weaponComponent.isEquipped) {
+    if (_canAttack && keysPressed.contains(LogicalKeyboardKey.keyK) && weaponComponent.isEquipped) {
+      _canAttack = false;
       weaponComponent.trySwing();
+    }
+    if (!keysPressed.contains(LogicalKeyboardKey.keyK)) {
+      _canAttack = true;
     }
     return super.onKeyboard(event, keysPressed);
   }

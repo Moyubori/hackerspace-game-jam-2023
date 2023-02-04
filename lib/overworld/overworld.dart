@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/demo_dungeon_map.dart';
 import 'package:hackerspace_game_jam_2023/enemies/boss/centipede.dart';
 import 'package:hackerspace_game_jam_2023/enemies/goblin.dart';
-import 'package:hackerspace_game_jam_2023/interface/life_bar.dart';
 import 'package:hackerspace_game_jam_2023/interface/equipment_info.dart';
+import 'package:hackerspace_game_jam_2023/interface/life_bar.dart';
 import 'package:hackerspace_game_jam_2023/overworld/player.dart';
 
 class Overworld extends StatelessWidget {
@@ -31,9 +31,11 @@ class Overworld extends StatelessWidget {
           map: DemoDungeonMap.map(),
           decorations: DemoDungeonMap.decorations(),
           cameraConfig: CameraConfig(zoom: 3),
-          interface: GameInterface()..add(LifeBar())..add(EquipmentInfo()),
-          constructionMode: true,
-          showCollisionArea: true,
+          interface: GameInterface()
+            ..add(LifeBar())
+            ..add(EquipmentInfo()),
+          // constructionMode: true,
+          // showCollisionArea: true,
         ),
       ],
     );

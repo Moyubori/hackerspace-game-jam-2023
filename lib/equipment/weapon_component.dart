@@ -3,6 +3,8 @@ import 'dart:ui';
 
 import 'package:bonfire/bonfire.dart';
 import 'package:flame/components.dart';
+import 'package:flame/rendering.dart';
+import 'package:flutter/material.dart';
 
 import '../overworld/player.dart';
 
@@ -108,6 +110,7 @@ class WeaponComponent extends SpriteComponent with HasGameRef<BonfireGame> {
       _swingingStartTime = gameRef.currentTime();
       _originalSwingFacingDirection = player.currentFacingDirection.toVector2();
       _enemiesDamagedThisSwing = [];
+      generateWeaponAttackTrails();
       add(
         TimerComponent(
           period: swingDuration,
@@ -118,5 +121,46 @@ class WeaponComponent extends SpriteComponent with HasGameRef<BonfireGame> {
         ),
       );
     }
+  }
+
+  void generateWeaponAttackTrails() {
+    for (int i = 0; i < 5; i++) {
+      add(
+        TimerComponent(
+          period: i * swingDuration / 5,
+          onTick: () {
+            final WeaponAttackTrailComponent trail = WeaponAttackTrailComponent();
+
+            trail.position = position;
+            trail.angle = angle;
+            trail.priority = priority;
+            trail.sprite = sprite;
+            trail.size = size;
+            trail.anchor = Anchor.center;
+            if (!_inSecondPosition) {
+              trail.flipVertically();
+            }
+            gameRef.add(trail);
+          },
+        ),
+      );
+    }
+  }
+}
+
+class WeaponAttackTrailComponent extends SpriteComponent with HasGameRef {
+  final double lifespan = 0.5;
+  late double startLifeTime;
+  @override
+  Future<void> onLoad() async {
+    startLifeTime = gameRef.currentTime();
+    opacity = 0.7;
+    decorator.addLast(PaintDecorator.tint(Colors.blue.withOpacity(0.8)));
+    add(OpacityEffect.to(0, EffectController(duration: lifespan)));
+    add(TimerComponent(
+        period: lifespan,
+        onTick: () {
+          removeFromParent();
+        }));
   }
 }
