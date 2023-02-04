@@ -107,6 +107,12 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
     gameRef.add(weaponComponent);
   }
 
+  @override
+  void onRemove() {
+    super.onRemove();
+    FlameAudio.bgm.dispose();
+  }
+
   void roll() {
     isRolling = true;
     final double originalSpeed = speed;
