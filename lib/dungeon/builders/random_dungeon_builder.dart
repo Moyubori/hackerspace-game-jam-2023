@@ -16,16 +16,19 @@ class RandomDungeonMapConfig extends DungeonMapConfig {
     super.safeAreaRadius = 10.0,
     super.enemySpread = 10.0,
     super.enemiesCount = -1,
+    super.enemyFactory,
+    super.decorationFactory,
   });
 }
 
 class RandomDungeonBuilder extends DungeonBuilder {
+
   @override
-  Future<DungeonMap> build(RandomDungeonMapConfig config) async {
+  Future<List<List<TileModel>>> buildPaths(RandomDungeonMapConfig config) async {
     final Random random = Random();
 
     List<List<TileModel>> rawMap = List.generate(config.mapSize,
-        (x) => List.generate(config.mapSize, (y) => dungeonTileBuilder.buildAbyss(x, y)));
+            (x) => List.generate(config.mapSize, (y) => dungeonTileBuilder.buildAbyss(x, y)));
 
     // select initial blob positions
     List<Vector2> blobs = [];
@@ -48,13 +51,7 @@ class RandomDungeonBuilder extends DungeonBuilder {
     _patchSingles(rawMap);
     _trimEdges(rawMap);
 
-    decorate(rawMap);
-
-    return DungeonMap(
-      dungeon: WorldMap(rawMap.expand((line) => line).toList()),
-      enemies: createEnemies(rawMap, config),
-      decorations: createDecorations(rawMap, config),
-    );
+    return rawMap;
   }
 
   void _insertBlobs(
@@ -196,6 +193,4 @@ class RandomDungeonBuilder extends DungeonBuilder {
       rawMap[x][rawMap.length - 1] = dungeonTileBuilder.buildAbyss(x, rawMap.length - 1);
     }
   }
-
-  bool isAbyss(TileModel model) => model.sprite!.path.contains('abyss');
 }

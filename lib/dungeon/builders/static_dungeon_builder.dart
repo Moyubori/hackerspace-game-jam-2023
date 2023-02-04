@@ -18,6 +18,15 @@ class StaticDungeonBuilder extends DungeonBuilder {
 
   @override
   Future<DungeonMap> build(DungeonMapConfig config) async {
+    List<List<TileModel>> rawMap = await buildPaths(config);
+
+    decorate(rawMap);
+
+    return DungeonMap(dungeon: WorldMap(rawMap.expand((tiles) => tiles).toList()));
+  }
+
+  @override
+  Future<List<List<TileModel>>> buildPaths(covariant DungeonMapConfig config) async {
     List<List<TileModel>> rawMap = [];
 
     for (int y = 0; y < sample.length; y++) {
@@ -31,9 +40,7 @@ class StaticDungeonBuilder extends DungeonBuilder {
       rawMap.add(tiles);
     }
 
-    decorate(rawMap);
-
-    return DungeonMap(dungeon: WorldMap(rawMap.expand((tiles) => tiles).toList()));
+    return rawMap;
   }
 
 }
