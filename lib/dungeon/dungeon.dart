@@ -2,6 +2,7 @@ import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/dungeon_builder.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/dungeon_map.dart';
+import 'package:hackerspace_game_jam_2023/dungeon/file_dungeon_builder.dart';
 import 'package:hackerspace_game_jam_2023/overworld/player.dart';
 
 class DungeonWidget extends StatelessWidget {
@@ -11,13 +12,13 @@ class DungeonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _dungeonBuilder = DungeonBuilder();
+    _dungeonBuilder = FileDungeonBuilder();
 
     return LayoutBuilder(
       builder: (context, constraints) {
         return FutureBuilder<DungeonMap>(
           // future: Future.value(_dungeonBuilder.build(DungeonBuilder.sample)),
-          future: _dungeonBuilder.buildFromFile(DungeonMapConfig(
+          future: _dungeonBuilder.build(DungeonMapConfig(
             levelFile: 'assets/levels/sampleLevel.png',
             startingPos: Vector2(1, 1),
           )),
