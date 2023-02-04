@@ -160,6 +160,13 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
   }
 
   @override
+  void receiveDamage(AttackFromEnum attacker, double damage, dynamic identify) {
+    if (!_isRolling) {
+      super.receiveDamage(attacker, damage, identify);
+    }
+  }
+
+  @override
   void joystickChangeDirectional(JoystickDirectionalEvent event) {
     if (event.directional != JoystickMoveDirectional.IDLE) {
       currentFacingDirection = event.directional;
@@ -226,7 +233,7 @@ class RollAnimationComponent extends PositionComponent {
 }
 
 class AxeComponent extends SpriteComponent with HasGameRef<BonfireGame> {
-  static const double swingDuration = 0.3;
+  static const double swingDuration = 0.150;
   static const double normalDamping = 0.3;
   static const double swingingDamping = 3;
   static const double firstPositionAngularPosition = 1.5;
@@ -234,10 +241,13 @@ class AxeComponent extends SpriteComponent with HasGameRef<BonfireGame> {
 
   final MainPlayer player;
 
+  double damage = 40;
+
   bool _inSecondPosition = false;
   bool _isSwinging = false;
   double _swingingStartTime = 0;
   Vector2 _originalSwingFacingDirection = Vector2.zero();
+  List<Attackable> _enemiesDamagedThisSwing = [];
 
   AxeComponent(this.player) : super(priority: 999);
 
@@ -278,6 +288,28 @@ class AxeComponent extends SpriteComponent with HasGameRef<BonfireGame> {
     angle = _inSecondPosition
         ? math.pi * 1.75 - math.atan2(positionRelativeToPlayer.x, positionRelativeToPlayer.y)
         : math.pi * 1.25 - math.atan2(positionRelativeToPlayer.x, positionRelativeToPlayer.y);
+
+    if (_isSwinging) {
+      gameRef
+          .visibleAttackables()
+          .where((a) => a.rectAttackable().overlaps(toRect()) && a != player && !_enemiesDamagedThisSwing.contains(a))
+          .forEach((Attackable hitEnemy) {
+        _enemiesDamagedThisSwing.add(hitEnemy);
+        hitEnemy.receiveDamage(AttackFromEnum.PLAYER_OR_ALLY, damage, 'id');
+        final Vector2 pushDirection = (hitEnemy.position - player.position).normalized();
+        final double pushAngle = math.atan2(pushDirection.x, pushDirection.y);
+        final Vector2 diffBase = BonfireUtil.diffMovePointByAngle(
+          hitEnemy.position,
+          32,
+          pushAngle,
+        );
+        final Vector2 rectAfterPush = hitEnemy.position.translate(diffBase.x, diffBase.y);
+        if (hitEnemy is ObjectCollision &&
+            ((hitEnemy as ObjectCollision).isCollision(displacement: rectAfterPush).isEmpty)) {
+          hitEnemy.translate(diffBase.x, diffBase.y);
+        }
+      });
+    }
   }
 
   void trySwing() {
@@ -285,6 +317,7 @@ class AxeComponent extends SpriteComponent with HasGameRef<BonfireGame> {
       _isSwinging = true;
       _swingingStartTime = gameRef.currentTime();
       _originalSwingFacingDirection = player.currentFacingDirection.toVector2();
+      _enemiesDamagedThisSwing = [];
       add(
         TimerComponent(
           period: swingDuration,
