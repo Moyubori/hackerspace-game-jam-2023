@@ -1,8 +1,8 @@
+import 'dart:math' as math;
 import 'dart:ui';
 
 import 'package:bonfire/bonfire.dart';
 import 'package:flame/components.dart';
-import 'dart:math' as math;
 
 import '../overworld/player.dart';
 
@@ -30,7 +30,7 @@ class WeaponComponent extends SpriteComponent with HasGameRef<BonfireGame> {
   @override
   Future<void> onLoad() async {
     axe = await Sprite.load('axe.png');
-    sword = await Sprite.load('axe.png');
+    sword = await Sprite.load('sword.png');
     sprite = axe;
     size = Vector2(32, 32);
     anchor = Anchor.center;
@@ -39,10 +39,9 @@ class WeaponComponent extends SpriteComponent with HasGameRef<BonfireGame> {
 
   @override
   void render(Canvas c) {
-    if(!isEquipped) {
+    if (!isEquipped) {
       return;
-    }
-    else {
+    } else {
       super.render(c);
     }
   }
@@ -65,10 +64,10 @@ class WeaponComponent extends SpriteComponent with HasGameRef<BonfireGame> {
       final double swingProgress = (gameRef.currentTime() - _swingingStartTime) / swingDuration;
       final Vector2 targetPosition = Vector2.copy(_originalSwingFacingDirection)
         ..rotate(((_inSecondPosition
-            ? secondPositionAngularPosition - firstPositionAngularPosition
-            : firstPositionAngularPosition - secondPositionAngularPosition) *
-            swingProgress +
-            (_inSecondPosition ? secondPositionAngularPosition : firstPositionAngularPosition)) *
+                        ? secondPositionAngularPosition - firstPositionAngularPosition
+                        : firstPositionAngularPosition - secondPositionAngularPosition) *
+                    swingProgress +
+                (_inSecondPosition ? secondPositionAngularPosition : firstPositionAngularPosition)) *
             math.pi);
       position = player.position + Vector2(16, 16) + targetPosition * 32;
     }
