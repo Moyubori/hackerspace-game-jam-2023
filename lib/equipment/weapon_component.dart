@@ -95,6 +95,9 @@ class WeaponComponent extends SpriteComponent with HasGameRef<BonfireGame> {
             ((hitEnemy as ObjectCollision).isCollision(displacement: rectAfterPush).isEmpty)) {
           hitEnemy.translate(diffBase.x, diffBase.y);
         }
+        if (!gameRef.camera.shaking) {
+          gameRef.camera.shake(duration: 0.1 + (dmg / 1000), intensity: 4 + (dmg / 100));
+        }
       });
     }
   }
