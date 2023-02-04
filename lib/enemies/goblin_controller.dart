@@ -1,7 +1,7 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:bonfire/state_manager/state_controller.dart';
 
-import '../dungeon/dungeon_map.dart';
+import '../dungeon/demo_dungeon_map.dart';
 import 'goblin.dart';
 
 class GoblinController extends StateController<Goblin> {
@@ -23,21 +23,21 @@ class GoblinController extends StateController<Goblin> {
         observed: () {
           _seePlayerToAttackMelee = true;
         },
-        radiusVision: DungeonMap.tileSize * 1.5,
+        radiusVision: DemoDungeonMap.tileSize * 1.5,
       );
 
       if (!_seePlayerToAttackMelee) {
         component.seeAndMoveToAttackRange(
-          minDistanceFromPlayer: DungeonMap.tileSize * 2,
+          minDistanceFromPlayer: DemoDungeonMap.tileSize * 2,
           positioned: (p) {
             component.execAttackRange(attack);
           },
-          radiusVision: DungeonMap.tileSize * 3,
+          radiusVision: DemoDungeonMap.tileSize * 3,
           notObserved: () {
             component.runRandomMovement(
               dt,
               speed: component.speed / 2,
-              maxDistance: (DungeonMap.tileSize * 3).toInt(),
+              maxDistance: (DemoDungeonMap.tileSize * 3).toInt(),
             );
           },
         );

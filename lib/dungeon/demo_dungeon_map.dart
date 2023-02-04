@@ -1,8 +1,9 @@
 import 'dart:math';
 
 import 'package:bonfire/bonfire.dart';
+import 'package:hackerspace_game_jam_2023/dungeon/dungeon_tile_builder.dart';
 
-class DungeonMap {
+class DemoDungeonMap {
   static double tileSize = 45;
   static const String wallBottom = 'tile/wall_bottom.png';
   static const String wall = 'tile/wall.png';
@@ -16,112 +17,44 @@ class DungeonMap {
   static const String floor_4 = 'tile/floor_4.png';
 
   static WorldMap map() {
+    DungeonTileBuilder tileBuilder = DungeonTileBuilder();
+
     List<TileModel> tileList = [];
     List.generate(35, (indexRow) {
       List.generate(70, (indexColumn) {
         if (indexRow == 3 && indexColumn > 2 && indexColumn < 30) {
-          tileList.add(_buildWallBottom(indexColumn, indexRow));
+          tileList.add(tileBuilder.buildWallBottom(indexColumn, indexRow));
           return;
         }
         if (indexRow == 4 && indexColumn > 2 && indexColumn < 30) {
-          tileList.add(_buildWall(indexColumn, indexRow));
+          tileList.add(tileBuilder.buildWall(indexColumn, indexRow));
           return;
         }
 
         if (indexRow == 9 && indexColumn > 2 && indexColumn < 30) {
-          tileList.add(_buildWallTop(indexColumn, indexRow));
+          tileList.add(tileBuilder.buildWallTop(indexColumn, indexRow));
           return;
         }
 
         if (indexRow > 4 && indexRow < 9 && indexColumn > 2 && indexColumn < 30) {
-          tileList.add(
-            TileModel(
-              sprite: TileModelSprite(path: randomFloor()),
-              x: indexColumn.toDouble(),
-              y: indexRow.toDouble(),
-              width: tileSize,
-              height: tileSize,
-            ),
-          );
+          tileList.add(tileBuilder.buildFloor(indexColumn, indexRow));
           return;
         }
 
         if (indexRow > 3 && indexRow < 9 && indexColumn == 2) {
-          tileList.add(_buildWallLeft(indexColumn, indexRow));
+          tileList.add(tileBuilder.buildWallLeft(indexColumn, indexRow));
         }
         if (indexRow == 9 && indexColumn == 2) {
-          tileList.add(TileModel(
-            sprite: TileModelSprite(path: wallBottomLeft),
-            x: indexColumn.toDouble(),
-            y: indexRow.toDouble(),
-            collisions: [CollisionArea.rectangle(size: Vector2(tileSize, tileSize))],
-            width: tileSize,
-            height: tileSize,
-          ));
+          tileList.add(tileBuilder.buildWallBottomLeft(indexColumn, indexRow));
         }
 
         if (indexRow > 3 && indexRow < 9 && indexColumn == 30) {
-          tileList.add(_buildWallRight(indexColumn, indexRow));
+          tileList.add(tileBuilder.buildWallRight(indexColumn, indexRow));
         }
       });
     });
 
     return WorldMap(tileList);
-  }
-
-  static TileModel _buildWallTop(int indexColumn, int indexRow) {
-    return TileModel(
-          sprite: TileModelSprite(path: wallTop),
-          x: indexColumn.toDouble(),
-          y: indexRow.toDouble(),
-          collisions: [CollisionArea.rectangle(size: Vector2(tileSize, tileSize))],
-          width: tileSize,
-          height: tileSize,
-        );
-  }
-
-  static TileModel _buildWallBottom(int indexColumn, int indexRow) {
-    return TileModel(
-          sprite: TileModelSprite(path: wallBottom),
-          x: indexColumn.toDouble(),
-          y: indexRow.toDouble(),
-          collisions: [CollisionArea.rectangle(size: Vector2(tileSize, tileSize))],
-          width: tileSize,
-          height: tileSize,
-        );
-  }
-
-  static TileModel _buildWall(int indexColumn, int indexRow) {
-    return TileModel(
-          sprite: TileModelSprite(path: wall),
-          x: indexColumn.toDouble(),
-          y: indexRow.toDouble(),
-          collisions: [CollisionArea.rectangle(size: Vector2(tileSize, tileSize))],
-          width: tileSize,
-          height: tileSize,
-        );
-  }
-
-  static TileModel _buildWallLeft(int indexColumn, int indexRow) {
-    return TileModel(
-          sprite: TileModelSprite(path: wallLeft),
-          x: indexColumn.toDouble(),
-          y: indexRow.toDouble(),
-          collisions: [CollisionArea.rectangle(size: Vector2(tileSize, tileSize))],
-          width: tileSize,
-          height: tileSize,
-        );
-  }
-
-  static TileModel _buildWallRight(int indexColumn, int indexRow) {
-    return TileModel(
-          sprite: TileModelSprite(path: wallRight),
-          x: indexColumn.toDouble(),
-          y: indexRow.toDouble(),
-          collisions: [CollisionArea.rectangle(size: Vector2(tileSize, tileSize))],
-          width: tileSize,
-          height: tileSize,
-        );
   }
 
   static List<GameDecoration> decorations() {
@@ -169,30 +102,6 @@ class DungeonMap {
         size: Vector2(tileSize, tileSize),
       )
     ];
-  }
-
-  static List<Enemy> enemies() {
-    return [];
-  }
-
-  static String randomFloor() {
-    int p = Random().nextInt(6);
-    switch (p) {
-      case 0:
-        return floor_1;
-      case 1:
-        return floor_2;
-      case 2:
-        return floor_3;
-      case 3:
-        return floor_4;
-      case 4:
-        return floor_3;
-      case 5:
-        return floor_4;
-      default:
-        return floor_1;
-    }
   }
 
   static Vector2 getRelativeTilePosition(int x, int y) {

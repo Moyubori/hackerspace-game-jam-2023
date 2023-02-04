@@ -74,6 +74,15 @@ class DungeonTileBuilder {
       height: tileSize,
     );
 
+  TileModel buildWallBottomLeft(int indexColumn, int indexRow) => TileModel(
+    sprite: TileModelSprite(path: wallBottomLeft),
+    x: indexColumn.toDouble(),
+    y: indexRow.toDouble(),
+    collisions: [CollisionArea.rectangle(size: Vector2(tileSize, tileSize))],
+    width: tileSize,
+    height: tileSize,
+  );
+
   TileModel buildWallRight(int indexColumn, int indexRow) => TileModel(
       sprite: TileModelSprite(path: wallRight),
       x: indexColumn.toDouble(),

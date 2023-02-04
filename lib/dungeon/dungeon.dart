@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/dungeon_builder.dart';
 import 'package:hackerspace_game_jam_2023/overworld/player.dart';
 
-class Dungeon extends StatelessWidget {
+class DungeonWidget extends StatelessWidget {
 
   late DungeonBuilder _dungeonBuilder;
+
+  DungeonWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

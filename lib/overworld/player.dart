@@ -6,9 +6,8 @@ import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
-import 'package:hackerspace_game_jam_2023/dungeon_map.dart';
-
-import '../inventory_item.dart';
+import 'package:hackerspace_game_jam_2023/dungeon/demo_dungeon_map.dart';
+import 'package:hackerspace_game_jam_2023/inventory_item.dart';
 
 class PlayerSpriteSheet {
   static Future<SpriteAnimation> get idleLeft => SpriteAnimation.load(
@@ -82,12 +81,12 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
         collisions: [
           CollisionArea.rectangle(
             size: Vector2(
-              DungeonMap.tileSize / 2,
-              DungeonMap.tileSize / 2.2,
+              DemoDungeonMap.tileSize / 2,
+              DemoDungeonMap.tileSize / 2.2,
             ),
             align: Vector2(
-              DungeonMap.tileSize / 3.5,
-              DungeonMap.tileSize / 2,
+              DemoDungeonMap.tileSize / 3.5,
+              DemoDungeonMap.tileSize / 2,
             ),
           )
         ],

@@ -2,7 +2,7 @@ import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
 import 'package:hackerspace_game_jam_2023/enemies/goblin_controller.dart';
 
-import '../dungeon/dungeon_map.dart';
+import '../dungeon/demo_dungeon_map.dart';
 import '../sprite_sheets/common_sprite_sheet.dart';
 import '../sprite_sheets/enemy_sprite_sheet.dart';
 
@@ -19,8 +19,8 @@ class Goblin extends SimpleEnemy
       : super(
     animation: EnemySpriteSheet.simpleDirectionAnimation,
     position: position,
-    size: Vector2.all(DungeonMap.tileSize * 0.8),
-    speed: DungeonMap.tileSize * 1.6,
+    size: Vector2.all(DemoDungeonMap.tileSize * 0.8),
+    speed: DemoDungeonMap.tileSize * 1.6,
     life: 100,
   ) {
     setupCollision(
@@ -28,12 +28,12 @@ class Goblin extends SimpleEnemy
         collisions: [
           CollisionArea.rectangle(
             size: Vector2(
-              DungeonMap.tileSize * 0.4,
-              DungeonMap.tileSize * 0.4,
+              DemoDungeonMap.tileSize * 0.4,
+              DemoDungeonMap.tileSize * 0.4,
             ),
             align: Vector2(
-              DungeonMap.tileSize * 0.2,
-              DungeonMap.tileSize * 0.2,
+              DemoDungeonMap.tileSize * 0.2,
+              DemoDungeonMap.tileSize * 0.2,
             ),
           ),
         ],
@@ -53,7 +53,7 @@ class Goblin extends SimpleEnemy
       AnimatedObjectOnce(
         animation: CommonSpriteSheet.smokeExplosion,
         position: position,
-        size: Vector2.all(DungeonMap.tileSize),
+        size: Vector2.all(DemoDungeonMap.tileSize),
       ),
     );
     removeFromParent();
@@ -67,7 +67,7 @@ class Goblin extends SimpleEnemy
       id: 35,
       size: Vector2.all(width * 0.9),
       damage: damage,
-      speed: DungeonMap.tileSize * 3,
+      speed: DemoDungeonMap.tileSize * 3,
       collision: CollisionConfig(
         collisions: [
           CollisionArea.rectangle(
@@ -90,7 +90,7 @@ class Goblin extends SimpleEnemy
       size: Vector2.all(width),
       damage: damage / 2,
       interval: 400,
-      sizePush: DungeonMap.tileSize / 2,
+      sizePush: DemoDungeonMap.tileSize / 2,
       animationRight: CommonSpriteSheet.blackAttackEffectRight,
     );
   }

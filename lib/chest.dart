@@ -1,9 +1,8 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/widgets.dart';
+import 'package:hackerspace_game_jam_2023/dungeon/demo_dungeon_map.dart';
 import 'package:hackerspace_game_jam_2023/inventory_item.dart';
 import 'package:hackerspace_game_jam_2023/overworld/player.dart';
-
-import 'dungeon_map.dart';
 
 class Chest extends GameDecoration with TapGesture {
   bool _observedPlayer = false;
@@ -19,7 +18,7 @@ class Chest extends GameDecoration with TapGesture {
         textureSize: Vector2(16, 16),
       ),
     ),
-    size: Vector2.all(DungeonMap.tileSize * 0.6),
+    size: Vector2.all(DemoDungeonMap.tileSize * 0.6),
     position: position,
   ) {
     _textConfig = TextPaint(
@@ -44,7 +43,7 @@ class Chest extends GameDecoration with TapGesture {
         notObserved: () {
           _observedPlayer = false;
         },
-        radiusVision: DungeonMap.tileSize,
+        radiusVision: DemoDungeonMap.tileSize,
       );
     }
     super.update(dt);
@@ -83,7 +82,7 @@ class Chest extends GameDecoration with TapGesture {
           ),
         ),
         position: position,
-        size: Vector2.all(DungeonMap.tileSize),
+        size: Vector2.all(DemoDungeonMap.tileSize),
       ),
     );
   }

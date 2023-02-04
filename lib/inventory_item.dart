@@ -2,15 +2,15 @@ import 'dart:math';
 
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
-import 'dungeon_map.dart';
-import 'overworld/player.dart';
+import 'package:hackerspace_game_jam_2023/dungeon/demo_dungeon_map.dart';
+import 'package:hackerspace_game_jam_2023/overworld/player.dart';
 
 abstract class MapObject extends GameDecoration with Sensor<Player> {
   MapObject(Vector2 position, String file)
       : super.withSprite(
     sprite: Sprite.load(file),
     position: position,
-    size: Vector2.all(DungeonMap.tileSize * 0.5),
+    size: Vector2.all(DemoDungeonMap.tileSize * 0.5),
   );
 
   @protected
@@ -32,7 +32,7 @@ abstract class InventoryItem extends GameDecoration with Sensor<Player> {
       : super.withSprite(
     sprite: Sprite.load(file),
     position: position,
-    size: Vector2.all(DungeonMap.tileSize * 0.5),
+    size: Vector2.all(DemoDungeonMap.tileSize * 0.5),
   );
 
   @override

@@ -60,7 +60,7 @@ class MyApp extends StatelessWidget {
               case '/fight':
                 return MaterialPageRoute(builder: (_) => FightSceneWidget(), settings: settings);
               case '/dungeon':
-                return MaterialPageRoute(builder: (_) => Dungeon(), settings: settings);
+                return MaterialPageRoute(builder: (_) => DungeonWidget(), settings: settings);
             }
           },
         ),
