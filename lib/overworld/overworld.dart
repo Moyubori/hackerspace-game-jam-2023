@@ -16,6 +16,8 @@ class Overworld extends StatelessWidget {
           keyboardConfig: KeyboardConfig(keyboardDirectionalType: KeyboardDirectionalType.wasdAndArrows),
         ),
         map: DungeonMap.map(),
+        // debug mode
+        // constructionMode: true,
       );
 }
 
