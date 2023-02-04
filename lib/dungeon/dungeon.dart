@@ -1,6 +1,7 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/dungeon_builder.dart';
+import 'package:hackerspace_game_jam_2023/overworld/player.dart';
 
 class Dungeon extends StatelessWidget {
 
@@ -13,7 +14,8 @@ class Dungeon extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         return FutureBuilder<WorldMap>(
-          future: _dungeonBuilder.buildFromLevelFile('sampleLevel.png'),
+          // future: Future.value(_dungeonBuilder.build(DungeonBuilder.sample)),
+          future: _dungeonBuilder.buildFromFile('sampleLevel.png'),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return const Material(
@@ -30,6 +32,12 @@ class Dungeon extends StatelessWidget {
             }
             WorldMap result = snapshot.data!;
             return BonfireWidget(
+              player: MainPlayer(
+                Vector2(45,45),
+              ),
+              joystick: Joystick(
+                keyboardConfig: KeyboardConfig(keyboardDirectionalType: KeyboardDirectionalType.wasdAndArrows),
+              ),
               map: result,
             );
           },
