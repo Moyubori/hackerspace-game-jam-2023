@@ -16,6 +16,8 @@ class Centipede extends SimpleEnemy
         UseBarLife,
         awards,
         UseStateController<CentipedeController> {
+  late final SpriteAnimation attackAnimation;
+
   Centipede(Vector2 position)
       : super(
           animation: CentipedeSpriteSheet.centipedeSimpleDirectionAnimation,
@@ -41,6 +43,8 @@ class Centipede extends SimpleEnemy
       borderRadius: BorderRadius.circular(2),
       borderWidth: 4,
     );
+
+    CentipedeSpriteSheet.centipedeAttack.then((value) => attackAnimation = value);
   }
 
   @override
@@ -82,14 +86,26 @@ class Centipede extends SimpleEnemy
   }
 
   void execAttack(double damage) {
-    if (gameRef.player != null && gameRef.player?.isDead == true) return;
+    if ((gameRef.player != null && gameRef.player?.isDead == true) ||
+        children.whereType<CentipedeAttackAnimationComponent>().isNotEmpty) return;
     simpleAttackMelee(
-      size: Vector2.all(width),
+      size: Vector2.all(72),
       damage: damage / 2,
       interval: 400,
-      sizePush: DemoDungeonMap.tileSize / 2,
+      withPush: true,
+      sizePush: 48,
       animationRight: CommonSpriteSheet.blackAttackEffectRight,
+      execute: () {
+        add(CentipedeAttackAnimationComponent(attackAnimation.clone()));
+      },
     );
+  }
+
+  @override
+  void render(Canvas canvas) {
+    if (children.where((element) => element is CentipedeAttackAnimationComponent).isEmpty) {
+      super.render(canvas);
+    }
   }
 
   @override
@@ -114,5 +130,32 @@ class Centipede extends SimpleEnemy
   @override
   double exp() {
     return 50;
+  }
+}
+
+class CentipedeAttackAnimationComponent extends PositionComponent {
+  final SpriteAnimation animation;
+
+  CentipedeAttackAnimationComponent(this.animation);
+
+  @override
+  Future<void> onLoad() async {
+    scale = Vector2.all(2.5);
+    animation.loop = false;
+    animation.completed.then((_) {
+      removeFromParent();
+    });
+  }
+
+  @override
+  void render(Canvas canvas) {
+    animation.getSprite().render(canvas);
+  }
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+    animation.update(dt);
+    position = (parent as Centipede).position - Vector2(52, 86);
   }
 }
