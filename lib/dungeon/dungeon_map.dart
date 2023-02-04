@@ -3,10 +3,12 @@ import 'package:bonfire/bonfire.dart';
 class DungeonMap {
   final WorldMap dungeon;
   final List<Enemy> enemies;
+  final List<GameDecoration> decorations;
 
   DungeonMap({
     required this.dungeon,
     this.enemies = const [],
+    this.decorations = const [],
   });
 }
 

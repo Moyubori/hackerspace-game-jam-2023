@@ -7,7 +7,8 @@ class Potion extends InteractableItem {
   Potion(Vector2 position): super(position, "itens/potion_life.png");
 
   @override
-  void interact(MainPlayer player) {
+  bool interact(MainPlayer player) {
     player.addLife(20);
+    return false;
   }
 }
