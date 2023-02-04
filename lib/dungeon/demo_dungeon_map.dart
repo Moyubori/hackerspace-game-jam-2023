@@ -105,8 +105,12 @@ class DemoDungeonMap {
         position: getRelativeTilePosition(14, 4),
         size: Vector2(tileSize, tileSize),
       ),
-      Axe(Vector2(480, 240)),
-      Sword(Vector2(580, 240)),
+      Axe(Vector2(480, 240), 1),
+      Sword(Vector2(480, 350), 1),
+      Axe(Vector2(580, 240), 3),
+      Sword(Vector2(580, 350), 3),
+      Axe(Vector2(680, 240), 5),
+      Sword(Vector2(680, 350), 5),
     ];
   }
 

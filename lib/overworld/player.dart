@@ -9,6 +9,7 @@ import 'package:hackerspace_game_jam_2023/dungeon/demo_dungeon_map.dart';
 import 'package:hackerspace_game_jam_2023/overworld/ExpManager.dart';
 import 'package:hackerspace_game_jam_2023/sprite_sheets/common_sprite_sheet.dart';
 
+import '../equipment/base_equipment.dart';
 import '../equipment/base_item.dart';
 import '../equipment/weapon_component.dart';
 
@@ -64,7 +65,7 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
   double _rollStartTime = 0;
   double initialHp = 100;
   bool _canAttack = true;
-  List<InteractableItem> inventory = List.empty(growable: true);
+  late BaseWeapon equippedWeapon = DummyWeapon();
   double currentExp = 0;
   static int initialLevel = 1;
   int currentLvl = initialLevel;

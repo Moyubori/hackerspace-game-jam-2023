@@ -16,12 +16,12 @@ abstract class InteractableItem extends GameDecoration with Sensor<Player> {
   @override
   void onContact(GameComponent component) {
     if (component is MainPlayer) {
-      interact(component);
-      removeFromParent();
+      var shouldPersist = interact(component);
+      if(!shouldPersist) removeFromParent();
     }
   }
 
-  void interact(MainPlayer player);
+  bool interact(MainPlayer player);
 
   @override
   void onContactExit(GameComponent component) {}

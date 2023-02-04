@@ -17,7 +17,7 @@ class EquipmentInfo extends InterfaceComponent {
   @override
   void update(double dt) {
     var player = gameRef.player as MainPlayer;
-    currentEquipment = List.from(player.inventory);
+    currentEquipment = [player.equippedWeapon];
     super.update(dt);
   }
 
