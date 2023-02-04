@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
 import 'package:hackerspace_game_jam_2023/overworld/player.dart';
@@ -9,7 +11,7 @@ class Overworld extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Knight player = Knight(
+    MainPlayer player = MainPlayer(
       Vector2((4 * DungeonMap.tileSize), (6 * DungeonMap.tileSize)),
       100,
     );
@@ -64,7 +66,7 @@ class PlayerSpriteSheet {
           amount: 6,
           stepTime: 0.1,
           textureSize: Vector2(16, 16),
-        ),
+        ));
 }
 
 class DungeonMap {
@@ -246,11 +248,4 @@ class DungeonMap {
       (y * tileSize).toDouble(),
     );
   }
-}
-
-
-  static SimpleDirectionAnimation get simpleDirectionAnimation => SimpleDirectionAnimation(
-        idleRight: idleRight,
-        runRight: runRight,
-      );
 }

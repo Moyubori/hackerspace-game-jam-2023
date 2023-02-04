@@ -1,9 +1,9 @@
 import 'dart:math';
 
 import 'package:bonfire/bonfire.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:hackerspace_game_jam_2023/player.dart';
+import 'package:flutter/material.dart';
 import 'dungeonMap.dart';
+import 'overworld/player.dart';
 
 abstract class MapObject extends GameDecoration with Sensor<Player> {
   MapObject(Vector2 position, String file)
@@ -14,11 +14,11 @@ abstract class MapObject extends GameDecoration with Sensor<Player> {
   );
 
   @protected
-  void onPlayerTouched(Knight player);
+  void onPlayerTouched(MainPlayer player);
 
   @override
   void onContact(GameComponent component) {
-    if (component is Knight) {
+    if (component is MainPlayer) {
       onPlayerTouched(component);
     }
   }
@@ -27,8 +27,8 @@ abstract class MapObject extends GameDecoration with Sensor<Player> {
   void onContactExit(GameComponent component) {}
 }
 
-abstract class Item extends GameDecoration with Sensor<Player> {
-  Item(Vector2 position, String file)
+abstract class InventoryItem extends GameDecoration with Sensor<Player> {
+  InventoryItem(Vector2 position, String file)
       : super.withSprite(
     sprite: Sprite.load(file),
     position: position,
@@ -37,23 +37,23 @@ abstract class Item extends GameDecoration with Sensor<Player> {
 
   @override
   void onContact(GameComponent component) {
-    if (component is Knight) {
+    if (component is MainPlayer) {
       component.inventory.add(this);
       removeFromParent();
     }
   }
 
-  void use(Knight player);
+  void use(MainPlayer player);
 
   @override
   void onContactExit(GameComponent component) {}
 }
 
-class Potion extends Item {
+class Potion extends InventoryItem {
   Potion(Vector2 position): super(position, "itens/potion_life.png");
 
   @override
-  void use(Knight player) {
+  void use(MainPlayer player) {
     player.hp = min(player.hp + 20, player.initialHp);
   }
 }

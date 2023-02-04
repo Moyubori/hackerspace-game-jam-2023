@@ -7,6 +7,8 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:hackerspace_game_jam_2023/overworld/overworld.dart';
 
+import '../item.dart';
+
 class PlayerSpriteSheet {
   static Future<SpriteAnimation> get idleLeft => SpriteAnimation.load(
         "player/knight_idle_left.png",
@@ -57,17 +59,23 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
   bool _canRoll = true;
   bool _isRolling = false;
   double _rollStartTime = 0;
+
+  List<InventoryItem> inventory = List.empty(growable: true);
+  late int hp;
+  int initialHp;
+
   JoystickMoveDirectional currentFacingDirection = JoystickMoveDirectional.MOVE_RIGHT;
   JoystickMoveDirectional _rollingDirection = JoystickMoveDirectional.MOVE_RIGHT;
 
   late final AxeComponent axeComponent;
 
-  MainPlayer(Vector2 position)
+  MainPlayer(Vector2 position, this.initialHp)
       : super(
           position: position,
           size: Vector2(32, 32),
           animation: PlayerSpriteSheet.simpleDirectionAnimation,
         ) {
+    hp = initialHp;
     setupCollision(
       CollisionConfig(
         collisions: [

@@ -1,13 +1,13 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hackerspace_game_jam_2023/item.dart';
+import 'package:hackerspace_game_jam_2023/overworld/player.dart';
 
 import 'dungeonMap.dart';
-import 'player.dart';
 
 class Chest extends GameDecoration with TapGesture {
   bool _observedPlayer = false;
-  List<Item> contents;
+  List<InventoryItem> contents;
   late TextPaint _textConfig;
   Chest(Vector2 position, this.contents)
       : super.withAnimation(
@@ -65,7 +65,7 @@ class Chest extends GameDecoration with TapGesture {
   @override
   void onTap() {
     if (_observedPlayer) {
-      (gameRef.player as Knight).inventory.addAll(contents);
+      (gameRef.player as MainPlayer).inventory.addAll(contents);
       removeFromParent();
       _addSmokeExplosion(position.translate(0, 0));
     }
