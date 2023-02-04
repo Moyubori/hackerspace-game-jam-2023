@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/demo_dungeon_map.dart';
@@ -15,7 +13,7 @@ class Overworld extends StatelessWidget {
   Widget build(BuildContext context) {
     MainPlayer player = MainPlayer(
       Vector2((4 * DemoDungeonMap.tileSize), (6 * DemoDungeonMap.tileSize)),
-      100,
+      999999,
     );
 
     return Stack(
@@ -24,7 +22,7 @@ class Overworld extends StatelessWidget {
           player: player,
           enemies: [Goblin(Vector2(6 * DemoDungeonMap.tileSize, 8 * DemoDungeonMap.tileSize))],
           joystick: Joystick(
-            keyboardConfig: KeyboardConfig(),
+            keyboardConfig: KeyboardConfig(keyboardDirectionalType: KeyboardDirectionalType.wasdAndArrows),
           ),
           map: DemoDungeonMap.map(),
           decorations: DemoDungeonMap.decorations(),
@@ -35,6 +33,7 @@ class Overworld extends StatelessWidget {
     );
   }
 }
+
 // Positioned(child: Text("HP: ${player.life}", style: TextStyle(color: Colors.yellow)
 class PlayerSpriteSheet {
   static Future<SpriteAnimation> get idleLeft => SpriteAnimation.load(
@@ -65,11 +64,10 @@ class PlayerSpriteSheet {
       );
 
   static Future<SpriteAnimation> get runLeft => SpriteAnimation.load(
-        "player/knight_run_left.png",
-        SpriteAnimationData.sequenced(
-          amount: 6,
-          stepTime: 0.1,
-          textureSize: Vector2(16, 16),
-        ));
+      "player/knight_run_left.png",
+      SpriteAnimationData.sequenced(
+        amount: 6,
+        stepTime: 0.1,
+        textureSize: Vector2(16, 16),
+      ));
 }
-

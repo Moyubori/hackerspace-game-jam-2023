@@ -70,11 +70,10 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
 
   MainPlayer(Vector2 position, initialHp)
       : super(
-          position: position,
-          size: Vector2(32, 32),
-          animation: PlayerSpriteSheet.simpleDirectionAnimation,
-          life: initialHp
-        ) {
+            position: position,
+            size: Vector2(32, 32),
+            animation: PlayerSpriteSheet.simpleDirectionAnimation,
+            life: initialHp) {
     setupCollision(
       CollisionConfig(
         collisions: [
@@ -238,6 +237,7 @@ class AxeComponent extends SpriteComponent with HasGameRef<BonfireGame> {
   bool _inSecondPosition = false;
   bool _isSwinging = false;
   double _swingingStartTime = 0;
+  Vector2 _originalSwingFacingDirection = Vector2.zero();
 
   AxeComponent(this.player) : super(priority: 999);
 
@@ -252,6 +252,9 @@ class AxeComponent extends SpriteComponent with HasGameRef<BonfireGame> {
   @override
   void update(double dt) {
     super.update(dt);
+    if ((_inSecondPosition && isFlippedVertically) || (!_inSecondPosition && !isFlippedVertically)) {
+      flipVertically();
+    }
     if (!_isSwinging) {
       final Vector2 targetAxeDirection = player.currentFacingDirection.toVector2()
         ..rotate((_inSecondPosition ? secondPositionAngularPosition : firstPositionAngularPosition) * math.pi);
@@ -262,7 +265,7 @@ class AxeComponent extends SpriteComponent with HasGameRef<BonfireGame> {
       );
     } else {
       final double swingProgress = (gameRef.currentTime() - _swingingStartTime) / swingDuration;
-      final Vector2 targetPosition = player.currentFacingDirection.toVector2()
+      final Vector2 targetPosition = Vector2.copy(_originalSwingFacingDirection)
         ..rotate(((_inSecondPosition
                         ? secondPositionAngularPosition - firstPositionAngularPosition
                         : firstPositionAngularPosition - secondPositionAngularPosition) *
@@ -271,12 +274,17 @@ class AxeComponent extends SpriteComponent with HasGameRef<BonfireGame> {
             math.pi);
       position = player.position + Vector2(16, 16) + targetPosition * 32;
     }
+    final Vector2 positionRelativeToPlayer = player.position - (position - Vector2(16, 16));
+    angle = _inSecondPosition
+        ? math.pi * 1.75 - math.atan2(positionRelativeToPlayer.x, positionRelativeToPlayer.y)
+        : math.pi * 1.25 - math.atan2(positionRelativeToPlayer.x, positionRelativeToPlayer.y);
   }
 
   void trySwing() {
     if (!_isSwinging) {
       _isSwinging = true;
       _swingingStartTime = gameRef.currentTime();
+      _originalSwingFacingDirection = player.currentFacingDirection.toVector2();
       add(
         TimerComponent(
           period: swingDuration,
