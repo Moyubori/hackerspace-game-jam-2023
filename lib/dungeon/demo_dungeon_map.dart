@@ -1,6 +1,7 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/builders/dungeon_tile_builder.dart';
 import 'package:hackerspace_game_jam_2023/equipment/axe.dart';
+import 'package:hackerspace_game_jam_2023/equipment/chest.dart';
 import 'package:hackerspace_game_jam_2023/equipment/sword.dart';
 
 import '../equipment/potion.dart';
@@ -105,12 +106,15 @@ class DemoDungeonMap {
         position: getRelativeTilePosition(14, 4),
         size: Vector2(tileSize, tileSize),
       ),
-      Axe(Vector2(480, 240), 1),
+      /*Axe(Vector2(480, 240), 1),
       Sword(Vector2(480, 350), 1),
       Axe(Vector2(580, 240), 3),
       Sword(Vector2(580, 350), 3),
       Axe(Vector2(680, 240), 5),
-      Sword(Vector2(680, 350), 5),
+      Sword(Vector2(680, 350), 5),*/
+      Chest(Vector2(680, 280), [
+        Axe(Vector2(0,0), 1),
+      ])
     ];
   }
 
