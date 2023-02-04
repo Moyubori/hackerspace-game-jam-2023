@@ -25,10 +25,7 @@ class Centipede extends SimpleEnemy
       CollisionConfig(
         collisions: [
           CollisionArea.rectangle(
-            size: Vector2(
-              DemoDungeonMap.tileSize * 0.4,
-              DemoDungeonMap.tileSize * 0.4,
-            ),
+            size: Vector2(128, 96),
             align: Vector2(
               DemoDungeonMap.tileSize * 0.2,
               DemoDungeonMap.tileSize * 0.2,
