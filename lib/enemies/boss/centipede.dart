@@ -5,6 +5,8 @@ import 'package:hackerspace_game_jam_2023/enemies/boss/centipede_controller.dart
 import 'package:hackerspace_game_jam_2023/sprite_sheets/centipede_sprite_sheet.dart';
 import 'package:hackerspace_game_jam_2023/sprite_sheets/common_sprite_sheet.dart';
 
+import '../awards.dart';
+
 class Centipede extends SimpleEnemy
     with
         ObjectCollision,
@@ -12,6 +14,7 @@ class Centipede extends SimpleEnemy
         MovementByJoystick,
         AutomaticRandomMovement,
         UseBarLife,
+        awards,
         UseStateController<CentipedeController> {
   Centipede(Vector2 position)
       : super(
@@ -106,4 +109,9 @@ class Centipede extends SimpleEnemy
 
   @override
   void moveTo(Vector2 position) {}
+
+  @override
+  double exp() {
+    return 50;
+  }
 }
