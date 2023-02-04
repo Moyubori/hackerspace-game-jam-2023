@@ -5,6 +5,8 @@ import 'package:hackerspace_game_jam_2023/dungeon/builders/dungeon_tile_builder.
 import 'package:hackerspace_game_jam_2023/dungeon/builders/random_dungeon_builder.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/dungeon_map.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/builders/file_dungeon_builder.dart';
+import 'package:hackerspace_game_jam_2023/interface/equipment_info.dart';
+import 'package:hackerspace_game_jam_2023/interface/life_bar.dart';
 import 'package:hackerspace_game_jam_2023/overworld/player.dart';
 
 class DungeonWidget extends StatelessWidget {
@@ -22,9 +24,9 @@ class DungeonWidget extends StatelessWidget {
     // );
     _dungeonBuilder = RandomDungeonBuilder();
     _mapConfig = RandomDungeonMapConfig(
-      mapSize: Vector2(64, 64),
-      startingBlobs: 32,
-      startingPos: Vector2(32, 32),
+      mapSize: 32,
+      startingBlobs: 8,
+      startingPos: Vector2(16, 16),
     );
 
     return LayoutBuilder(
@@ -54,15 +56,17 @@ class DungeonWidget extends StatelessWidget {
                   _mapConfig.startingPos.x * DungeonTileBuilder.tileSize,
                   _mapConfig.startingPos.y * DungeonTileBuilder.tileSize,
                 ),
-                150,
+                1500,
               ),
               joystick: Joystick(
                 keyboardConfig:
                     KeyboardConfig(keyboardDirectionalType: KeyboardDirectionalType.wasdAndArrows),
               ),
-              lightingColorGame: Colors.black,
-              cameraConfig: CameraConfig(zoom: 3),
+              // lightingColorGame: Colors.black,
+              // cameraConfig: CameraConfig(zoom: 3),
+              interface: GameInterface()..add(LifeBar())..add(EquipmentInfo()),
               enemies: result.enemies,
+              decorations: result.decorations,
               map: result.dungeon,
             );
           },

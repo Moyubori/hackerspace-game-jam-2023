@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:bonfire/bonfire.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:hackerspace_game_jam_2023/dungeon/builders/dungeon_decoration_builder.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/dungeon_map.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/builders/dungeon_tile_builder.dart';
 import 'package:hackerspace_game_jam_2023/enemies/goblin.dart';
@@ -102,12 +104,10 @@ abstract class DungeonBuilder {
     }
 
     return spawnPoints
-        .map((e) =>
-            Goblin(Vector2(e.x * DungeonTileBuilder.tileSize, e.y * DungeonTileBuilder.tileSize)))
+        .map((e) => Goblin(Vector2(e.x * DungeonTileBuilder.tileSize, e.y * DungeonTileBuilder.tileSize)))
         .toList();
   }
 
-  @protected
   bool _isOutsideSafeSpace(DungeonMapConfig config, Vector2 currentPos) {
     return getManhattanDistance(config.startingPos, currentPos) > config.safeAreaRadius;
   }
@@ -117,4 +117,24 @@ abstract class DungeonBuilder {
   bool _canSpawn(Vector2 currentPos, List<Vector2> spawnPoints, DungeonMapConfig config) =>
       spawnPoints.none((e) => getManhattanDistance(e, currentPos) < config.enemySpread) &&
       (spawnPoints.length < config.enemiesCount || config.enemiesCount == -1);
+
+  List<GameDecoration> createDecorations(List<List<TileModel>> rawMap, DungeonMapConfig config) {
+    final DungeonDecorationBuilder decorationBuilder = DungeonDecorationBuilder();
+    final Random r = Random();
+    List<Vector2> decorationPositions = [];
+
+    for (int x = 0; x < rawMap.length; x++) {
+      for (int y = 0; y < rawMap.length; y++) {
+        final Vector2 currentPos = Vector2(x.toDouble(), y.toDouble());
+
+        if (isFloor(rawMap[x][y]) &&
+            r.nextInt(10) < 3 &&
+            decorationPositions.none((p) => getManhattanDistance(p, currentPos) < 10)) {
+          decorationPositions.add(currentPos);
+        }
+      }
+    }
+
+    return decorationPositions.map((e) => decorationBuilder.buildRandom(e.x.toInt(), e.y.toInt())).toList();
+  }
 }

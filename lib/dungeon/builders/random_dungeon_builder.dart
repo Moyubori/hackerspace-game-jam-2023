@@ -6,7 +6,7 @@ import 'package:hackerspace_game_jam_2023/dungeon/builders/dungeon_builder.dart'
 import 'package:hackerspace_game_jam_2023/dungeon/dungeon_map.dart';
 
 class RandomDungeonMapConfig extends DungeonMapConfig {
-  final Vector2 mapSize;
+  final int mapSize;
   final int startingBlobs;
 
   RandomDungeonMapConfig({
@@ -24,17 +24,14 @@ class RandomDungeonBuilder extends DungeonBuilder {
   Future<DungeonMap> build(RandomDungeonMapConfig config) async {
     final Random random = Random();
 
-    final int rows = config.mapSize.x.toInt();
-    final int cols = config.mapSize.y.toInt();
-
-    List<List<TileModel>> rawMap = List.generate(config.mapSize.x.toInt(),
-        (x) => List.generate(cols, (y) => dungeonTileBuilder.buildAbyss(x, y)));
+    List<List<TileModel>> rawMap = List.generate(config.mapSize,
+        (x) => List.generate(config.mapSize, (y) => dungeonTileBuilder.buildAbyss(x, y)));
 
     // select initial blob positions
     List<Vector2> blobs = [];
     while (blobs.length < config.startingBlobs) {
-      int x = random.nextInt(rows);
-      int y = random.nextInt(cols);
+      int x = random.nextInt(config.mapSize);
+      int y = random.nextInt(config.mapSize);
 
       final Vector2 blobPos = Vector2(x.toDouble(), y.toDouble());
       if (blobs.none((e) => getManhattanDistance(e, blobPos) < 10)) {
@@ -45,9 +42,9 @@ class RandomDungeonBuilder extends DungeonBuilder {
     Vector2 centerBlob = config.startingPos;
 
     // build blobs
-    _insertBlobs(blobs, centerBlob, rawMap, cols, rows);
+    _insertBlobs(blobs, centerBlob, rawMap, config.mapSize, config.mapSize);
     List<MapEntry<Vector2, Vector2>> neighbours = _buildTree(blobs, centerBlob);
-    _buildPaths(neighbours, rawMap, cols, rows);
+    _buildPaths(neighbours, rawMap, config.mapSize, config.mapSize);
     _patchSingles(rawMap);
     _trimEdges(rawMap);
 
@@ -56,6 +53,7 @@ class RandomDungeonBuilder extends DungeonBuilder {
     return DungeonMap(
       dungeon: WorldMap(rawMap.expand((line) => line).toList()),
       enemies: createEnemies(rawMap, config),
+      decorations: createDecorations(rawMap, config),
     );
   }
 
@@ -150,7 +148,6 @@ class RandomDungeonBuilder extends DungeonBuilder {
 
         if (xPos >= 0 && xPos < rawMap.length) {
           _insertBlob(Vector2(xPos.toDouble(), yStart.toDouble()), rawMap, cols, rows);
-          // rawMap[xPos][yStart] = dungeonTileBuilder.buildFloor(xPos, yStart);
         } else {
           print('index out of bounds x: $xPos');
         }
@@ -159,7 +156,6 @@ class RandomDungeonBuilder extends DungeonBuilder {
       for (int y = 0; y < yAxisDiff + 1; y++) {
         int yPos = goUp ? yEnd - y : yEnd + y;
         if (yPos >= 0 && yPos < rawMap.length) {
-          // rawMap[xEnd][yPos] = dungeonTileBuilder.buildFloor(xEnd, yPos);
           _insertBlob(Vector2(xEnd.toDouble(), yPos.toDouble()), rawMap, cols, rows);
         } else {
           print('index out of bounds y: $yPos');
@@ -176,7 +172,6 @@ class RandomDungeonBuilder extends DungeonBuilder {
             isAbyss(rawMap[x][y]) &&
             isFloor(rawMap[x + 1][y]) &&
             isFloor(rawMap[x - 1][y])) {
-          print('Fix\'n single');
           rawMap[x + 1][y] = dungeonTileBuilder.buildAbyss(x + 1, y);
         }
 
@@ -185,7 +180,6 @@ class RandomDungeonBuilder extends DungeonBuilder {
             isAbyss(rawMap[x][y]) &&
             isFloor(rawMap[x][y + 1]) &&
             isFloor(rawMap[x][y - 1])) {
-          print('Fix\'n single');
           rawMap[x][y + 1] = dungeonTileBuilder.buildAbyss(x, y + 1);
         }
       }
