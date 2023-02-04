@@ -15,7 +15,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
+  static GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
   MyApp({super.key});
 
@@ -72,7 +72,7 @@ class MyApp extends StatelessWidget {
               case '/fight':
                 return MaterialPageRoute(builder: (_) => FightSceneWidget(), settings: settings);
               case '/dungeon':
-                return MaterialPageRoute(builder: (_) => DungeonWidget(), settings: settings);
+                return MaterialPageRoute(builder: (_) => DungeonWidget(dungeonSize: settings.arguments as int?), settings: settings);
             }
           },
         ),
