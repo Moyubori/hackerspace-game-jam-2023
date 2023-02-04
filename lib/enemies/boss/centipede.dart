@@ -12,16 +12,15 @@ class Centipede extends SimpleEnemy
         MovementByJoystick,
         AutomaticRandomMovement,
         UseBarLife,
-        UseStateController<CentipedeController>
-{
+        UseStateController<CentipedeController> {
   Centipede(Vector2 position)
       : super(
-    animation: CentipedeSpriteSheet.centipedeSimpleDirectionAnimation,
-    position: position,
-    size: Vector2.all(DemoDungeonMap.tileSize * 3),
-    speed: DemoDungeonMap.tileSize * 0.8,
-    life: 1000,
-  ) {
+          animation: CentipedeSpriteSheet.centipedeSimpleDirectionAnimation,
+          position: position,
+          size: Vector2(128, 96),
+          speed: DemoDungeonMap.tileSize * 0.8,
+          life: 1000,
+        ) {
     setupCollision(
       CollisionConfig(
         collisions: [

@@ -4,7 +4,6 @@ import 'package:hackerspace_game_jam_2023/dungeon/demo_dungeon_map.dart';
 import 'package:hackerspace_game_jam_2023/enemies/boss/centipede.dart';
 import 'package:hackerspace_game_jam_2023/overworld/player.dart';
 
-import '../enemies/goblin.dart';
 import '../interface/life_bar.dart';
 
 class Overworld extends StatelessWidget {
@@ -32,6 +31,7 @@ class Overworld extends StatelessWidget {
           decorations: DemoDungeonMap.decorations(),
           cameraConfig: CameraConfig(zoom: 3),
           interface: GameInterface()..add(LifeBar()),
+          constructionMode: true,
         ),
       ],
     );

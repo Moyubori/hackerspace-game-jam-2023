@@ -5,7 +5,7 @@ import 'package:hackerspace_game_jam_2023/dungeon/demo_dungeon_map.dart';
 import 'centipede.dart';
 
 class CentipedeController extends StateController<Centipede> {
-  double attack = 100;
+  double attack = 0;
   bool _seePlayerToAttackMelee = false;
   bool enableBehaviors = true;
 
