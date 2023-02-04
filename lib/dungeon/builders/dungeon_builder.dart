@@ -8,7 +8,7 @@ import 'package:hackerspace_game_jam_2023/dungeon/builders/dungeon_decoration_bu
 import 'package:hackerspace_game_jam_2023/dungeon/builders/tile_helpers.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/dungeon_map.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/builders/dungeon_tile_builder.dart';
-import 'package:hackerspace_game_jam_2023/enemies/goblin.dart';
+import 'package:hackerspace_game_jam_2023/enemies/goblin/goblin.dart';
 
 abstract class DungeonBuilder with TileHelpers {
   @protected

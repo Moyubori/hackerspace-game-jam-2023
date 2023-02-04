@@ -1,7 +1,7 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
-import 'package:hackerspace_game_jam_2023/enemies/boss/centipede_controller.dart';
-import 'package:hackerspace_game_jam_2023/enemies/goblin_controller.dart';
+import 'package:hackerspace_game_jam_2023/enemies/centipede/centipede_controller.dart';
+import 'package:hackerspace_game_jam_2023/enemies/goblin/goblin_controller.dart';
 import 'package:hackerspace_game_jam_2023/fight/fight.dart';
 import 'package:hackerspace_game_jam_2023/overworld/overworld.dart';
 

@@ -2,10 +2,10 @@ import 'package:bonfire/bonfire.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/demo_dungeon_map.dart';
-import 'package:hackerspace_game_jam_2023/enemies/boss/centipede_controller.dart';
+import 'package:hackerspace_game_jam_2023/enemies/centipede/centipede_controller.dart';
+import 'package:hackerspace_game_jam_2023/enemies/centipede/centipede_sprite_sheet.dart';
+import 'package:hackerspace_game_jam_2023/enemies/common/common_sprite_sheet.dart';
 import 'package:hackerspace_game_jam_2023/overworld/player.dart';
-import 'package:hackerspace_game_jam_2023/sprite_sheets/centipede_sprite_sheet.dart';
-import 'package:hackerspace_game_jam_2023/sprite_sheets/common_sprite_sheet.dart';
 
 import '../awards.dart';
 
