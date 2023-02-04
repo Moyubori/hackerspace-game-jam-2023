@@ -57,8 +57,10 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
   bool _canRoll = true;
   bool _isRolling = false;
   double _rollStartTime = 0;
-  JoystickMoveDirectional _currentFacingDirection = JoystickMoveDirectional.IDLE;
-  JoystickMoveDirectional _rollingDirection = JoystickMoveDirectional.IDLE;
+  JoystickMoveDirectional currentFacingDirection = JoystickMoveDirectional.MOVE_RIGHT;
+  JoystickMoveDirectional _rollingDirection = JoystickMoveDirectional.MOVE_RIGHT;
+
+  late final AxeComponent axeComponent;
 
   MainPlayer(Vector2 position)
       : super(
@@ -84,11 +86,18 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
     );
   }
 
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+    axeComponent = AxeComponent(this);
+    gameRef.add(axeComponent);
+  }
+
   void roll() {
     _isRolling = true;
     final double originalSpeed = speed;
     speed = 0;
-    _rollingDirection = _currentFacingDirection;
+    _rollingDirection = currentFacingDirection;
     _rollStartTime = gameRef.currentTime();
     add(RollAnimationComponent(animation!.runRight!));
     add(
@@ -126,19 +135,22 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
   @override
   void joystickChangeDirectional(JoystickDirectionalEvent event) {
     if (event.directional != JoystickMoveDirectional.IDLE) {
-      _currentFacingDirection = event.directional;
+      currentFacingDirection = event.directional;
     }
     super.joystickChangeDirectional(event);
   }
 
   @override
   bool onKeyboard(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
-    if (keysPressed.contains(LogicalKeyboardKey.space)) {
+    if (keysPressed.contains(LogicalKeyboardKey.keyJ)) {
       if (_canRoll) {
         _canRoll = false;
         roll();
         add(TimerComponent(period: rollDuration, onTick: () => _canRoll = true));
       }
+    }
+    if (keysPressed.contains(LogicalKeyboardKey.keyK)) {
+      axeComponent.trySwing();
     }
     return super.onKeyboard(event, keysPressed);
   }
@@ -175,17 +187,77 @@ class RollAnimationComponent extends PositionComponent {
   final SpriteAnimation animation;
 
   set animationProgress(double value) {
-    // animation.update(value);
     angle = math.pi * value * 2;
   }
 
   RollAnimationComponent(this.animation);
 
   @override
-  Future<void> onLoad() async {}
-
-  @override
   void render(Canvas canvas) {
     animation.getSprite().render(canvas, anchor: Anchor.center, size: Vector2(32, 32));
+  }
+}
+
+class AxeComponent extends SpriteComponent with HasGameRef<BonfireGame> {
+  static const double swingDuration = 0.3;
+  static const double normalDamping = 0.3;
+  static const double swingingDamping = 3;
+  static const double firstPositionAngularPosition = 1.5;
+  static const double secondPositionAngularPosition = 0.5;
+
+  final MainPlayer player;
+
+  bool _inSecondPosition = false;
+  bool _isSwinging = false;
+  double _swingingStartTime = 0;
+
+  AxeComponent(this.player) : super(priority: 999);
+
+  @override
+  Future<void> onLoad() async {
+    sprite = await Sprite.load('axe.png');
+    size = Vector2(32, 32);
+    anchor = Anchor.center;
+    position = player.position;
+  }
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+    if (!_isSwinging) {
+      final Vector2 targetAxeDirection = player.currentFacingDirection.toVector2()
+        ..rotate((_inSecondPosition ? secondPositionAngularPosition : firstPositionAngularPosition) * math.pi);
+      final Vector2 targetPosition = player.position + Vector2(16, 16) + targetAxeDirection * 32;
+      position.lerp(
+        targetPosition,
+        dt * position.distanceTo(targetPosition) * (_isSwinging ? swingingDamping : normalDamping),
+      );
+    } else {
+      final double swingProgress = (gameRef.currentTime() - _swingingStartTime) / swingDuration;
+      final Vector2 targetPosition = player.currentFacingDirection.toVector2()
+        ..rotate(((_inSecondPosition
+                        ? secondPositionAngularPosition - firstPositionAngularPosition
+                        : firstPositionAngularPosition - secondPositionAngularPosition) *
+                    swingProgress +
+                (_inSecondPosition ? secondPositionAngularPosition : firstPositionAngularPosition)) *
+            math.pi);
+      position = player.position + Vector2(16, 16) + targetPosition * 32;
+    }
+  }
+
+  void trySwing() {
+    if (!_isSwinging) {
+      _isSwinging = true;
+      _swingingStartTime = gameRef.currentTime();
+      add(
+        TimerComponent(
+          period: swingDuration,
+          onTick: () {
+            _isSwinging = false;
+            _inSecondPosition = !_inSecondPosition;
+          },
+        ),
+      );
+    }
   }
 }

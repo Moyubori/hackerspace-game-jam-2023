@@ -18,6 +18,7 @@ class Overworld extends StatelessWidget {
         map: DungeonMap.map(),
         // debug mode
         // constructionMode: true,
+        cameraConfig: CameraConfig(zoom: 3),
       );
 }
 
