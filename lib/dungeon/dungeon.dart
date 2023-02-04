@@ -39,6 +39,7 @@ class Dungeon extends StatelessWidget {
               joystick: Joystick(
                 keyboardConfig: KeyboardConfig(keyboardDirectionalType: KeyboardDirectionalType.wasdAndArrows),
               ),
+              lightingColorGame: Colors.black,
               map: result,
             );
           },

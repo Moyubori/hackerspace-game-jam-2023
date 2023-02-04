@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:bonfire/bonfire.dart';
 import 'package:bonfire/mixins/keyboard_listener.dart';
 import 'package:flame/components.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:hackerspace_game_jam_2023/dungeon_map.dart';
@@ -52,7 +53,7 @@ class PlayerSpriteSheet {
       );
 }
 
-class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListener, HasGameRef<BonfireGame> {
+class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListener, Lighting, HasGameRef<BonfireGame> {
   static const double rollDuration = 0.3;
   static const double rollDistance = 100;
 
@@ -90,6 +91,14 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
             ),
           )
         ],
+      ),
+    );
+
+    setupLighting(
+      LightingConfig(
+        radius: width * 2.5,
+        blurBorder: width * 2,
+        color: Colors.deepOrangeAccent.withOpacity(0.2),
       ),
     );
   }
