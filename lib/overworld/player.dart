@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:bonfire/bonfire.dart';
 import 'package:bonfire/mixins/keyboard_listener.dart';
 import 'package:flame/components.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/demo_dungeon_map.dart';
@@ -100,6 +101,8 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
   @override
   Future<void> onLoad() async {
     await super.onLoad();
+    FlameAudio.bgm.initialize();
+    FlameAudio.bgm.play('bgm.ogg');
     weaponComponent = WeaponComponent(this);
     gameRef.add(weaponComponent);
   }

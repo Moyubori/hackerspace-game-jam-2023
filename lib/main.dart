@@ -1,10 +1,9 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
 import 'package:hackerspace_game_jam_2023/enemies/boss/centipede_controller.dart';
-
+import 'package:hackerspace_game_jam_2023/enemies/goblin_controller.dart';
 import 'package:hackerspace_game_jam_2023/fight/fight.dart';
 import 'package:hackerspace_game_jam_2023/overworld/overworld.dart';
-import 'package:hackerspace_game_jam_2023/enemies/goblin_controller.dart';
 
 import 'dungeon/dungeon.dart';
 
@@ -28,7 +27,7 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           actions: [
             TextButton(
-              onPressed: () => navigatorKey.currentState!.popAndPushNamed('/'),
+              onPressed: () => navigatorKey.currentState!.popAndPushNamed('/overworld'),
               child: Text(
                 'overworld',
                 style: TextStyle(color: Colors.white),
@@ -58,6 +57,17 @@ class MyApp extends StatelessWidget {
           onGenerateRoute: (RouteSettings settings) {
             switch (settings.name) {
               case '/':
+                return MaterialPageRoute(
+                    builder: (_) => Scaffold(
+                          body: Center(
+                            child: ElevatedButton(
+                              onPressed: () => navigatorKey.currentState!.popAndPushNamed('/overworld'),
+                              child: Text('Start!'),
+                            ),
+                          ),
+                        ),
+                    settings: settings);
+              case '/overworld':
                 return MaterialPageRoute(builder: (_) => Overworld(), settings: settings);
               case '/fight':
                 return MaterialPageRoute(builder: (_) => FightSceneWidget(), settings: settings);

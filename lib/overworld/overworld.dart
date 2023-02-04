@@ -33,7 +33,7 @@ class Overworld extends StatelessWidget {
           map: DemoDungeonMap.map(),
           decorations: DemoDungeonMap.decorations(),
           cameraConfig: CameraConfig(zoom: 3),
-          constructionMode: true,
+          // constructionMode: true,
           // showCollisionArea: true,
           interface: GameInterface()
             ..add(LifeBar())
