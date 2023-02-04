@@ -1,7 +1,9 @@
 import 'package:bonfire/bonfire.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/demo_dungeon_map.dart';
 import 'package:hackerspace_game_jam_2023/enemies/boss/centipede_controller.dart';
+import 'package:hackerspace_game_jam_2023/overworld/player.dart';
 import 'package:hackerspace_game_jam_2023/sprite_sheets/centipede_sprite_sheet.dart';
 import 'package:hackerspace_game_jam_2023/sprite_sheets/common_sprite_sheet.dart';
 
@@ -50,6 +52,7 @@ class Centipede extends SimpleEnemy
   @override
   void die() {
     super.die();
+    FlameAudio.play('mnstr7.wav');
     gameRef.add(
       AnimatedObjectOnce(
         animation: CommonSpriteSheet.smokeExplosion,
@@ -69,6 +72,9 @@ class Centipede extends SimpleEnemy
       size: Vector2.all(width * 0.9),
       damage: damage,
       speed: DemoDungeonMap.tileSize * 3,
+      execute: () {
+        FlameAudio.play('fireball.wav', volume: 0.6);
+      },
       collision: CollisionConfig(
         collisions: [
           CollisionArea.rectangle(
@@ -96,6 +102,7 @@ class Centipede extends SimpleEnemy
       sizePush: 48,
       animationRight: CommonSpriteSheet.blackAttackEffectRight,
       execute: () {
+        FlameAudio.play(['giant1.wav', 'giant2.wav', 'giant3.wav'].getRandom());
         add(CentipedeAttackAnimationComponent(attackAnimation.clone()));
       },
     );
@@ -110,6 +117,7 @@ class Centipede extends SimpleEnemy
 
   @override
   void removeLife(double life) {
+    FlameAudio.play(['giant4.wav', 'giant5.wav'].getRandom());
     showDamage(
       life,
       config: TextStyle(

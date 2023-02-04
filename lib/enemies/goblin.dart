@@ -1,6 +1,8 @@
 import 'package:bonfire/bonfire.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:hackerspace_game_jam_2023/enemies/goblin_controller.dart';
+import 'package:hackerspace_game_jam_2023/overworld/player.dart';
 import 'package:hackerspace_game_jam_2023/sprite_sheets/goblin_sprite_sheet.dart';
 
 import '../dungeon/demo_dungeon_map.dart';
@@ -60,6 +62,9 @@ class Goblin extends SimpleEnemy
       size: Vector2.all(width * 0.9),
       damage: damage,
       speed: DemoDungeonMap.tileSize * 3,
+      execute: () {
+        FlameAudio.play('fireball.wav', volume: 0.6);
+      },
       collision: CollisionConfig(
         collisions: [
           CollisionArea.rectangle(
@@ -82,6 +87,9 @@ class Goblin extends SimpleEnemy
       size: Vector2.all(width),
       damage: damage / 2,
       interval: 400,
+      execute: () {
+        FlameAudio.play(['ogre1.wav', 'ogre2.wav'].getRandom());
+      },
       sizePush: DemoDungeonMap.tileSize / 2,
       animationRight: CommonSpriteSheet.blackAttackEffectRight,
     );
@@ -89,6 +97,7 @@ class Goblin extends SimpleEnemy
 
   @override
   void removeLife(double life) {
+    FlameAudio.play(['ogre3.wav', 'ogre4.wav', 'ogre5.wav'].getRandom());
     showDamage(
       life,
       config: TextStyle(

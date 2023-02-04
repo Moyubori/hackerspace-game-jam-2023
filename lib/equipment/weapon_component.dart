@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:bonfire/bonfire.dart';
 import 'package:flame/components.dart';
 import 'package:flame/rendering.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 
 import '../enemies/awards.dart';
@@ -83,6 +84,7 @@ class WeaponComponent extends SpriteComponent with HasGameRef<BonfireGame> {
           .visibleAttackables()
           .where((a) => a.rectAttackable().overlaps(toRect()) && a != player && !_enemiesDamagedThisSwing.contains(a))
           .forEach((Attackable hitEnemy) {
+        FlameAudio.play(['interface4.wav', 'interface5.wav'].getRandom());
         _enemiesDamagedThisSwing.add(hitEnemy);
         hitEnemy.receiveDamage(AttackFromEnum.PLAYER_OR_ALLY, dmg, 'id');
         final Vector2 pushDirection = (hitEnemy.position - player.position).normalized();
@@ -113,6 +115,7 @@ class WeaponComponent extends SpriteComponent with HasGameRef<BonfireGame> {
       _swingingStartTime = gameRef.currentTime();
       _originalSwingFacingDirection = player.currentFacingDirection.toVector2();
       _enemiesDamagedThisSwing = [];
+      FlameAudio.play(['swing.wav', 'swing2.wav', 'swing3.wav'].getRandom());
       generateWeaponAttackTrails();
       add(
         TimerComponent(

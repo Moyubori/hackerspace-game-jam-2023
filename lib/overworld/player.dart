@@ -56,6 +56,13 @@ class PlayerSpriteSheet {
       );
 }
 
+extension RandomListGetter on List<String> {
+  String getRandom() {
+    final math.Random random = math.Random();
+    return this[random.nextInt(length)];
+  }
+}
+
 class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListener, Lighting, HasGameRef<BonfireGame> {
   static const double rollDuration = 0.3;
   static const double rollDistance = 100;
@@ -101,6 +108,7 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
   @override
   Future<void> onLoad() async {
     await super.onLoad();
+    FlameAudio.bgm.dispose();
     FlameAudio.bgm.initialize();
     FlameAudio.bgm.play('bgm.ogg');
     weaponComponent = WeaponComponent(this);
@@ -119,6 +127,7 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
     speed = 0;
     _rollingDirection = currentFacingDirection;
     _rollStartTime = gameRef.currentTime();
+    FlameAudio.play(['cloth-heavy.wav', 'cloth.wav'].getRandom());
     add(RollAnimationComponent(animation!.runRight!));
     add(
       TimerComponent(
@@ -155,6 +164,7 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
   @override
   void die() {
     super.die();
+    FlameAudio.play(['die1.wav', 'die2.wav', 'lego-yoda-death-sound-effect.mp3'].getRandom());
     gameRef.add(
       AnimatedObjectOnce(
         animation: CommonSpriteSheet.smokeExplosion,
@@ -168,6 +178,7 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
   @override
   void receiveDamage(AttackFromEnum attacker, double damage, dynamic identify) {
     if (!isRolling && !isIframe) {
+      FlameAudio.play(['pain1.wav', 'pain2.wav', 'pain3.wav', 'pain4.wav', 'pain5.wav', 'pain6.wav'].getRandom());
       super.receiveDamage(attacker, damage, identify);
       isIframe = true;
       add(SequenceEffect([

@@ -2,9 +2,9 @@ import 'dart:math';
 
 import 'package:bonfire/bonfire.dart';
 import 'package:bonfire/mixins/keyboard_listener.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:hackerspace_game_jam_2023/overworld/player.dart';
 
 import '../dungeon/demo_dungeon_map.dart';
 import 'base_item.dart';
@@ -15,17 +15,17 @@ class Chest extends GameDecoration with KeyboardEventListener {
   late TextPaint _textConfig;
   Chest(Vector2 position, this.contents)
       : super.withAnimation(
-    animation: SpriteAnimation.load(
-      "itens/chest_spritesheet.png",
-      SpriteAnimationData.sequenced(
-        amount: 8,
-        stepTime: 0.1,
-        textureSize: Vector2(16, 16),
-      ),
-    ),
-    size: Vector2.all(DemoDungeonMap.tileSize * 0.6),
-    position: position,
-  ) {
+          animation: SpriteAnimation.load(
+            "itens/chest_spritesheet.png",
+            SpriteAnimationData.sequenced(
+              amount: 8,
+              stepTime: 0.1,
+              textureSize: Vector2(16, 16),
+            ),
+          ),
+          size: Vector2.all(DemoDungeonMap.tileSize * 0.6),
+          position: position,
+        ) {
     _textConfig = TextPaint(
       style: TextStyle(
         color: const Color(0xFFFFFFFF),
@@ -36,7 +36,7 @@ class Chest extends GameDecoration with KeyboardEventListener {
 
   @override
   bool onKeyboard(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
-    if(keysPressed.contains(LogicalKeyboardKey.keyE)) {
+    if (keysPressed.contains(LogicalKeyboardKey.keyE)) {
       _open();
     }
     return super.onKeyboard(event, keysPressed);
@@ -76,6 +76,7 @@ class Chest extends GameDecoration with KeyboardEventListener {
 
   void _open() {
     if (_observedPlayer) {
+      FlameAudio.play('door.wav');
       for (var element in contents) {
         const min = -30;
         const max = 30;
