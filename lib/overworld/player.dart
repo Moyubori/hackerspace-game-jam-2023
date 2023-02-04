@@ -8,6 +8,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/demo_dungeon_map.dart';
 import 'package:hackerspace_game_jam_2023/inventory_item.dart';
+import 'package:hackerspace_game_jam_2023/sprite_sheets/common_sprite_sheet.dart';
 
 class PlayerSpriteSheet {
   static Future<SpriteAnimation> get idleLeft => SpriteAnimation.load(
@@ -59,23 +60,21 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
   bool _canRoll = true;
   bool _isRolling = false;
   double _rollStartTime = 0;
-
+  double initialHp = 100;
   List<InventoryItem> inventory = List.empty(growable: true);
-  late int hp;
-  int initialHp;
 
   JoystickMoveDirectional currentFacingDirection = JoystickMoveDirectional.MOVE_RIGHT;
   JoystickMoveDirectional _rollingDirection = JoystickMoveDirectional.MOVE_RIGHT;
 
   late final AxeComponent axeComponent;
 
-  MainPlayer(Vector2 position, this.initialHp)
+  MainPlayer(Vector2 position, initialHp)
       : super(
           position: position,
           size: Vector2(32, 32),
           animation: PlayerSpriteSheet.simpleDirectionAnimation,
+          life: initialHp
         ) {
-    hp = initialHp;
     setupCollision(
       CollisionConfig(
         collisions: [
@@ -146,6 +145,19 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
     } else {
       super.render(canvas);
     }
+  }
+
+  @override
+  void die() {
+    super.die();
+    gameRef.add(
+      AnimatedObjectOnce(
+        animation: CommonSpriteSheet.smokeExplosion,
+        position: position,
+        size: Vector2.all(DemoDungeonMap.tileSize),
+      ),
+    );
+    removeFromParent();
   }
 
   @override

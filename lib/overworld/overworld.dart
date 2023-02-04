@@ -6,6 +6,7 @@ import 'package:hackerspace_game_jam_2023/dungeon/demo_dungeon_map.dart';
 import 'package:hackerspace_game_jam_2023/overworld/player.dart';
 
 import '../enemies/goblin.dart';
+import '../interface/life_bar.dart';
 
 class Overworld extends StatelessWidget {
   const Overworld({super.key});
@@ -28,13 +29,13 @@ class Overworld extends StatelessWidget {
           map: DemoDungeonMap.map(),
           decorations: DemoDungeonMap.decorations(),
           cameraConfig: CameraConfig(zoom: 3),
+          interface: GameInterface()..add(LifeBar()),
         ),
-        const Positioned(child: Text("HP: ", style: TextStyle(color: Colors.yellow)))
       ],
     );
   }
 }
-
+// Positioned(child: Text("HP: ${player.life}", style: TextStyle(color: Colors.yellow)
 class PlayerSpriteSheet {
   static Future<SpriteAnimation> get idleLeft => SpriteAnimation.load(
         "player/knight_idle_left.png",
