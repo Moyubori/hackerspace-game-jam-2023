@@ -25,6 +25,7 @@ class Overworld extends StatelessWidget {
           ),
           map: DungeonMap.map(),
           decorations: DungeonMap.decorations(),
+          cameraConfig: CameraConfig(zoom: 3),
         ),
         const Positioned(child: Text("HP: ", style: TextStyle(color: Colors.yellow)))
       ],
