@@ -4,11 +4,12 @@ import 'package:bonfire/bonfire.dart';
 import 'package:bonfire/mixins/keyboard_listener.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/demo_dungeon_map.dart';
-import 'package:hackerspace_game_jam_2023/inventory_item.dart';
 import 'package:hackerspace_game_jam_2023/sprite_sheets/common_sprite_sheet.dart';
+
+import '../equipment/base_item.dart';
+import '../equipment/weapon_component.dart';
 
 class PlayerSpriteSheet {
   static Future<SpriteAnimation> get idleLeft => SpriteAnimation.load(
@@ -61,12 +62,12 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
   bool _isRolling = false;
   double _rollStartTime = 0;
   double initialHp = 100;
-  List<InventoryItem> inventory = List.empty(growable: true);
+  List<InteractableItem> inventory = List.empty(growable: true);
 
   JoystickMoveDirectional currentFacingDirection = JoystickMoveDirectional.MOVE_RIGHT;
   JoystickMoveDirectional _rollingDirection = JoystickMoveDirectional.MOVE_RIGHT;
 
-  late final AxeComponent axeComponent;
+  late final WeaponComponent weaponComponent;
 
   MainPlayer(Vector2 position, initialHp)
       : super(
@@ -92,8 +93,8 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    axeComponent = AxeComponent(this);
-    gameRef.add(axeComponent);
+    weaponComponent = WeaponComponent(this);
+    gameRef.add(weaponComponent);
   }
 
   void roll() {
@@ -172,8 +173,8 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
         add(TimerComponent(period: rollDuration, onTick: () => _canRoll = true));
       }
     }
-    if (keysPressed.contains(LogicalKeyboardKey.keyK)) {
-      axeComponent.trySwing();
+    if (keysPressed.contains(LogicalKeyboardKey.keyK) && weaponComponent.isEquipped) {
+      weaponComponent.trySwing();
     }
     return super.onKeyboard(event, keysPressed);
   }

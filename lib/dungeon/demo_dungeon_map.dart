@@ -1,5 +1,9 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/builders/dungeon_tile_builder.dart';
+import 'package:hackerspace_game_jam_2023/equipment/axe.dart';
+import 'package:hackerspace_game_jam_2023/equipment/sword.dart';
+
+import '../equipment/potion.dart';
 
 class DemoDungeonMap {
   static double tileSize = 48;
@@ -100,7 +104,9 @@ class DemoDungeonMap {
         sprite: Sprite.load('itens/flag_red.png'),
         position: getRelativeTilePosition(14, 4),
         size: Vector2(tileSize, tileSize),
-      )
+      ),
+      Axe(Vector2(480, 240)),
+      Sword(Vector2(580, 240)),
     ];
   }
 
