@@ -34,6 +34,7 @@ class Dungeon extends StatelessWidget {
             return BonfireWidget(
               player: MainPlayer(
                 Vector2(45,45),
+                150,
               ),
               joystick: Joystick(
                 keyboardConfig: KeyboardConfig(keyboardDirectionalType: KeyboardDirectionalType.wasdAndArrows),
