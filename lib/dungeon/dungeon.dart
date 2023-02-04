@@ -1,10 +1,10 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/dungeon_builder.dart';
+import 'package:hackerspace_game_jam_2023/dungeon/dungeon_map.dart';
 import 'package:hackerspace_game_jam_2023/overworld/player.dart';
 
 class DungeonWidget extends StatelessWidget {
-
   late DungeonBuilder _dungeonBuilder;
 
   DungeonWidget({super.key});
@@ -15,9 +15,12 @@ class DungeonWidget extends StatelessWidget {
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        return FutureBuilder<WorldMap>(
+        return FutureBuilder<DungeonMap>(
           // future: Future.value(_dungeonBuilder.build(DungeonBuilder.sample)),
-          future: _dungeonBuilder.buildFromFile('sampleLevel.png'),
+          future: _dungeonBuilder.buildFromFile(DungeonMapConfig(
+            levelFile: 'assets/levels/sampleLevel.png',
+            startingPos: Vector2(1, 1),
+          )),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return const Material(
@@ -32,22 +35,24 @@ class DungeonWidget extends StatelessWidget {
                 ),
               );
             }
-            WorldMap result = snapshot.data!;
+            DungeonMap result = snapshot.data!;
             return BonfireWidget(
               player: MainPlayer(
-                Vector2(45,45),
+                Vector2(45, 45),
                 150,
               ),
               joystick: Joystick(
-                keyboardConfig: KeyboardConfig(keyboardDirectionalType: KeyboardDirectionalType.wasdAndArrows),
+                keyboardConfig:
+                    KeyboardConfig(keyboardDirectionalType: KeyboardDirectionalType.wasdAndArrows),
               ),
               lightingColorGame: Colors.black,
-              map: result,
+              cameraConfig: CameraConfig(zoom: 3),
+              enemies: result.enemies,
+              map: result.dungeon,
             );
           },
         );
       },
     );
   }
-
 }

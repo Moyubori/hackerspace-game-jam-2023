@@ -20,6 +20,7 @@ dependencies:
   bonfire: ^2.12.0
   fast_noise: ^1.0.1
   image: ^4.0.13
+  collection: ^1.16.0
 
 dev_dependencies:
   flutter_test:

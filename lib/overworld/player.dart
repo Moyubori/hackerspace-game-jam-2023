@@ -95,8 +95,8 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
 
     setupLighting(
       LightingConfig(
-        radius: width * 2.5,
-        blurBorder: width * 2,
+        radius: width * 3,
+        blurBorder: width * 3,
         color: Colors.deepOrangeAccent.withOpacity(0.2),
       ),
     );
