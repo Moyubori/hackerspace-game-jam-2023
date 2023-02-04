@@ -61,7 +61,7 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
   static const double rollDistance = 100;
 
   bool _canRoll = true;
-  bool _isRolling = false;
+  bool isRolling = false;
   double _rollStartTime = 0;
   double initialHp = 100;
   bool _canAttack = true;
@@ -105,7 +105,7 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
   }
 
   void roll() {
-    _isRolling = true;
+    isRolling = true;
     final double originalSpeed = speed;
     speed = 0;
     _rollingDirection = currentFacingDirection;
@@ -115,7 +115,7 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
       TimerComponent(
         period: rollDuration,
         onTick: () {
-          _isRolling = false;
+          isRolling = false;
           _canRoll = true;
           speed = originalSpeed;
           remove(children.whereType<RollAnimationComponent>().first);
@@ -127,7 +127,7 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
   @override
   void update(double dt) {
     super.update(dt);
-    if (_isRolling) {
+    if (isRolling) {
       (children.whereType<RollAnimationComponent>().first).position = position + Vector2(16, 16);
       moveByVector(_rollingDirection.toVector2() * rollDistance / rollDuration);
     }
@@ -135,7 +135,7 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
 
   @override
   void render(Canvas canvas) {
-    if (_isRolling) {
+    if (isRolling) {
       final double rollingAnimationProgress = (gameRef.currentTime() - _rollStartTime) / rollDuration;
       (children.whereType<RollAnimationComponent>().first).animationProgress = rollingAnimationProgress;
     } else {
@@ -158,7 +158,7 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
 
   @override
   void receiveDamage(AttackFromEnum attacker, double damage, dynamic identify) {
-    if (!_isRolling) {
+    if (!isRolling) {
       super.receiveDamage(attacker, damage, identify);
     }
   }

@@ -20,7 +20,7 @@ abstract class BaseWeapon extends InteractableItem {
   bool interact(MainPlayer player) {
     if(player.currentLvl >= reqLvl && !wasJustDropped) {
       var oldWeapon = player.equippedWeapon;
-      if(oldWeapon == this) {
+      if(oldWeapon == this || player.isRolling) {
         return true;
       }
       oldWeapon.isEquipped = false;
