@@ -2,7 +2,7 @@ import 'package:bonfire/bonfire.dart';
 
 class GoblinSpriteSheet {
   static Future<SpriteAnimation> get goblinIdleLeft => SpriteAnimation.load(
-    "enemy/goblin_idle_left.png",
+    "enemy/goblin/goblin_idle_left.png",
     SpriteAnimationData.sequenced(
       amount: 6,
       stepTime: 0.1,
@@ -11,7 +11,7 @@ class GoblinSpriteSheet {
   );
 
   static Future<SpriteAnimation> get goblinIdleRight => SpriteAnimation.load(
-    "enemy/goblin_idle.png",
+    "enemy/goblin/goblin_idle.png",
     SpriteAnimationData.sequenced(
       amount: 6,
       stepTime: 0.1,
@@ -20,7 +20,7 @@ class GoblinSpriteSheet {
   );
 
   static Future<SpriteAnimation> get goblinRunRight => SpriteAnimation.load(
-    "enemy/goblin_run_right.png",
+    "enemy/goblin/goblin_run_right.png",
     SpriteAnimationData.sequenced(
       amount: 6,
       stepTime: 0.1,
@@ -29,7 +29,7 @@ class GoblinSpriteSheet {
   );
 
   static Future<SpriteAnimation> get goblinRunLeft => SpriteAnimation.load(
-    "enemy/goblin_run_left.png",
+    "enemy/goblin/goblin_run_left.png",
     SpriteAnimationData.sequenced(
       amount: 6,
       stepTime: 0.1,

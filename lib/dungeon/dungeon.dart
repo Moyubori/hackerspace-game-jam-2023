@@ -7,8 +7,8 @@ import 'package:hackerspace_game_jam_2023/dungeon/builders/dungeon_tile_builder.
 import 'package:hackerspace_game_jam_2023/dungeon/builders/random_dungeon_builder.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/dungeon_map.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/builders/file_dungeon_builder.dart';
-import 'package:hackerspace_game_jam_2023/enemies/boss/centipede.dart';
-import 'package:hackerspace_game_jam_2023/enemies/goblin.dart';
+import 'package:hackerspace_game_jam_2023/enemies/centipede/centipede.dart';
+import 'package:hackerspace_game_jam_2023/enemies/goblin/goblin.dart';
 import 'package:hackerspace_game_jam_2023/interface/equipment_info.dart';
 import 'package:hackerspace_game_jam_2023/interface/life_bar.dart';
 import 'package:hackerspace_game_jam_2023/overworld/player.dart';

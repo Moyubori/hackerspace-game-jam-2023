@@ -1,13 +1,13 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
-import 'package:hackerspace_game_jam_2023/enemies/goblin_controller.dart';
+import 'package:hackerspace_game_jam_2023/enemies/goblin/goblin_controller.dart';
 import 'package:hackerspace_game_jam_2023/overworld/player.dart';
-import 'package:hackerspace_game_jam_2023/sprite_sheets/goblin_sprite_sheet.dart';
+import 'package:hackerspace_game_jam_2023/enemies/goblin/goblin_sprite_sheet.dart';
 
-import '../dungeon/demo_dungeon_map.dart';
-import '../sprite_sheets/common_sprite_sheet.dart';
-import 'awards.dart';
+import '../../dungeon/demo_dungeon_map.dart';
+import '../common/common_sprite_sheet.dart';
+import '../awards.dart';
 
 class Goblin extends SimpleEnemy
     with
