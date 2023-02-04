@@ -89,7 +89,7 @@ class WeaponComponent extends SpriteComponent with HasGameRef<BonfireGame> {
         final double pushAngle = math.atan2(pushDirection.x, pushDirection.y);
         final Vector2 diffBase = BonfireUtil.diffMovePointByAngle(
           hitEnemy.position,
-          32,
+          16,
           pushAngle,
         );
         final Vector2 rectAfterPush = hitEnemy.position.translate(diffBase.x, diffBase.y);

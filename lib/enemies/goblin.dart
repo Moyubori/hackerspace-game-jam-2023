@@ -97,6 +97,7 @@ class Goblin extends SimpleEnemy
       ),
     );
     super.removeLife(life);
+    ColorEffect(Colors.white, Offset(0, 1), EffectController(duration: 0.2));
   }
 
   @override

@@ -10,7 +10,6 @@ import 'package:hackerspace_game_jam_2023/overworld/ExpManager.dart';
 import 'package:hackerspace_game_jam_2023/sprite_sheets/common_sprite_sheet.dart';
 
 import '../equipment/base_equipment.dart';
-import '../equipment/base_item.dart';
 import '../equipment/weapon_component.dart';
 
 class PlayerSpriteSheet {
@@ -62,6 +61,7 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
 
   bool _canRoll = true;
   bool isRolling = false;
+  bool isIframe = false;
   double _rollStartTime = 0;
   double initialHp = 100;
   bool _canAttack = true;
@@ -158,8 +158,18 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
 
   @override
   void receiveDamage(AttackFromEnum attacker, double damage, dynamic identify) {
-    if (!isRolling) {
+    if (!isRolling && !isIframe) {
       super.receiveDamage(attacker, damage, identify);
+      isIframe = true;
+      add(SequenceEffect([
+        ColorEffect(Colors.white, Offset(0, 0), EffectController(duration: 0.1)),
+        ColorEffect(Colors.white, Offset(1, 1), EffectController(duration: 0.2)),
+        ColorEffect(Colors.white, Offset(0, 0), EffectController(duration: 0.1)),
+        ColorEffect(Colors.white, Offset(1, 1), EffectController(duration: 0.2)),
+        ColorEffect(Colors.white, Offset(0, 0), EffectController(duration: 0.1)),
+      ], onComplete: () {
+        isIframe = false;
+      }));
     }
   }
 
