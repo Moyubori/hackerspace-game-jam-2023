@@ -5,10 +5,9 @@ import 'package:bonfire/mixins/keyboard_listener.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
+import 'package:hackerspace_game_jam_2023/dungeon_map.dart';
 
-import '../dungeon_provider.dart';
-
-import '../item.dart';
+import '../inventory_item.dart';
 
 class PlayerSpriteSheet {
   static Future<SpriteAnimation> get idleLeft => SpriteAnimation.load(
@@ -82,12 +81,12 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
         collisions: [
           CollisionArea.rectangle(
             size: Vector2(
-              DungeonProvider.tileSize / 2,
-              DungeonProvider.tileSize / 2.2,
+              DungeonMap.tileSize / 2,
+              DungeonMap.tileSize / 2.2,
             ),
             align: Vector2(
-              DungeonProvider.tileSize / 3.5,
-              DungeonProvider.tileSize / 2,
+              DungeonMap.tileSize / 3.5,
+              DungeonMap.tileSize / 2,
             ),
           )
         ],

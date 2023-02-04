@@ -4,7 +4,7 @@ import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
 import 'package:hackerspace_game_jam_2023/overworld/player.dart';
 
-import 'player.dart';
+import '../enemies/goblin.dart';
 
 class Overworld extends StatelessWidget {
   const Overworld({super.key});
@@ -20,6 +20,7 @@ class Overworld extends StatelessWidget {
       children: [
         BonfireWidget(
           player: player,
+          enemies: [Goblin(Vector2(6 * DungeonMap.tileSize, 8 * DungeonMap.tileSize))],
           joystick: Joystick(
             keyboardConfig: KeyboardConfig(),
           ),

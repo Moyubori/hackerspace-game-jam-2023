@@ -1,11 +1,11 @@
 import 'dart:math';
 
 import 'package:bonfire/bonfire.dart';
-import 'package:bonfire/collision/collision_area.dart';
-import 'package:bonfire/map/base/tile_model.dart';
-import 'package:bonfire/map/world_map.dart';
 
-class DungeonProvider {
+import 'chest.dart';
+import 'inventory_item.dart';
+
+class DungeonMap {
   static double tileSize = 45;
   static const String wallBottom = 'tile/wall_bottom.png';
   static const String wall = 'tile/wall.png';
@@ -109,48 +109,8 @@ class DungeonProvider {
 
   static List<GameDecoration> decorations() {
     return [
-      GameDecorationWithCollision.withSprite(
-        sprite: Sprite.load('itens/barrel.png'),
-        position: getRelativeTilePosition(10, 6),
-        size: Vector2(tileSize, tileSize),
-        collisions: [CollisionArea.rectangle(size: Vector2(tileSize / 1.5, tileSize / 1.5))],
-      ),
-      GameDecorationWithCollision.withSprite(
-        sprite: Sprite.load('itens/table.png'),
-        position: getRelativeTilePosition(15, 7),
-        size: Vector2(tileSize, tileSize),
-        collisions: [
-          CollisionArea.rectangle(size: Vector2(tileSize, tileSize * 0.8)),
-        ],
-      ),
-      GameDecorationWithCollision.withSprite(
-        sprite: Sprite.load('itens/table.png'),
-        position: getRelativeTilePosition(27, 6),
-        size: Vector2(tileSize, tileSize),
-        collisions: [
-          CollisionArea.rectangle(size: Vector2(tileSize, tileSize * 0.8)),
-        ],
-      ),
-      GameDecoration.withSprite(
-        sprite: Sprite.load('itens/flag_red.png'),
-        position: getRelativeTilePosition(24, 4),
-        size: Vector2(tileSize, tileSize),
-      ),
-      GameDecoration.withSprite(
-        sprite: Sprite.load('itens/flag_red.png'),
-        position: getRelativeTilePosition(6, 4),
-        size: Vector2(tileSize, tileSize),
-      ),
-      GameDecoration.withSprite(
-        sprite: Sprite.load('itens/prisoner.png'),
-        position: getRelativeTilePosition(10, 4),
-        size: Vector2(tileSize, tileSize),
-      ),
-      GameDecoration.withSprite(
-        sprite: Sprite.load('itens/flag_red.png'),
-        position: getRelativeTilePosition(14, 4),
-        size: Vector2(tileSize, tileSize),
-      )
+      Chest(Vector2(250, 300), [Potion(Vector2(0, 0))]),
+      Potion(Vector2(450, 240)),
     ];
   }
 
