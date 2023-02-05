@@ -29,11 +29,13 @@ class MyApp extends StatelessWidget {
       home: Navigator(
         key: navigatorKey,
         onGenerateRoute: (RouteSettings settings) {
-          if (!FlameAudio.bgm.isPlaying) {
-            FlameAudio.bgm.stop();
-            FlameAudio.bgm.initialize();
-            FlameAudio.bgm.play('bgm.ogg');
-          }
+          WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+            if (!FlameAudio.bgm.isPlaying) {
+              FlameAudio.bgm.stop();
+              FlameAudio.bgm.initialize();
+              FlameAudio.bgm.play('bgm.ogg');
+            }
+          });
           switch (settings.name) {
             case '/':
               return MaterialPageRoute(

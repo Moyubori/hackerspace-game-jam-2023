@@ -65,6 +65,12 @@ class DungeonWidget extends StatelessWidget {
             DungeonMap result = snapshot.data!;
             WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
               focusNode.requestFocus();
+              Future.delayed(Duration(seconds: 1), () {
+                focusNode.requestFocus();
+              });
+              Future.delayed(Duration(seconds: 2), () {
+                focusNode.requestFocus();
+              });
             });
 
             return Stack(
