@@ -12,5 +12,9 @@ class TileHelpers {
 
   bool isAbyss(TileModel model) => model.sprite!.path.contains('abyss');
 
+  bool isWall(TileModel model) => model.sprite!.path == DungeonTileBuilder.wall;
+
   bool isWallTop(TileModel model) => model.sprite!.path == DungeonTileBuilder.wallTop;
+
+  bool isWallBottom(TileModel model) => model.sprite!.path == DungeonTileBuilder.wallBottom;
 }

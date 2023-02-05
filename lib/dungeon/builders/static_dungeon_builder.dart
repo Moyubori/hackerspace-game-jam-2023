@@ -20,7 +20,7 @@ class StaticDungeonBuilder extends DungeonBuilder {
   Future<DungeonMap> build(DungeonMapConfig config) async {
     List<List<TileModel>> rawMap = await buildPaths(config);
 
-    decorate(rawMap);
+    buildWalls(rawMap);
 
     return DungeonMap(dungeon: WorldMap(rawMap.expand((tiles) => tiles).toList()));
   }
