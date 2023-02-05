@@ -62,12 +62,6 @@ class DungeonWidget extends StatelessWidget {
               );
             }
             DungeonMap result = snapshot.data!;
-            if (result.gatePos != null) {
-              result.decorations.add(DungeonGate(DungeonDecorationBuilder.getRelativeTilePosition(
-                result.gatePos!.x.toInt(),
-                result.gatePos!.y.toInt(),
-              )));
-            }
 
             return BonfireWidget(
               // constructionMode: true,

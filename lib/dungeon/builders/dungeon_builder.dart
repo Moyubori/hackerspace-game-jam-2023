@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
+import 'package:hackerspace_game_jam_2023/dungeon/builders/content/dungeon_decoration_builder.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/builders/tile_helpers.dart';
+import 'package:hackerspace_game_jam_2023/dungeon/dungeon_gate.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/dungeon_map.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/builders/dungeon_tile_builder.dart';
 
@@ -21,11 +23,20 @@ abstract class DungeonBuilder with TileHelpers {
 
     decorate(rawMap);
 
+    List<Enemy> enemies = config.enemyFactory?.createContent(rawMap, config, takenSpots) ?? [];
+    List<GameDecoration> decorations =
+        config.decorationFactory?.createContent(rawMap, config, takenSpots) ?? [];
+    if (gatePos != null) {
+      decorations.add(DungeonGate(DungeonDecorationBuilder.getRelativeTilePosition(
+        gatePos.x.toInt(),
+        gatePos.y.toInt(),
+      )));
+    }
+
     return DungeonMap(
       dungeon: WorldMap(rawMap.expand((line) => line).toList()),
-      enemies: config.enemyFactory?.createContent(rawMap, config, takenSpots) ?? [],
-      decorations: config.decorationFactory?.createContent(rawMap, config, takenSpots) ?? [],
-      gatePos: gatePos,
+      enemies: enemies,
+      decorations: decorations,
     );
   }
 
@@ -94,5 +105,6 @@ abstract class DungeonBuilder with TileHelpers {
     }
   }
 
-  Vector2? chooseGatePosition(List<List<TileModel>> rawMap, covariant DungeonMapConfig config) => null;
+  Vector2? chooseGatePosition(List<List<TileModel>> rawMap, covariant DungeonMapConfig config) =>
+      null;
 }
