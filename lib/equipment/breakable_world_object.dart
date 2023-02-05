@@ -59,7 +59,7 @@ class Barrel extends BreakableWorldObject {
       : super(position,
       Vector2(DungeonTileBuilder.tileSize, DungeonTileBuilder.tileSize),
       "itens/barrel.png",
-      "wooden_break.wav",
+      "ceramic_break.wav",
       [
         CollisionArea.circle(
             radius: DungeonTileBuilder.tileSize / 3, align: Vector2.all(DungeonTileBuilder.tileSize / 6)),
