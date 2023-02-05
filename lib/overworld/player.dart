@@ -108,7 +108,7 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    FlameAudio.bgm.dispose();
+    FlameAudio.bgm.stop();
     FlameAudio.bgm.initialize();
     FlameAudio.bgm.play('bgm.ogg');
     weaponComponent = WeaponComponent(this);

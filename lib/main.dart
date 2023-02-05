@@ -23,59 +23,37 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      home: Scaffold(
-        appBar: AppBar(
-          actions: [
-            TextButton(
-              onPressed: () => navigatorKey.currentState!.popAndPushNamed('/overworld'),
-              child: Text(
-                'overworld',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-            TextButton(
-              onPressed: () => navigatorKey.currentState!.popAndPushNamed('/fight'),
-              child: Text(
-                'fight',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-            TextButton(
-              onPressed: () => navigatorKey.currentState!.popAndPushNamed('/dungeon'),
-              child: Text(
-                'dungeon',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-            const SizedBox(
-              width: 100,
-            )
-          ],
-        ),
-        body: Navigator(
-          key: navigatorKey,
-          onGenerateRoute: (RouteSettings settings) {
-            switch (settings.name) {
-              case '/':
-                return MaterialPageRoute(
-                    builder: (_) => Scaffold(
-                          body: Center(
+      home: Navigator(
+        key: navigatorKey,
+        onGenerateRoute: (RouteSettings settings) {
+          switch (settings.name) {
+            case '/':
+              return MaterialPageRoute(
+                  builder: (_) => Scaffold(
+                        body: Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              fit: BoxFit.fitHeight,
+                              image: AssetImage('images/menu_art.jpg'),
+                            ),
+                          ),
+                          child: Center(
                             child: ElevatedButton(
                               onPressed: () => navigatorKey.currentState!.popAndPushNamed('/overworld'),
                               child: Text('Start!'),
                             ),
                           ),
                         ),
-                    settings: settings);
-              case '/overworld':
-                return MaterialPageRoute(builder: (_) => Overworld(), settings: settings);
-              case '/fight':
-                return MaterialPageRoute(builder: (_) => FightSceneWidget(), settings: settings);
-              case '/dungeon':
-                return MaterialPageRoute(builder: (_) => DungeonWidget(), settings: settings);
-            }
-          },
-        ),
+                      ),
+                  settings: settings);
+            case '/overworld':
+              return MaterialPageRoute(builder: (_) => Overworld(), settings: settings);
+            case '/fight':
+              return MaterialPageRoute(builder: (_) => FightSceneWidget(), settings: settings);
+            case '/dungeon':
+              return MaterialPageRoute(builder: (_) => DungeonWidget(), settings: settings);
+          }
+        },
       ),
     );
   }

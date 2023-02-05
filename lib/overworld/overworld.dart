@@ -19,28 +19,24 @@ class Overworld extends StatelessWidget {
       999999,
     );
 
-    return Stack(
-      children: [
-        BonfireWidget(
-          player: player,
-          enemies: [
-            Goblin(Vector2(10 * DemoDungeonMap.tileSize, 5 * DemoDungeonMap.tileSize)),
-            Centipede(Vector2(6 * DemoDungeonMap.tileSize, 5 * DemoDungeonMap.tileSize))
-          ],
-          joystick: Joystick(
-            keyboardConfig: KeyboardConfig(keyboardDirectionalType: KeyboardDirectionalType.wasdAndArrows),
-          ),
-          map: DemoDungeonMap.map(),
-          decorations: DemoDungeonMap.decorations(),
-          cameraConfig: CameraConfig(zoom: 3),
-          // constructionMode: true,
-          // showCollisionArea: true,
-          interface: GameInterface()
-            ..add(LifeBar())
-            ..add(EquipmentInfo())
-            ..add(ExpInfo()),
-        ),
+    return BonfireWidget(
+      player: player,
+      enemies: [
+        Goblin(Vector2(10 * DemoDungeonMap.tileSize, 5 * DemoDungeonMap.tileSize)),
+        Centipede(Vector2(6 * DemoDungeonMap.tileSize, 5 * DemoDungeonMap.tileSize))
       ],
+      joystick: Joystick(
+        keyboardConfig: KeyboardConfig(keyboardDirectionalType: KeyboardDirectionalType.wasdAndArrows),
+      ),
+      map: DemoDungeonMap.map(),
+      decorations: DemoDungeonMap.decorations(),
+      cameraConfig: CameraConfig(zoom: 3),
+      // constructionMode: true,
+      // showCollisionArea: true,
+      interface: GameInterface()
+        ..add(LifeBar())
+        ..add(EquipmentInfo())
+        ..add(ExpInfo()),
     );
   }
 }
