@@ -28,7 +28,7 @@ abstract class BaseWeapon extends InteractableItem {
       var oldWeaponPos = oldWeapon.position;
       oldWeaponPos.x = player.position.x;
       oldWeaponPos.y = player.position.y;
-      if(oldWeapon is! DummyWeapon) oldWeapon.addToParent(parent!);
+      if(oldWeapon is! DummyWeapon) oldWeapon.changeParent(parent!);
       player.equippedWeapon = this;
       var weaponData = player.weaponComponent;
       weaponData.isEquipped = true;

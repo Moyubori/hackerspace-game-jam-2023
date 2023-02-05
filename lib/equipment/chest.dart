@@ -84,7 +84,7 @@ class Chest extends GameDecoration with KeyboardEventListener {
         roll() => min + rnd.nextInt(max - min);
         var newPosition = Vector2(position.x + roll(), position.y + roll());
         element.position = newPosition;
-        gameRef.add(element);
+        element.changeParent(parent!);
         _addSmokeExplosion(newPosition);
       }
       _addSmokeExplosion(position);
