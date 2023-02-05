@@ -79,6 +79,45 @@ class MyApp extends StatelessWidget {
                         ),
                       ),
                   settings: settings);
+            case '/gameover':
+              return MaterialPageRoute(
+                  builder: (_) => Scaffold(
+                        body: Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              fit: BoxFit.fitHeight,
+                              image: AssetImage('images/background.jpg'),
+                            ),
+                          ),
+                          child: Center(
+                            child: Column(
+                              children: [
+                                const Spacer(),
+                                Image.asset('images/gameover.gif'),
+                                const Spacer(),
+                                Image.asset(
+                                  'images/skeletal.png',
+                                  scale: 0.5,
+                                ),
+                                const Spacer(),
+                                SpriteButton.future(
+                                  sprite: Sprite.load('button.png'),
+                                  pressedSprite: Sprite.load('button_click.png'),
+                                  onPressed: () => navigatorKey.currentState!.popAndPushNamed('/'),
+                                  width: 292,
+                                  height: 64,
+                                  label: Text(
+                                    'Back to Main Menu',
+                                    style: TextStyle(fontSize: 24, color: Colors.white70),
+                                  ),
+                                ),
+                                const Spacer(),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                  settings: settings);
             case '/overworld':
               return MaterialPageRoute(builder: (_) => Overworld(), settings: settings);
             case '/fight':
