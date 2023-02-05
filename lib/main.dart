@@ -57,8 +57,7 @@ class MyApp extends StatelessWidget {
                                   SpriteButton.future(
                                     sprite: Sprite.load('button.png'),
                                     pressedSprite: Sprite.load('button_click.png'),
-                                    onPressed: () =>
-                                        navigatorKey.currentState!.popAndPushNamed('/dungeon'),
+                                    onPressed: () => navigatorKey.currentState!.popAndPushNamed('/dungeon'),
                                     width: 292,
                                     height: 64,
                                     label: Text(
@@ -94,10 +93,10 @@ class MyApp extends StatelessWidget {
                             child: Column(
                               children: [
                                 const Spacer(),
-                                Image.asset(
+                                Image.network(
                                     'https://raw.githubusercontent.com/Moyubori/ggj2023.github.io/main/assets/assets/images/gameover.gif'),
                                 const Spacer(),
-                                Image.asset(
+                                Image.network(
                                   'https://raw.githubusercontent.com/Moyubori/ggj2023.github.io/main/assets/assets/images/skeletal.png',
                                   scale: 0.5,
                                 ),
@@ -126,8 +125,7 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(builder: (_) => FightSceneWidget(), settings: settings);
             case '/dungeon':
               return MaterialPageRoute(
-                  builder: (_) => DungeonWidget(dungeonSize: settings.arguments as int?),
-                  settings: settings);
+                  builder: (_) => DungeonWidget(dungeonSize: settings.arguments as int?), settings: settings);
           }
         },
       ),
