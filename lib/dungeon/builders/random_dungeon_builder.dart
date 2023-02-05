@@ -49,7 +49,7 @@ class RandomDungeonBuilder extends DungeonBuilder {
     _insertCaves(cavePositions, 5, rawMap, config.mapSize);
     List<MapEntry<Vector2, Vector2>> neighbours = _buildTree(cavePositions, centerCave);
     _buildPaths(neighbours, rawMap, config.mapSize, config.mapSize);
-    _patchSingles(rawMap);
+    _patchSingles(rawMap, config);
     _trimEdges(rawMap);
 
     return rawMap;
@@ -198,14 +198,16 @@ class RandomDungeonBuilder extends DungeonBuilder {
     }
   }
 
-  void _patchSingles(List<List<TileModel>> rawMap) {
+  void _patchSingles(List<List<TileModel>> rawMap, DungeonMapConfig config) {
     for (int x = 0; x < rawMap.length; x++) {
       for (int y = 0; y < rawMap.length; y++) {
         if (x + 1 < rawMap.length &&
             x - 1 >= 0 &&
             isAbyss(rawMap[x][y]) &&
             isFloor(rawMap[x + 1][y]) &&
-            isFloor(rawMap[x - 1][y])) {
+            isFloor(rawMap[x - 1][y]) &&
+            Vector2((x + 1).toDouble(), y.toDouble()) != config.startingPos
+        ) {
           rawMap[x + 1][y] = dungeonTileBuilder.buildAbyss(x + 1, y);
         }
 
