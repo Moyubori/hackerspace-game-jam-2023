@@ -88,7 +88,7 @@ class DungeonWidget extends StatelessWidget {
                     keyboardConfig: KeyboardConfig(keyboardDirectionalType: KeyboardDirectionalType.wasdAndArrows),
                   ),
                   lightingColorGame: Colors.black,
-                  cameraConfig: CameraConfig(zoom: 3),
+                  cameraConfig: CameraConfig(zoom: 2.5),
                   interface: GameInterface()
                     ..add(LifeBar())
                     ..add(EquipmentInfo())
@@ -96,6 +96,27 @@ class DungeonWidget extends StatelessWidget {
                   enemies: result.enemies,
                   decorations: result.decorations,
                   map: result.dungeon,
+                  overlayBuilderMap: {
+                    'miniMap': (context, game) => MiniMap(
+                      game: game,
+                      margin: EdgeInsets.all(20),
+                      borderRadius: BorderRadius.circular(10),
+                      size: Vector2.all(constraints.maxHeight / 4),
+                      border: Border.all(color: Colors.white.withOpacity(0.5)),
+                      zoom: 0.5,
+                      // backgroundColor: Color(),
+                      // tileCollisionColor: Color(),
+                      // tileColor: Color(),
+                      // playerColor: Color(),
+                      // enemyColor: Color(),
+                      // npcColor: Color(),
+                      // allyColor: Color(),
+                      // decorationColor: Color(),
+                    ),
+                  },
+                  initialActiveOverlays: [
+                    'miniMap',
+                  ],
                 ),
                 Positioned(
                   top: 10,

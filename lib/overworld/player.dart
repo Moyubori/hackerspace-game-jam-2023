@@ -75,7 +75,7 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
   double _rollStartTime = 0;
   double initialHp = 100;
   bool _canAttack = true;
-  BaseWeapon equippedWeapon = Hammer(Vector2(0, 0), 1, isEquipped: true);
+  late BaseWeapon equippedWeapon;
   double currentExp = 0;
   static int initialLevel = 1;
   int currentLvl = initialLevel;
@@ -100,8 +100,8 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
 
     setupLighting(
       LightingConfig(
-        radius: width * 3,
-        blurBorder: width * 3,
+        radius: width * 2.5,
+        blurBorder: width * 2,
         color: Colors.deepOrangeAccent.withOpacity(0.2),
       ),
     );
@@ -114,6 +114,8 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
     // FlameAudio.bgm.initialize();
     // FlameAudio.bgm.play('bgm.ogg');
     weaponComponent = WeaponComponent(this);
+    equippedWeapon = Hammer(Vector2(0, 0), 1, isEquipped: true);
+    equippedWeapon.sprite = await Sprite.load("Hammer.png");
     weaponComponent.isEquipped = true;
     weaponComponent.dmg = equippedWeapon.baseDmg;
     weaponComponent.swingDuration = equippedWeapon.swingDuration;

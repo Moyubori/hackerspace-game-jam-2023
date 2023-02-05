@@ -57,7 +57,8 @@ class MyApp extends StatelessWidget {
                                   SpriteButton.future(
                                     sprite: Sprite.load('button.png'),
                                     pressedSprite: Sprite.load('button_click.png'),
-                                    onPressed: () => navigatorKey.currentState!.popAndPushNamed('/dungeon'),
+                                    onPressed: () =>
+                                        navigatorKey.currentState!.popAndPushNamed('/dungeon'),
                                     width: 292,
                                     height: 64,
                                     label: Text(
@@ -124,7 +125,9 @@ class MyApp extends StatelessWidget {
             case '/fight':
               return MaterialPageRoute(builder: (_) => FightSceneWidget(), settings: settings);
             case '/dungeon':
-              return MaterialPageRoute(builder: (_) => DungeonWidget(), settings: settings);
+              return MaterialPageRoute(
+                  builder: (_) => DungeonWidget(dungeonSize: settings.arguments as int?),
+                  settings: settings);
           }
         },
       ),
