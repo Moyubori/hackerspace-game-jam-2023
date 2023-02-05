@@ -4,10 +4,9 @@ const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
   "version.json": "ae63c0feeeed8c8a8ac9e1cf372f97c7",
-"index.html": "86c7556a3d2e7c91ddbf53f54341e128",
-"/": "86c7556a3d2e7c91ddbf53f54341e128",
-"main.dart.js": "d03575db779ffa4193a88e2b516b2406",
-"flutter.js": "f85e6fb278b0fd20c349186fb46ae36d",
+"index.html": "39608792fb8c52658d2c396d1fa64ba3",
+"/": "39608792fb8c52658d2c396d1fa64ba3",
+"main.dart.js": "16a3d3c405d682a8008856d37d0d90b3",
 "favicon.png": "5dcef449791fa27946b3d35ad8803796",
 "icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
 "icons/Icon-maskable-192.png": "c457ef57daa1d16f64b27b786ec2ea3c",
@@ -220,11 +219,7 @@ const RESOURCES = {
 "assets/assets/audio/metal-ringing.wav": "c66898f089e522f18a4d145ed89d7f45",
 "assets/assets/audio/armor-light.wav": "96bdf960c4a96e42a80888ac49e236b4",
 "assets/assets/audio/door.wav": "1f54fcae089c345cbf4e14158f00872f",
-"assets/assets/levels/sampleLevel.png": "3169da3a928292586c65161dd8602b50",
-"canvaskit/canvaskit.js": "2bc454a691c631b07a9307ac4ca47797",
-"canvaskit/profiling/canvaskit.js": "38164e5a72bdad0faa4ce740c9b8e564",
-"canvaskit/profiling/canvaskit.wasm": "95a45378b69e77af5ed2bc72b2209b94",
-"canvaskit/canvaskit.wasm": "bf50631470eb967688cca13ee181af62"
+"assets/assets/levels/sampleLevel.png": "3169da3a928292586c65161dd8602b50"
 };
 
 // The application shell files that are downloaded before a service worker can
