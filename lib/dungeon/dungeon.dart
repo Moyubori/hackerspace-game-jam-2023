@@ -1,4 +1,5 @@
 import 'package:bonfire/bonfire.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/builders/content/decoration_factory.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/builders/content/enemy_factory.dart';
@@ -65,12 +66,10 @@ class DungeonWidget extends StatelessWidget {
             DungeonMap result = snapshot.data!;
             WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
               focusNode.requestFocus();
-              Future.delayed(Duration(seconds: 1), () {
-                focusNode.requestFocus();
-              });
-              Future.delayed(Duration(seconds: 2), () {
-                focusNode.requestFocus();
-              });
+              if (!FlameAudio.bgm.isPlaying) {
+                FlameAudio.bgm.initialize();
+                FlameAudio.bgm.play('bgm.ogg');
+              }
             });
 
             return Stack(
