@@ -16,7 +16,7 @@ class Overworld extends StatelessWidget {
   Widget build(BuildContext context) {
     MainPlayer player = MainPlayer(
       Vector2((4 * DemoDungeonMap.tileSize), (6 * DemoDungeonMap.tileSize)),
-      999999,
+      1,
     );
     return Stack(
       children: [

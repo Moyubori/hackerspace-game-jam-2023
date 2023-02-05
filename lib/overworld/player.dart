@@ -7,8 +7,8 @@ import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/demo_dungeon_map.dart';
-import 'package:hackerspace_game_jam_2023/overworld/reward_manager.dart';
 import 'package:hackerspace_game_jam_2023/enemies/common/common_sprite_sheet.dart';
+import 'package:hackerspace_game_jam_2023/overworld/reward_manager.dart';
 
 import '../equipment/base_equipment.dart';
 import '../equipment/weapon_component.dart';
@@ -108,9 +108,9 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    FlameAudio.bgm.stop();
-    FlameAudio.bgm.initialize();
-    FlameAudio.bgm.play('bgm.ogg');
+    // FlameAudio.bgm.stop();
+    // FlameAudio.bgm.initialize();
+    // FlameAudio.bgm.play('bgm.ogg');
     weaponComponent = WeaponComponent(this);
     gameRef.add(weaponComponent);
   }
