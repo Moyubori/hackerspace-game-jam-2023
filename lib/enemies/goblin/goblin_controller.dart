@@ -1,7 +1,7 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:bonfire/state_manager/state_controller.dart';
 
-import '../dungeon/demo_dungeon_map.dart';
+import '../../dungeon/demo_dungeon_map.dart';
 import 'goblin.dart';
 
 class GoblinController extends StateController<Goblin> {

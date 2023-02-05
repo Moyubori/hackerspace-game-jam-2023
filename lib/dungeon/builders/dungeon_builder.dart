@@ -1,14 +1,12 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:bonfire/bonfire.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:hackerspace_game_jam_2023/dungeon/builders/dungeon_decoration_builder.dart';
+import 'package:hackerspace_game_jam_2023/dungeon/builders/content/dungeon_decoration_builder.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/builders/tile_helpers.dart';
+import 'package:hackerspace_game_jam_2023/dungeon/dungeon_gate.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/dungeon_map.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/builders/dungeon_tile_builder.dart';
-import 'package:hackerspace_game_jam_2023/enemies/goblin.dart';
 
 abstract class DungeonBuilder with TileHelpers {
   @protected
@@ -16,13 +14,29 @@ abstract class DungeonBuilder with TileHelpers {
 
   Future<DungeonMap> build(covariant DungeonMapConfig config) async {
     List<List<TileModel>> rawMap = await buildPaths(config);
+    List<Vector2> takenSpots = [];
+
+    Vector2? gatePos = chooseGatePosition(rawMap, config);
+    if (gatePos != null) {
+      takenSpots.add(gatePos);
+    }
 
     decorate(rawMap);
 
+    List<Enemy> enemies = config.enemyFactory?.createContent(rawMap, config, takenSpots) ?? [];
+    List<GameDecoration> decorations =
+        config.decorationFactory?.createContent(rawMap, config, takenSpots) ?? [];
+    if (gatePos != null) {
+      decorations.add(DungeonGate(DungeonDecorationBuilder.getRelativeTilePosition(
+        gatePos.x.toInt(),
+        gatePos.y.toInt(),
+      )));
+    }
+
     return DungeonMap(
       dungeon: WorldMap(rawMap.expand((line) => line).toList()),
-      enemies: config.enemyFactory?.createContent(rawMap, config) ?? [],
-      decorations: config.decorationFactory?.createContent(rawMap, config) ?? [],
+      enemies: enemies,
+      decorations: decorations,
     );
   }
 
@@ -90,4 +104,7 @@ abstract class DungeonBuilder with TileHelpers {
       }
     }
   }
+
+  Vector2? chooseGatePosition(List<List<TileModel>> rawMap, covariant DungeonMapConfig config) =>
+      null;
 }

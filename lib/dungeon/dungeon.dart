@@ -1,23 +1,28 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/builders/content/decoration_factory.dart';
+import 'package:hackerspace_game_jam_2023/dungeon/builders/content/dungeon_decoration_builder.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/builders/content/enemy_factory.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/builders/dungeon_builder.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/builders/dungeon_tile_builder.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/builders/random_dungeon_builder.dart';
+import 'package:hackerspace_game_jam_2023/dungeon/dungeon_gate.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/dungeon_map.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/builders/file_dungeon_builder.dart';
-import 'package:hackerspace_game_jam_2023/enemies/boss/centipede.dart';
-import 'package:hackerspace_game_jam_2023/enemies/goblin.dart';
+import 'package:hackerspace_game_jam_2023/enemies/centipede/centipede.dart';
+import 'package:hackerspace_game_jam_2023/enemies/goblin/goblin.dart';
 import 'package:hackerspace_game_jam_2023/interface/equipment_info.dart';
+import 'package:hackerspace_game_jam_2023/interface/exp_info.dart';
 import 'package:hackerspace_game_jam_2023/interface/life_bar.dart';
 import 'package:hackerspace_game_jam_2023/overworld/player.dart';
 
 class DungeonWidget extends StatelessWidget {
+  final int dungeonSize;
+
   late DungeonBuilder _dungeonBuilder;
   late DungeonMapConfig _mapConfig;
 
-  DungeonWidget({super.key});
+  DungeonWidget({super.key, int? dungeonSize}) : dungeonSize = dungeonSize ?? 32;
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +33,9 @@ class DungeonWidget extends StatelessWidget {
     // );
     _dungeonBuilder = RandomDungeonBuilder();
     _mapConfig = RandomDungeonMapConfig(
-      mapSize: 32,
-      startingBlobs: 8,
-      startingPos: Vector2(16, 16),
+      mapSize: dungeonSize,
+      startingBlobs: dungeonSize ~/ 4,
+      startingPos: Vector2(dungeonSize / 2, dungeonSize / 2),
       enemyFactory: EnemyFactory()
         ..withEnemy(EnemyDefinition(builder: (pos) => Goblin(pos), spawnProbability: 0.9))
         ..withEnemy(EnemyDefinition(builder: (pos) => Centipede(pos), spawnProbability: 0.1)),
@@ -57,6 +62,7 @@ class DungeonWidget extends StatelessWidget {
               );
             }
             DungeonMap result = snapshot.data!;
+
             return BonfireWidget(
               // constructionMode: true,
               player: MainPlayer(
@@ -69,11 +75,12 @@ class DungeonWidget extends StatelessWidget {
               joystick: Joystick(
                 keyboardConfig: KeyboardConfig(keyboardDirectionalType: KeyboardDirectionalType.wasdAndArrows),
               ),
-              // lightingColorGame: Colors.black,
-              // cameraConfig: CameraConfig(zoom: 3),
+              lightingColorGame: Colors.black,
+              cameraConfig: CameraConfig(zoom: 1),
               interface: GameInterface()
                 ..add(LifeBar())
-                ..add(EquipmentInfo()),
+                ..add(EquipmentInfo())
+                ..add(ExpInfo()),
               enemies: result.enemies,
               decorations: result.decorations,
               map: result.dungeon,

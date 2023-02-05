@@ -8,7 +8,7 @@ import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 
 import '../enemies/awards.dart';
-import '../overworld/ExpManager.dart';
+import '../overworld/reward_manager.dart';
 import '../overworld/player.dart';
 
 class WeaponComponent extends SpriteComponent with HasGameRef<BonfireGame> {
@@ -103,7 +103,7 @@ class WeaponComponent extends SpriteComponent with HasGameRef<BonfireGame> {
           gameRef.camera.shake(duration: 0.1 + (dmg / 1000), intensity: 4 + (dmg / 100));
         }
         if (hitEnemy.isDead) {
-          ExpManager.giveAwardsToKiller(player, (hitEnemy as awards).exp());
+          RewardManager.giveAwardsToKiller(player, hitEnemy);
         }
       });
     }
