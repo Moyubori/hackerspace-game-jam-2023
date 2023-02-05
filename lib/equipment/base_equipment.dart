@@ -77,14 +77,25 @@ abstract class BaseWeapon extends InteractableItem with KeyboardEventListener {
 
   @override
   void render(Canvas c) {
-    var style = const TextStyle(color: Colors.white, fontSize: 10);
+    var player = gameRef.player as MainPlayer;
+    var equipable = player.currentLvl >= reqLvl;
+    Color color = Colors.white;
+    if(!equipable) {
+      color = Colors.red;
+    }
+    var style = TextStyle(color: color, fontSize: 10);
     var basePos = Vector2.copy(position);
-    basePos.y -= 5;
+    basePos.y -= 10;
     TextPaint(style: style).render(c, "LV: $reqLvl", basePos);
     if(_observedPlayer && !isEquipped) {
-      var newPos = Vector2.copy(position);
-      newPos.y -= 15;
+      var newPos = Vector2.copy(basePos);
+      newPos.y -= 10;
       TextPaint(style: style).render(c, "Pickup (E)", newPos);
+      if(!equipable) {
+        var newPos2 = Vector2.copy(newPos);
+        newPos2.y -= 10;
+        TextPaint(style: style).render(c, "Too low LV", newPos2);
+      }
     }
     super.render(c);
   }
