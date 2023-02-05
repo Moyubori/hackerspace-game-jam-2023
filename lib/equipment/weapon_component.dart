@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import '../enemies/awards.dart';
 import '../overworld/reward_manager.dart';
 import '../overworld/player.dart';
+import 'breakable_world_object.dart';
 
 class WeaponComponent extends SpriteComponent with HasGameRef<BonfireGame> {
   late double swingDuration;
@@ -80,6 +81,10 @@ class WeaponComponent extends SpriteComponent with HasGameRef<BonfireGame> {
         : math.pi * 1.25 - math.atan2(positionRelativeToPlayer.x, positionRelativeToPlayer.y);
 
     if (_isSwinging) {
+      gameRef
+        .visibleComponentsByType<BreakableWorldObject>()
+        .where((element) => element.overlaps(toRect()))
+        .forEach((element) => element.breakObject());
       gameRef
           .visibleAttackables()
           .where((a) => a.rectAttackable().overlaps(toRect()) && a != player && !_enemiesDamagedThisSwing.contains(a))

@@ -4,6 +4,7 @@ import 'package:hackerspace_game_jam_2023/equipment/axe.dart';
 import 'package:hackerspace_game_jam_2023/equipment/chest.dart';
 import 'package:hackerspace_game_jam_2023/equipment/sword.dart';
 
+import '../equipment/breakable_world_object.dart';
 import '../equipment/potion.dart';
 
 class DemoDungeonMap {
@@ -62,30 +63,9 @@ class DemoDungeonMap {
 
   static List<GameDecoration> decorations() {
     return [
-      GameDecorationWithCollision.withSprite(
-        sprite: Sprite.load('itens/barrel.png'),
-        position: getRelativeTilePosition(10, 6),
-        size: Vector2(tileSize, tileSize),
-        collisions: [
-          CollisionArea.circle(radius: tileSize / 3, align: Vector2.all(tileSize / 6)),
-        ],
-      ),
-      GameDecorationWithCollision.withSprite(
-        sprite: Sprite.load('itens/table.png'),
-        position: getRelativeTilePosition(15, 7),
-        size: Vector2(tileSize, tileSize),
-        collisions: [
-          CollisionArea.circle(radius: tileSize * 0.4, align: Vector2.all(tileSize * 0.1)),
-        ],
-      ),
-      GameDecorationWithCollision.withSprite(
-        sprite: Sprite.load('itens/table.png'),
-        position: getRelativeTilePosition(27, 6),
-        size: Vector2(tileSize, tileSize),
-        collisions: [
-          CollisionArea.circle(radius: tileSize * 0.4, align: Vector2.all(tileSize * 0.1)),
-        ],
-      ),
+      Barrel(getRelativeTilePosition(10, 6)),
+      Table(getRelativeTilePosition(15, 7)),
+      Table(getRelativeTilePosition(27, 6)),
       GameDecoration.withSprite(
         sprite: Sprite.load('itens/flag_red.png'),
         position: getRelativeTilePosition(24, 4),
