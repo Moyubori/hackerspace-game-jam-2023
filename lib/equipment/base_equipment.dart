@@ -9,10 +9,10 @@ import 'package:hackerspace_game_jam_2023/overworld/player.dart';
 abstract class BaseWeapon extends InteractableItem {
   double baseDmg;
   double swingDuration;
-  bool isEquipped = false;
+  bool isEquipped;
   int reqLvl = 1;
   bool wasJustDropped = false;
-  BaseWeapon(super.position, super.file, this.baseDmg, this.swingDuration, this.reqLvl);
+  BaseWeapon(super.position, super.file, this.baseDmg, this.swingDuration, this.reqLvl, {this.isEquipped = false});
   BaseWeapon.noPosition(String file, double dmg, double swingDuration, int reqLvl)
       : this(Vector2(0, 0), file, dmg, swingDuration, reqLvl);
 
@@ -47,7 +47,7 @@ abstract class BaseWeapon extends InteractableItem {
 
   @override
   void render(Canvas c) {
-    var style = const TextStyle(color: Colors.white, fontSize: 5);
+    var style = const TextStyle(color: Colors.white, fontSize: 10);
     var basePos = Vector2.copy(position);
     basePos.y -= 5;
     TextPaint(style: style).render(c, "LV: $reqLvl", basePos);

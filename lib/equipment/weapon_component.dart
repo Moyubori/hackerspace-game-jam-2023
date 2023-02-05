@@ -34,7 +34,7 @@ class WeaponComponent extends SpriteComponent with HasGameRef<BonfireGame> {
 
   @override
   Future<void> onLoad() async {
-    anyWeapon = await Sprite.load('axe.png');
+    anyWeapon = await Sprite.load('hammer.png');
     sprite = anyWeapon;
     size = Vector2(32, 32);
     anchor = Anchor.center;
