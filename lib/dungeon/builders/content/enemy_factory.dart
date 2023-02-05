@@ -9,8 +9,9 @@ typedef EnemyBuilder = Enemy Function(Vector2);
 class EnemyDefinition {
   final EnemyBuilder builder;
   final double spawnProbability;
+  final int size;
 
-  EnemyDefinition({required this.builder, required this.spawnProbability});
+  EnemyDefinition({required this.builder, required this.spawnProbability, this.size = 1});
 }
 
 class EnemyFactory extends DungeonContentFactory<Enemy> {
