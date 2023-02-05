@@ -39,11 +39,36 @@ class MyApp extends StatelessWidget {
                               image: AssetImage('images/menu_art.jpg'),
                             ),
                           ),
-                          child: Center(
-                            child: ElevatedButton(
-                              onPressed: () => navigatorKey.currentState!.popAndPushNamed('/overworld'),
-                              child: Text('Start!'),
-                            ),
+                          child: Row(
+                            children: [
+                              const Spacer(),
+                              Column(
+                                children: [
+                                  const Spacer(
+                                    flex: 2,
+                                  ),
+                                  Image.asset('images/logo.png'),
+                                  const Spacer(),
+                                  SpriteButton.future(
+                                    sprite: Sprite.load('button.png'),
+                                    pressedSprite: Sprite.load('button_click.png'),
+                                    onPressed: () => navigatorKey.currentState!.popAndPushNamed('/overworld'),
+                                    width: 292,
+                                    height: 64,
+                                    label: Text(
+                                      'Start!',
+                                      style: TextStyle(fontSize: 36, color: Colors.white70),
+                                    ),
+                                  ),
+                                  const Spacer(
+                                    flex: 2,
+                                  ),
+                                ],
+                              ),
+                              const Spacer(
+                                flex: 9,
+                              ),
+                            ],
                           ),
                         ),
                       ),
