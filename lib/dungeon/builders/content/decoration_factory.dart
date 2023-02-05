@@ -22,6 +22,7 @@ class DecorationFactory extends DungeonContentFactory<GameDecoration> {
             && decorationPositions.none((p) => getManhattanDistance(p, currentPos) < 10)
             && !isTaken(currentPos, takenSpots)) {
           decorationPositions.add(currentPos);
+          takenSpots.add(currentPos);
         }
       }
     }

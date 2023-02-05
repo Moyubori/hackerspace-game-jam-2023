@@ -31,22 +31,23 @@ class RandomDungeonBuilder extends DungeonBuilder {
             (x) => List.generate(config.mapSize, (y) => dungeonTileBuilder.buildAbyss(x, y)));
 
     // select initial blob positions
-    List<Vector2> blobs = [];
-    while (blobs.length < config.startingBlobs) {
+    List<Vector2> cavePositions = [];
+    while (cavePositions.length < config.startingBlobs) {
       int x = random.nextInt(config.mapSize);
       int y = random.nextInt(config.mapSize);
 
       final Vector2 blobPos = Vector2(x.toDouble(), y.toDouble());
-      if (blobs.none((e) => getManhattanDistance(e, blobPos) < 10)) {
-        blobs.add(blobPos);
+      if (cavePositions.none((e) => getManhattanDistance(e, blobPos) < 10)) {
+        cavePositions.add(blobPos);
       }
     }
 
-    Vector2 centerBlob = config.startingPos;
+    Vector2 centerCave = config.startingPos;
 
     // build blobs
-    _insertBlobs(blobs, centerBlob, rawMap, config.mapSize, config.mapSize);
-    List<MapEntry<Vector2, Vector2>> neighbours = _buildTree(blobs, centerBlob);
+    _insertCave(centerCave, 5, rawMap, config.mapSize);
+    _insertCaves(cavePositions, 5, rawMap, config.mapSize);
+    List<MapEntry<Vector2, Vector2>> neighbours = _buildTree(cavePositions, centerCave);
     _buildPaths(neighbours, rawMap, config.mapSize, config.mapSize);
     _patchSingles(rawMap);
     _trimEdges(rawMap);
@@ -69,11 +70,28 @@ class RandomDungeonBuilder extends DungeonBuilder {
     return null;
   }
 
-  void _insertBlobs(
-      List<Vector2> blobs, Vector2 centerBlob, List<List<TileModel>> rawMap, int cols, int rows) {
-    _insertBlob(centerBlob, rawMap, cols, rows);
-    for (Vector2 blobPos in blobs) {
-      _insertBlob(blobPos, rawMap, cols, rows);
+  void _insertCaves(List<Vector2> cavePositions, int caveSize, List<List<TileModel>> rawMap, int mapSize) {
+    for (Vector2 cavePosition in cavePositions) {
+      _insertCave(cavePosition, caveSize, rawMap, mapSize);
+    }
+  }
+
+  void _insertCave(Vector2 cavePos, int caveSize, List<List<TileModel>> rawMap, int mapSize) {
+    final int caveXpos = cavePos.x.toInt();
+    final int caveYpos = cavePos.y.toInt();
+
+    for (int x = 0; x < caveSize; x++) {
+      if (caveXpos + x == mapSize) {
+        break;
+      }
+
+      for (int y = 0; y < caveSize; y++) {
+        if (caveYpos + y == mapSize) {
+          break;
+        }
+
+        rawMap[caveXpos + x][caveYpos + y] = dungeonTileBuilder.buildFloor(caveXpos + x, caveYpos + y);
+      }
     }
   }
 
@@ -114,6 +132,8 @@ class RandomDungeonBuilder extends DungeonBuilder {
       }
     }
   }
+
+  void _paintPath(Vector2 pathPos, List<List<TileModel>> rawMap, int mapSize) => _insertCave(pathPos, 2, rawMap, mapSize);
 
   List<MapEntry<Vector2, Vector2>> _buildTree(List<Vector2> blobs, Vector2 centerBlob) {
     final Map<Vector2, Vector2> neighbours = {};
@@ -159,7 +179,8 @@ class RandomDungeonBuilder extends DungeonBuilder {
         int xPos = goLeft ? xStart + x : xStart - x;
 
         if (xPos >= 0 && xPos < rawMap.length) {
-          _insertBlob(Vector2(xPos.toDouble(), yStart.toDouble()), rawMap, cols, rows);
+          _paintPath(Vector2(xPos.toDouble(), yStart.toDouble()), rawMap, rows);
+          // _insertBlob(Vector2(xPos.toDouble(), yStart.toDouble()), rawMap, cols, rows);
         } else {
           print('index out of bounds x: $xPos');
         }
@@ -168,7 +189,8 @@ class RandomDungeonBuilder extends DungeonBuilder {
       for (int y = 0; y < yAxisDiff + 1; y++) {
         int yPos = goUp ? yEnd - y : yEnd + y;
         if (yPos >= 0 && yPos < rawMap.length) {
-          _insertBlob(Vector2(xEnd.toDouble(), yPos.toDouble()), rawMap, cols, rows);
+          _paintPath(Vector2(xEnd.toDouble(), yPos.toDouble()), rawMap, rows);
+          // _insertBlob(Vector2(xEnd.toDouble(), yPos.toDouble()), rawMap, cols, rows);
         } else {
           print('index out of bounds y: $yPos');
         }
@@ -187,13 +209,13 @@ class RandomDungeonBuilder extends DungeonBuilder {
           rawMap[x + 1][y] = dungeonTileBuilder.buildAbyss(x + 1, y);
         }
 
-        if (y + 1 < rawMap.length &&
-            y - 1 >= 0 &&
-            isAbyss(rawMap[x][y]) &&
-            isFloor(rawMap[x][y + 1]) &&
-            isFloor(rawMap[x][y - 1])) {
-          rawMap[x][y + 1] = dungeonTileBuilder.buildAbyss(x, y + 1);
-        }
+        // if (y + 1 < rawMap.length &&
+        //     y - 1 >= 0 &&
+        //     isAbyss(rawMap[x][y]) &&
+        //     isFloor(rawMap[x][y + 1]) &&
+        //     isFloor(rawMap[x][y - 1])) {
+        //   rawMap[x][y + 1] = dungeonTileBuilder.buildAbyss(x, y + 1);
+        // }
       }
     }
   }
