@@ -17,6 +17,8 @@ import 'package:hackerspace_game_jam_2023/overworld/player.dart';
 class DungeonWidget extends StatelessWidget {
   final int dungeonSize;
 
+  final FocusNode focusNode = FocusNode();
+
   late DungeonBuilder _dungeonBuilder;
   late DungeonMapConfig _mapConfig;
 
@@ -60,17 +62,21 @@ class DungeonWidget extends StatelessWidget {
               );
             }
             DungeonMap result = snapshot.data!;
+            WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+              focusNode.requestFocus();
+            });
 
             return Stack(
               children: [
                 BonfireWidget(
                   // constructionMode: true,
+                  focusNode: focusNode,
                   player: MainPlayer(
                     Vector2(
                       _mapConfig.startingPos.x * DungeonTileBuilder.tileSize,
                       _mapConfig.startingPos.y * DungeonTileBuilder.tileSize,
                     ),
-                    1500,
+                    150,
                   ),
                   joystick: Joystick(
                     keyboardConfig: KeyboardConfig(keyboardDirectionalType: KeyboardDirectionalType.wasdAndArrows),

@@ -54,7 +54,8 @@ class MyApp extends StatelessWidget {
                                     flex: 2,
                                   ),
                                   Image.asset('images/logo.png'),
-                                  const Spacer(),
+                                  Image.asset('images/controls.png'),
+                                  const SizedBox(height: 10),
                                   SpriteButton.future(
                                     sprite: Sprite.load('button.png'),
                                     pressedSprite: Sprite.load('button_click.png'),
