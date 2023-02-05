@@ -21,13 +21,13 @@ class DungeonDecorationBuilder {
   GameDecoration getRandomDecoration(int x, int y) {
     int randValue = random.nextInt(10);
 
-    // if (randValue < 3) {
-    //   return buildTable(x, y);
-    // } else if (randValue < 8) {
-    //   return buildBarrel(x, y);
-    // } else {
+    if (randValue < 3) {
+      return buildTable(x, y);
+    } else if (randValue < 8) {
+      return buildBarrel(x, y);
+    } else {
       return buildChest(x, y);
-    // }
+    }
   }
 
   static Vector2 getRelativeTilePosition(int x, int y) {

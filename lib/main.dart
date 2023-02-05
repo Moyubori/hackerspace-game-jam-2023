@@ -1,5 +1,4 @@
 import 'package:bonfire/bonfire.dart';
-import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:hackerspace_game_jam_2023/enemies/centipede/centipede_controller.dart';
 import 'package:hackerspace_game_jam_2023/enemies/goblin/goblin_controller.dart';
@@ -29,11 +28,7 @@ class MyApp extends StatelessWidget {
       home: Navigator(
         key: navigatorKey,
         onGenerateRoute: (RouteSettings settings) {
-          if (!FlameAudio.bgm.isPlaying) {
-            FlameAudio.bgm.stop();
-            FlameAudio.bgm.initialize();
-            FlameAudio.bgm.play('bgm.ogg');
-          }
+          WidgetsBinding.instance.addPostFrameCallback((timeStamp) {});
           switch (settings.name) {
             case '/':
               return MaterialPageRoute(

@@ -11,6 +11,7 @@ class ExpInfo extends InterfaceComponent {
   double exp = 0;
   double neededExp = 0;
   int currentLvl = 1;
+  int enemiesLeft = 0;
 
   ExpInfo() : super(
       id: 3,
@@ -24,12 +25,13 @@ class ExpInfo extends InterfaceComponent {
     exp = player.currentExp;
     neededExp = player.expNeeded;
     currentLvl = player.currentLvl;
+    enemiesLeft = gameRef.enemies().length;
     super.update(dt);
   }
 
   @override
   void render(Canvas c) {
     var style = const TextStyle(color: Colors.yellow, fontSize: 30);
-    TextPaint(style: style).render(c, "LV: $currentLvl | XP: $exp | LV UP AT: $neededExp", Vector2(220, 0));
+    TextPaint(style: style).render(c, "LV: $currentLvl | XP: $exp | LV UP AT: $neededExp | ENEMIES: $enemiesLeft ", Vector2(220, 0));
   }
 }

@@ -1,7 +1,9 @@
 import 'package:bonfire/bonfire.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/builders/content/decoration_factory.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/builders/content/enemy_factory.dart';
+import 'package:hackerspace_game_jam_2023/dungeon/builders/content/new_enemy_factory.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/builders/dungeon_builder.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/builders/dungeon_tile_builder.dart';
 import 'package:hackerspace_game_jam_2023/dungeon/builders/random_dungeon_builder.dart';
@@ -36,9 +38,9 @@ class DungeonWidget extends StatelessWidget {
       mapSize: dungeonSize,
       startingBlobs: dungeonSize ~/ 4,
       startingPos: Vector2(dungeonSize / 2, dungeonSize / 2),
-      enemyFactory: EnemyFactory()
+      enemyFactory: NewEnemyFactory() // EnemyFactory()
         ..withEnemy(EnemyDefinition(builder: (pos) => Goblin(pos), spawnProbability: 0.9))
-        ..withEnemy(EnemyDefinition(builder: (pos) => Centipede(pos), spawnProbability: 0.1)),
+        ..withEnemy(EnemyDefinition(builder: (pos) => Centipede(pos), spawnProbability: 0.1, size: 3)),
       decorationFactory: DecorationFactory(),
     );
 
@@ -64,6 +66,10 @@ class DungeonWidget extends StatelessWidget {
             DungeonMap result = snapshot.data!;
             WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
               focusNode.requestFocus();
+              if (!FlameAudio.bgm.isPlaying) {
+                FlameAudio.bgm.initialize();
+                FlameAudio.bgm.play('bgm.ogg');
+              }
             });
 
             return Stack(
