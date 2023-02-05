@@ -37,7 +37,8 @@ class MyApp extends StatelessWidget {
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               fit: BoxFit.fitHeight,
-                              image: AssetImage('images/menu_art.jpg'),
+                              image: NetworkImage(
+                                  'https://raw.githubusercontent.com/Moyubori/ggj2023.github.io/main/assets/assets/images/menu_art.jpg'),
                             ),
                           ),
                           child: Row(
@@ -48,8 +49,10 @@ class MyApp extends StatelessWidget {
                                   const Spacer(
                                     flex: 2,
                                   ),
-                                  Image.asset('images/logo.png'),
-                                  Image.asset('images/controls.png'),
+                                  Image.network(
+                                      'https://raw.githubusercontent.com/Moyubori/ggj2023.github.io/main/assets/assets/images/logo.png'),
+                                  Image.network(
+                                      'https://raw.githubusercontent.com/Moyubori/ggj2023.github.io/main/assets/assets/images/controls.png'),
                                   const SizedBox(height: 10),
                                   SpriteButton.future(
                                     sprite: Sprite.load('button.png'),
@@ -82,17 +85,19 @@ class MyApp extends StatelessWidget {
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               fit: BoxFit.fitHeight,
-                              image: AssetImage('images/background.jpg'),
+                              image: NetworkImage(
+                                  'https://raw.githubusercontent.com/Moyubori/ggj2023.github.io/main/assets/assets/images/background.jpg'),
                             ),
                           ),
                           child: Center(
                             child: Column(
                               children: [
                                 const Spacer(),
-                                Image.asset('images/gameover.gif'),
+                                Image.asset(
+                                    'https://raw.githubusercontent.com/Moyubori/ggj2023.github.io/main/assets/assets/images/gameover.gif'),
                                 const Spacer(),
                                 Image.asset(
-                                  'images/skeletal.png',
+                                  'https://raw.githubusercontent.com/Moyubori/ggj2023.github.io/main/assets/assets/images/skeletal.png',
                                   scale: 0.5,
                                 ),
                                 const Spacer(),
