@@ -115,7 +115,7 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
     // FlameAudio.bgm.play('bgm.ogg');
     weaponComponent = WeaponComponent(this);
     equippedWeapon = Hammer(Vector2(0, 0), 1, isEquipped: true);
-    equippedWeapon.sprite = await Sprite.load("Hammer.png");
+    equippedWeapon.sprite = await Sprite.load("hammer.png");
     weaponComponent.isEquipped = true;
     weaponComponent.dmg = equippedWeapon.baseDmg;
     weaponComponent.swingDuration = equippedWeapon.swingDuration;

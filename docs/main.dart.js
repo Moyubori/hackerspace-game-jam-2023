@@ -60181,7 +60181,7 @@ o=A.apu(o,1,!0)
 q.b4=o
 j=o
 s=3
-return A.E(A.cA("Hammer.png"),$async$U)
+return A.E(A.cA("hammer.png"),$async$U)
 case 3:j.cR$=c
 p.bS=!0
 o=q.b4
