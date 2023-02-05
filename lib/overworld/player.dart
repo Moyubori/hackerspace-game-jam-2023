@@ -12,6 +12,7 @@ import 'package:hackerspace_game_jam_2023/main.dart';
 import 'package:hackerspace_game_jam_2023/overworld/reward_manager.dart';
 
 import '../equipment/base_equipment.dart';
+import '../equipment/hammer.dart';
 import '../equipment/weapon_component.dart';
 
 class PlayerSpriteSheet {
@@ -74,7 +75,7 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
   double _rollStartTime = 0;
   double initialHp = 100;
   bool _canAttack = true;
-  late BaseWeapon equippedWeapon = DummyWeapon();
+  BaseWeapon equippedWeapon = Hammer(Vector2(0, 0), 1, isEquipped: true);
   double currentExp = 0;
   static int initialLevel = 1;
   int currentLvl = initialLevel;
@@ -113,6 +114,10 @@ class MainPlayer extends SimplePlayer with ObjectCollision, KeyboardEventListene
     // FlameAudio.bgm.initialize();
     // FlameAudio.bgm.play('bgm.ogg');
     weaponComponent = WeaponComponent(this);
+    weaponComponent.isEquipped = true;
+    weaponComponent.dmg = equippedWeapon.baseDmg;
+    weaponComponent.swingDuration = equippedWeapon.swingDuration;
+    weaponComponent.sprite = equippedWeapon.sprite;
     gameRef.add(weaponComponent);
   }
 
